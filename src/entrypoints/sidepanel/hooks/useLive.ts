@@ -1,6 +1,7 @@
 // Live meeting state for the side panel (contracts/extension-messages.md "Live updates"): follows the offscreen
-// runtime over the `live` port; when no runtime answers (nothing running, or it just ended), shows the most recent
-// stored meeting read straight from IndexedDB with status idle.
+// runtime over the `live` port; when no runtime answers (nothing running, or it just ended), or it first answers with a
+// meeting that has already ended (the offscreen document lingers after a self-inflicted end), shows the most recent
+// stored meeting the main view may show, read straight from IndexedDB.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { parseLive, type PartialLine } from '../../../core/messaging/protocol';
 import { initialStatus, type StatusSnapshot } from '../../../core/status/status';
@@ -46,11 +47,48 @@ export function useLive(api: LiveApi): LiveState & { refresh: () => void } {
     const gen = ++generation.current;
     const current = () => gen === generation.current;
 
+    // No meeting runs: show what the main view may show from storage, as the panel's first look if it is one. `ended` is
+    // the stopped meeting the lingering offscreen document answered with, if any.
+    const showStored = (ended?: { meetingId: string; status: StatusSnapshot }) => {
+      setState((s) => ({ ...s, connected: false, partials: [] }));
+      const first = opening.current;
+      opening.current = false;
+      void api.latestStored(first ? { opening: true } : undefined).then((stored) => {
+        if (!current()) return;
+        // The same meeting just ended: keep its last status so the reason it stopped stays visible (FR-022), whether
+        // this panel saw it end or learns it from the lingering document (e.g. a Start that failed at once).
+        setState((s) => ({
+          ...EMPTY,
+          meeting: stored?.meeting ?? null,
+          segments: stored?.segments ?? [],
+          status:
+            stored && ended?.meetingId === stored.meeting.id
+              ? ended.status
+              : stored && s.meeting?.id === stored.meeting.id
+                ? s.status
+                : EMPTY.status,
+        }));
+      });
+    };
+    let answered = false;
+
     close.current = api.connect(
       (raw) => {
         if (!current()) return;
         const e = parseLive(raw);
         if (!e) return;
+        if (e.type === 'live/snapshot' && !answered) {
+          answered = true;
+          // 014 fix: after a meeting ends by itself the offscreen document lingers and answers a new port with the
+          // stopped meeting. That is no meeting running, so Close and the opening clear hold. A panel connected before
+          // the end gets the end as a later snapshot, handled below, and keeps showing it (FR-022).
+          if (e.meeting === null || e.meeting.endedAt !== null) {
+            close.current?.();
+            close.current = null;
+            showStored(e.meeting === null ? undefined : { meetingId: e.meeting.id, status: e.status });
+            return;
+          }
+        }
         if (e.type === 'live/snapshot') opening.current = false;
         setState((s) => {
           switch (e.type) {
@@ -88,20 +126,7 @@ export function useLive(api: LiveApi): LiveState & { refresh: () => void } {
         });
       },
       () => {
-        if (!current()) return;
-        setState((s) => ({ ...s, connected: false, partials: [] }));
-        const first = opening.current;
-        opening.current = false;
-        void api.latestStored(first ? { opening: true } : undefined).then((stored) => {
-          if (!current()) return;
-          // The same meeting just ended: keep its last status so the reason it stopped stays visible (FR-022).
-          setState((s) => ({
-            ...EMPTY,
-            meeting: stored?.meeting ?? null,
-            segments: stored?.segments ?? [],
-            status: stored && s.meeting?.id === stored.meeting.id ? s.status : EMPTY.status,
-          }));
-        });
+        if (current()) showStored();
       },
     );
   }, [api]);

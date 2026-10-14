@@ -47,3 +47,11 @@
 ## R6 — Copy (FR-010)
 
 Two strings, X1 and X2, recorded as K46 in `specs/006-panel-redesign/copy-review.md`; the "Never add" list becomes fixture entry A11 (absent fragments) so the scan enforces it.
+
+## R7 — The lingering offscreen document (fix, 2026-10-14)
+
+**Finding**: R2 took "the live port answered with a snapshot" to mean "a meeting runs". That is wrong for 30 s after a meeting ends by itself (the Meet call left, transcription failed for good): the service worker's `ended()` keeps the offscreen document open for `OFFSCREEN_LINGER_MS` so late panels still see why it stopped, and the host answers every new `live` port with `runtime.snapshot()`, which still holds the stopped meeting. `Close transcript` reconnects (`refresh`), got that snapshot and showed the meeting again; a panel opened in that window never asked for the opening clear. The running test (`isRunning` in `App.tsx`: connected, a meeting, no end time) was not broken, so the Close button showed correctly; only the main view's source was.
+
+**Decision**: in `useLive`, a connection's first `live/snapshot` that holds no meeting, or a meeting with an end time, counts as no meeting running: the hook closes that port and reads `latestStored()` exactly as on a disconnect (as an opening on the panel's first look). A later snapshot on a connection that first saw a running meeting is the end arriving while the panel is open, and is shown as before (001/002/006 FR-022). When the stored meeting is the one in that snapshot, the snapshot's status is kept, so the reason it ended stays: after a rename within the linger, and after a Start whose meeting fails before the panel reconnects (an ElevenLabs key rejected; `tests/e2e/resilience.spec.ts` caught a first version of this fix that dropped it).
+
+**Why not the offscreen host**: answering with an empty snapshot once nothing runs would show an empty main view for every refresh within the linger (after a rename, a delete elsewhere), not the stored meeting, and would leave the protocol's snapshot meaning "running" implicit in two places. **Why not a running flag in the snapshot**: the meeting's end time already says it, and a protocol change would touch the parser and contract tests for nothing.
