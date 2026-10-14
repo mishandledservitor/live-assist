@@ -148,4 +148,33 @@ describe('Close transcript on the main view (014 US1)', () => {
     expect(onMain().queryByRole('button', { name: 'Close transcript' })).toBeNull();
     expect(onMain().queryByRole('button', { name: 'Delete transcript' })).toBeNull();
   });
+  // 014 fix T040: the meeting ended by itself with the panel open; the offscreen document lingers and answers the
+  // reconnect after Close with a snapshot of the stopped meeting.
+  it('clears the main view after a meeting that ended by itself, while the offscreen document lingers', async () => {
+    const setup = stored();
+    const emitters: ((e: unknown) => void)[] = [];
+    setup.meetings.api.connect.mockImplementation((onEvent: (e: unknown) => void) => {
+      emitters.push(onEvent);
+      return () => undefined;
+    });
+    open(setup);
+    await waitFor(() => expect(emitters).toHaveLength(1));
+    const shown = storedMeeting({ id: 'shown' });
+    const lines = [storedSegment('shown', 0, { text: 'Latest meeting line.', ...spokenBy('Jane') })];
+    const starting = reduceStatus(initialStatus(), { type: 'capture', state: 'starting' });
+    const snapshot = (endedAt: number | null) => ({
+      type: 'live/snapshot',
+      meeting: { ...shown, endedAt, endReason: endedAt === null ? null : 'call-ended' },
+      segments: lines,
+      partials: [],
+      status: endedAt === null ? starting : reduceStatus(starting, { type: 'capture', state: 'stopped' }),
+    });
+    act(() => emitters[0]!(snapshot(null)));
+    act(() => emitters[0]!(snapshot(shown.endedAt ?? 9)));
+    fireEvent.click(await closeButton());
+    await waitFor(() => expect(emitters).toHaveLength(2));
+    act(() => emitters[1]!(snapshot(shown.endedAt ?? 9)));
+    await waitFor(expectCleanMain);
+    expect(setup.meetings.api.deleteMeeting).not.toHaveBeenCalled();
+  });
 });
