@@ -8,7 +8,7 @@
 
 ## Phase 1: Setup
 
-- [ ] T001 Confirm the baseline: `pnpm test` passes on the branch before any change (no file changes)
+- [X] T001 Confirm the baseline: `pnpm test` passes on the branch before any change (no file changes)
 
 ## Phase 2: Foundational
 
@@ -20,14 +20,14 @@ No foundational work: both stories reuse 012's `MainViewStore`, `clearMainView` 
 
 **Independent Test**: in `tests/unit/sidepanel/app-close.test.tsx`, a stored meeting on the main view, press `Close transcript`, the main view is clean, `clearMainView` called once, `deleteMeeting` never, focus on Transcripts; running meeting has no button; failure shows X2.
 
-- [ ] T002 [P] [US1] Write failing component tests for `CloseTranscript` (label, disabled while closing, `onClosed` on success, X2 alert on failure and cleared on the next press) in tests/unit/sidepanel/close-transcript.test.tsx
-- [ ] T003 [US1] Implement `CloseTranscript` per contracts/internal-api.md in src/entrypoints/sidepanel/components/CloseTranscript.tsx
-- [ ] T004 [P] [US1] Write failing App tests (button order Download, Close, Delete; none while running; press → clean main view, `clearMainView` once, `deleteMeeting` never, focus on the Transcripts control or the gear without it; Transcripts screen then Back stays clean; delete confirmation open then Close → clean, nothing deleted; failed write keeps the transcript and shows X2) in tests/unit/sidepanel/app-close.test.tsx
-- [ ] T005 [US1] Wire `CloseTranscript` into `MainView`'s footer and add the `Panel` close handler and focus move in src/entrypoints/sidepanel/App.tsx
-- [ ] T006 [P] [US1] Write failing tests that `useChat` stops a streaming answer once when the meeting shown changes to another or to none, and sends no waiting question, in tests/unit/sidepanel/use-chat-close.test.tsx
-- [ ] T007 [US1] Implement the stop on meeting change in src/entrypoints/sidepanel/hooks/useChat.ts
-- [ ] T008 [P] [US1] Add the K46 cases (X1 on a stopped meeting, X2 after a failed close, the clean main view shows only K27) to tests/unit/copy/keep-strings.test.tsx and the A11 never-add entry to tests/fixtures/copy/copy-review.json with the entry count in tests/unit/copy/copy-review.test.ts; see them fail before T003/T005 exist, pass after
-- [ ] T009 [US1] Record K46 (X1, X2), the review paragraph and the A11 never-add line in specs/006-panel-redesign/copy-review.md
+- [X] T002 [P] [US1] Write failing component tests for `CloseTranscript` (label, disabled while closing, `onClosed` on success, X2 alert on failure and cleared on the next press) in tests/unit/sidepanel/close-transcript.test.tsx
+- [X] T003 [US1] Implement `CloseTranscript` per contracts/internal-api.md in src/entrypoints/sidepanel/components/CloseTranscript.tsx
+- [X] T004 [P] [US1] Write failing App tests (button order Download, Close, Delete; none while running; press → clean main view, `clearMainView` once, `deleteMeeting` never, focus on the Transcripts control or the gear without it; Transcripts screen then Back stays clean; delete confirmation open then Close → clean, nothing deleted; failed write keeps the transcript and shows X2) in tests/unit/sidepanel/app-close.test.tsx
+- [X] T005 [US1] Wire `CloseTranscript` into `MainView`'s footer and add the `Panel` close handler and focus move in src/entrypoints/sidepanel/App.tsx
+- [X] T006 [P] [US1] Write failing tests that `useChat` stops a streaming answer once when the meeting shown changes to another or to none, and sends no waiting question, in tests/unit/sidepanel/use-chat-close.test.tsx
+- [X] T007 [US1] Implement the stop on meeting change in src/entrypoints/sidepanel/hooks/useChat.ts
+- [X] T008 [P] [US1] Add the K46 cases (X1 on a stopped meeting, X2 after a failed close, the clean main view shows only K27) to tests/unit/copy/keep-strings.test.tsx and the A11 never-add entry to tests/fixtures/copy/copy-review.json with the entry count in tests/unit/copy/copy-review.test.ts; see them fail before T003/T005 exist, pass after
+- [X] T009 [US1] Record K46 (X1, X2), the review paragraph and the A11 never-add line in specs/006-panel-redesign/copy-review.md
 
 **Checkpoint**: US1 works with the panel left open; the opening clear is not yet built.
 

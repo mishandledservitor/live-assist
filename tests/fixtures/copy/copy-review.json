@@ -587,6 +587,23 @@
         "Waiting for the answer",
         "No answer came back. Ask again."
       ]
+    },
+    {
+      "id": "A11",
+      "enabled": true,
+      "$comment": "014 FR-010 (design decisions 91, 92, copy review K46): Close transcript and its failure, and close-ui never add of 2026-10-14",
+      "absent": [
+        "Transcript closed",
+        "Saved to Transcripts",
+        "Undo",
+        "does not delete",
+        "cleared itself",
+        "Moved to Transcripts"
+      ],
+      "present": [
+        "Close transcript",
+        "Couldn't close this transcript. Try again."
+      ]
     }
   ]
 }

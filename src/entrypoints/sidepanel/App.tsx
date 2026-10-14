@@ -11,6 +11,7 @@ import type { ChatApi } from './chat-api';
 import { AccountDetails } from './components/AccountDetails';
 import { AskArea } from './components/AskArea';
 import { ChatRetention } from './components/ChatRetention';
+import { CloseTranscript } from './components/CloseTranscript';
 import { CreditsBadge } from './components/CreditsBadge';
 import { CAPTIONS_PROMPT, DeleteTranscript } from './components/DeleteTranscript';
 import { DownloadTranscript } from './components/DownloadTranscript';
@@ -44,6 +45,8 @@ function MainView({
   loaded,
   onFixMic,
   onDeleted,
+  onClose,
+  onClosed,
   hidden,
   onOpenSettings,
   gearRef,
@@ -59,6 +62,10 @@ function MainView({
   onFixMic: () => void;
   /** The meeting shown here was deleted with `Delete transcript` (012 FR-019). */
   onDeleted: () => void;
+  /** 014: clears the main view without deleting; rejects when it cannot be remembered. */
+  onClose: () => Promise<void>;
+  /** 014: the main view was cleared with `Close transcript`. */
+  onClosed: () => void;
   hidden: boolean;
   onOpenSettings: () => void;
   gearRef: Ref<HTMLButtonElement>;
@@ -80,7 +87,7 @@ function MainView({
   const hasCaptions = meeting?.hasCaptions === true;
   const downloadable = hasTranscriptFileLines(segments) || hasCaptions;
   // After the last line (006 FR-013): Download for the meeting shown, running or stopped (007, design decision 48),
-  // then Delete once it has stopped. Download is absent until a settled line or a kept caption exists, and saves what
+  // then Close (014, decisions 91 and 92) and Delete once it has stopped. Download is absent until a settled line or a kept caption exists, and saves what
   // `meetingDownload` gives for the meeting, as every Download does (012 FR-014, 013 FR-019). The caption turns are
   // read at the press, used for that one file and dropped: their text never enters the panel's state (FR-009). If
   // they cannot be read the press saves nothing, never the transcript alone in place of the zip.
@@ -96,6 +103,7 @@ function MainView({
             )
           }
         />
+        {!running && <CloseTranscript close={onClose} onClosed={onClosed} />}
         {!running && (
           <DeleteTranscript
             remove={() => meetings.deleteMeeting(meetingId)}
@@ -251,6 +259,15 @@ function Panel({
     void clearMainView().then(() => {
       if (transcripts) openTranscripts();
     });
+  // 014 FR-002, FR-009: Close clears the main view as a delete does, without deleting. A failure reaches the button,
+  // which says so; the transcript stays.
+  const closeShown = async () => {
+    await meetings.clearMainView();
+    refresh();
+  };
+  const closedOnMain = () => {
+    focusNext.current = () => transcriptsRef.current ?? gearRef.current;
+  };
   // FR-027: deleting any other meeting on the Transcripts screen leaves the main view as it was.
   const shownId = live.meeting?.id ?? null;
   const deletedOnScreen = (id: string) => {
@@ -277,6 +294,8 @@ function Panel({
         loaded={loaded}
         onFixMic={() => void api.openMicPermission()}
         onDeleted={deletedOnMain}
+        onClose={closeShown}
+        onClosed={closedOnMain}
         hidden={screen !== 'main'}
         onOpenSettings={openSettings}
         gearRef={gearRef}
