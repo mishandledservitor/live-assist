@@ -11,6 +11,7 @@ import {
   openMeetingTab,
   openMeetPage,
   openPanel,
+  seedAskMeeting,
   seedSettings,
 } from './helpers';
 import { readAllStores, rows, transcriptsButton, transcriptsScreen } from './transcripts-helpers';
@@ -108,6 +109,16 @@ test('the panel opens clean after a meeting stopped, and shows a running meeting
   await expectCleanMain(panel);
   await transcriptsButton(panel).click();
   await expect(rows(panel)).toHaveCount(1);
+});
+
+// The seeding helper (`reloadShowingStored`) waits for the reloaded panel's opening clear before undoing it. On a slow
+// machine (CI) that clear lands late; a 10x slower panel stands in for it.
+test('a seeded meeting shows on the main view of a slow panel', async ({ context, extensionId }) => {
+  const panel = await openPanel(context, extensionId);
+  const cdp = await context.newCDPSession(panel);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 10 });
+  await seedAskMeeting(panel, 0);
+  await expect(onMain(panel, 'Close transcript')).toBeAttached();
 });
 
 // 014 fix T040: leaving the Meet call ends the meeting by itself, and the offscreen document lingers for 30 s

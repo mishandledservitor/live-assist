@@ -42,6 +42,8 @@
 
 **Alternatives considered**: an e2e-only build switch that disables the opening clear (production behaviour would be untested); rewriting every seeded spec to record a fixture meeting (slow, and the chat fixtures are tied to the seeded standup).
 
+**Fix (2026-10-14)**: the helper as merged (`showStoredOnMain`) waited with `page.waitForFunction` and an async predicate. Playwright does not await the predicate's promise and takes it as true, so the helper never waited: it wrote `0` at once, and when the panel's opening clear landed after that (a slow CI runner), the seeded meeting stayed hidden and every seeded spec timed out waiting for `Close transcript` (main run 38558581709: a11y, ask, captions-download, transcripts). The product was right throughout. The helper now polls the marker from the test with `expect.poll`; `close.spec.ts` checks it against a panel slowed 10x with CDP CPU throttling, which failed 2 runs in 3 before the fix.
+
 ## R6 — Copy (FR-010)
 
 Two strings, X1 and X2, recorded as K46 in `specs/006-panel-redesign/copy-review.md`; the "Never add" list becomes fixture entry A11 (absent fragments) so the scan enforces it.
