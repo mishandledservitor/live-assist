@@ -1,0 +1,4 @@
+{"at":0,"dir":"in","msg":{"message_type":"session_started","session_id":"sess-fixture-unknown","config":{"model_id":"scribe_v2_realtime"}}}
+{"at":500,"dir":"in","msg":{"message_type":"future_feature_announcement","payload":{"anything":true}}}
+{"at":3000,"dir":"in","msg":{"message_type":"committed_transcript","text":"Still works."}}
+{"at":3040,"dir":"in","msg":{"message_type":"committed_transcript_with_timestamps","text":"Still works.","language_code":"en","words":[{"text":"Still","start":2.5,"end":2.7,"type":"word","logprob":-0.1},{"text":" ","start":2.7,"end":2.72,"type":"spacing","logprob":0},{"text":"works.","start":2.72,"end":2.95,"type":"word","logprob":-0.1}]}}

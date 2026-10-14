@@ -1,0 +1,131 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2300,
+        2800,
+        3300,
+        3800,
+        4300
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        2000,
+        2500,
+        3000,
+        3500,
+        4000,
+        4100
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        7800,
+        8300,
+        8800,
+        9300,
+        9800
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "over:mixed:0",
+      "startMs": 1000,
+      "endMs": 4000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1429
+        },
+        {
+          "text": "w1",
+          "startMs": 1429,
+          "endMs": 1857
+        },
+        {
+          "text": "w2",
+          "startMs": 1857,
+          "endMs": 2286
+        },
+        {
+          "text": "w3",
+          "startMs": 2286,
+          "endMs": 2714
+        },
+        {
+          "text": "w4",
+          "startMs": 2714,
+          "endMs": 3143
+        },
+        {
+          "text": "w5",
+          "startMs": 3143,
+          "endMs": 3571
+        },
+        {
+          "text": "w6",
+          "startMs": 3571,
+          "endMs": 4000
+        }
+      ]
+    },
+    {
+      "id": "over:mixed:1",
+      "startMs": 7000,
+      "endMs": 9500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 7000,
+          "endMs": 7417
+        },
+        {
+          "text": "w1",
+          "startMs": 7417,
+          "endMs": 7833
+        },
+        {
+          "text": "w2",
+          "startMs": 7833,
+          "endMs": 8250
+        },
+        {
+          "text": "w3",
+          "startMs": 8250,
+          "endMs": 8667
+        },
+        {
+          "text": "w4",
+          "startMs": 8667,
+          "endMs": 9083
+        },
+        {
+          "text": "w5",
+          "startMs": 9083,
+          "endMs": 9500
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "over:mixed:0": "Others",
+    "over:mixed:1": "$user"
+  }
+}

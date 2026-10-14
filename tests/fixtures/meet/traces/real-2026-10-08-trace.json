@@ -1,0 +1,2120 @@
+{
+  "format": "live-assist-alignment-trace/1",
+  "userName": "The user",
+  "captions": [
+    {
+      "turnKey": "0ae75765:1",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        1791473938349,
+        1791473938698,
+        1791473939032,
+        1791473944554,
+        1791473944887,
+        1791473945237,
+        1791473945571,
+        1791473945921,
+        1791473946254,
+        1791473946588,
+        1791473946922,
+        1791473947256,
+        1791473947590,
+        1791473948057,
+        1791473948390,
+        1791473948955,
+        1791473950159,
+        1791473950659,
+        1791473950993,
+        1791473951460,
+        1791473952228,
+        1791473952662,
+        1791473954447,
+        1791473954814,
+        1791473955578
+      ]
+    },
+    {
+      "turnKey": "0ae75765:2",
+      "speakerName": "Participant A",
+      "self": null,
+      "observedAtMs": [
+        1791473996209,
+        1791473996542,
+        1791474000460,
+        1791474000862,
+        1791474001195,
+        1791474001528,
+        1791474001863,
+        1791474002195,
+        1791474002529,
+        1791474002864,
+        1791474003197,
+        1791474004632,
+        1791474004964,
+        1791474005299,
+        1791474005633,
+        1791474005967,
+        1791474006300,
+        1791474006634,
+        1791474006968,
+        1791474007301,
+        1791474007635,
+        1791474007968,
+        1791474008302,
+        1791474008638,
+        1791474008969,
+        1791474009303,
+        1791474010055,
+        1791474010388,
+        1791474010721,
+        1791474011055,
+        1791474011388,
+        1791474011722,
+        1791474012056,
+        1791474012390,
+        1791474012723,
+        1791474013074,
+        1791474013407,
+        1791474013742,
+        1791474014075,
+        1791474014408,
+        1791474014742,
+        1791474015076,
+        1791474015410,
+        1791474016077,
+        1791474016745,
+        1791474017078,
+        1791474017412,
+        1791474017747,
+        1791474018764,
+        1791474019098,
+        1791474022968,
+        1791474023351,
+        1791474023701,
+        1791474024036,
+        1791474024370,
+        1791474024702,
+        1791474025037,
+        1791474025521,
+        1791474026722,
+        1791474027056,
+        1791474027389,
+        1791474027722,
+        1791474028072,
+        1791474028406,
+        1791474028740,
+        1791474029073,
+        1791474029407,
+        1791474029741,
+        1791474030075,
+        1791474030408,
+        1791474030742,
+        1791474031076,
+        1791474031409,
+        1791474031760,
+        1791474032093,
+        1791474032427,
+        1791474032761,
+        1791474033094,
+        1791474033428,
+        1791474033762,
+        1791474034095,
+        1791474035296,
+        1791474035964,
+        1791474037066,
+        1791474040818,
+        1791474041170,
+        1791474041503,
+        1791474041837,
+        1791474042170,
+        1791474043822,
+        1791474044656,
+        1791474046024,
+        1791474046375,
+        1791474046708,
+        1791474047028,
+        1791474047376,
+        1791474047709,
+        1791474048043,
+        1791474048427,
+        1791474048761,
+        1791474049094,
+        1791474054151,
+        1791474054501,
+        1791474054835,
+        1791474055168,
+        1791474055501,
+        1791474057920,
+        1791474058254,
+        1791474058755,
+        1791474059088,
+        1791474059421,
+        1791474059752,
+        1791474060089,
+        1791474060422,
+        1791474060757,
+        1791474064760,
+        1791474077557,
+        1791474077890,
+        1791474078224,
+        1791474078858,
+        1791474079192,
+        1791474079525,
+        1791474080556
+      ]
+    },
+    {
+      "turnKey": "0ae75765:3",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        1791474109740,
+        1791474110073,
+        1791474110407,
+        1791474110741,
+        1791474111330,
+        1791474112693,
+        1791474113193,
+        1791474113527,
+        1791474113994,
+        1791474114495,
+        1791474114828,
+        1791474115161,
+        1791474115496,
+        1791474115833,
+        1791474116496,
+        1791474117599,
+        1791474117998,
+        1791474118933,
+        1791474119267,
+        1791474119900,
+        1791474120234,
+        1791474120568,
+        1791474120901,
+        1791474121235,
+        1791474121569,
+        1791474121897,
+        1791474122232,
+        1791474123071,
+        1791474127591,
+        1791474127925,
+        1791474128259,
+        1791474128593,
+        1791474128924,
+        1791474129262,
+        1791474134332,
+        1791474140104,
+        1791474140488,
+        1791474140821,
+        1791474146227,
+        1791474146561,
+        1791474146895,
+        1791474147429,
+        1791474147763,
+        1791474148129,
+        1791474149630,
+        1791474149965,
+        1791474150298,
+        1791474150632,
+        1791474151433,
+        1791474151800,
+        1791474152133,
+        1791474152467,
+        1791474152801,
+        1791474153132,
+        1791474153895,
+        1791474157790,
+        1791474158123,
+        1791474158457,
+        1791474159225,
+        1791474161793,
+        1791474162127,
+        1791474162477,
+        1791474162811,
+        1791474163145,
+        1791474163477,
+        1791474165430,
+        1791474165764,
+        1791474166114,
+        1791474166448,
+        1791474167399,
+        1791474167733,
+        1791474168066,
+        1791474168400,
+        1791474168734,
+        1791474169067,
+        1791474169401,
+        1791474169735,
+        1791474170068,
+        1791474170402,
+        1791474250218,
+        1791474255124,
+        1791474255462,
+        1791474255793,
+        1791474256757
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "seg-0",
+      "startMs": 4127,
+      "endMs": 4867,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 4127,
+          "endMs": 4427
+        },
+        {
+          "text": "w1",
+          "startMs": 4487,
+          "endMs": 4607
+        },
+        {
+          "text": "w2",
+          "startMs": 4707,
+          "endMs": 4867
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-1",
+      "startMs": 10207,
+      "endMs": 14347,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 10207,
+          "endMs": 10266
+        },
+        {
+          "text": "w1",
+          "startMs": 10307,
+          "endMs": 10447
+        },
+        {
+          "text": "w2",
+          "startMs": 10567,
+          "endMs": 10707
+        },
+        {
+          "text": "w3",
+          "startMs": 10807,
+          "endMs": 11287
+        },
+        {
+          "text": "w4",
+          "startMs": 11727,
+          "endMs": 12107
+        },
+        {
+          "text": "w5",
+          "startMs": 12327,
+          "endMs": 12427
+        },
+        {
+          "text": "w6",
+          "startMs": 12487,
+          "endMs": 12707
+        },
+        {
+          "text": "w7",
+          "startMs": 12767,
+          "endMs": 13307
+        },
+        {
+          "text": "w8",
+          "startMs": 13347,
+          "endMs": 13487
+        },
+        {
+          "text": "w9",
+          "startMs": 13527,
+          "endMs": 14347
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-2",
+      "startMs": 16039,
+      "endMs": 20899,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 16039,
+          "endMs": 16179
+        },
+        {
+          "text": "w1",
+          "startMs": 16219,
+          "endMs": 16539
+        },
+        {
+          "text": "w2",
+          "startMs": 16639,
+          "endMs": 16839
+        },
+        {
+          "text": "w3",
+          "startMs": 17319,
+          "endMs": 17719
+        },
+        {
+          "text": "w4",
+          "startMs": 17919,
+          "endMs": 18319
+        },
+        {
+          "text": "w5",
+          "startMs": 18439,
+          "endMs": 18599
+        },
+        {
+          "text": "w6",
+          "startMs": 20099,
+          "endMs": 20219
+        },
+        {
+          "text": "w7",
+          "startMs": 20319,
+          "endMs": 20899
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-3",
+      "startMs": 23099,
+      "endMs": 23599,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 23099,
+          "endMs": 23599
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-4",
+      "startMs": 26915,
+      "endMs": 30655,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 26915,
+          "endMs": 27095
+        },
+        {
+          "text": "w1",
+          "startMs": 30215,
+          "endMs": 30395
+        },
+        {
+          "text": "w2",
+          "startMs": 30455,
+          "endMs": 30655
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-5",
+      "startMs": 61595,
+      "endMs": 63355,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 61595,
+          "endMs": 61795
+        },
+        {
+          "text": "w1",
+          "startMs": 61975,
+          "endMs": 62095
+        },
+        {
+          "text": "w2",
+          "startMs": 62135,
+          "endMs": 62295
+        },
+        {
+          "text": "w3",
+          "startMs": 62315,
+          "endMs": 62415
+        },
+        {
+          "text": "w4",
+          "startMs": 62455,
+          "endMs": 62675
+        },
+        {
+          "text": "w5",
+          "startMs": 62695,
+          "endMs": 62795
+        },
+        {
+          "text": "w6",
+          "startMs": 62835,
+          "endMs": 63355
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-6",
+      "startMs": 65495,
+      "endMs": 84775,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 65495,
+          "endMs": 66315
+        },
+        {
+          "text": "w1",
+          "startMs": 67455,
+          "endMs": 67695
+        },
+        {
+          "text": "w2",
+          "startMs": 67715,
+          "endMs": 67795
+        },
+        {
+          "text": "w3",
+          "startMs": 67835,
+          "endMs": 68055
+        },
+        {
+          "text": "w4",
+          "startMs": 68115,
+          "endMs": 68255
+        },
+        {
+          "text": "w5",
+          "startMs": 68295,
+          "endMs": 68435
+        },
+        {
+          "text": "w6",
+          "startMs": 68535,
+          "endMs": 68715
+        },
+        {
+          "text": "w7",
+          "startMs": 68774,
+          "endMs": 68975
+        },
+        {
+          "text": "w8",
+          "startMs": 69015,
+          "endMs": 69075
+        },
+        {
+          "text": "w9",
+          "startMs": 69115,
+          "endMs": 69155
+        },
+        {
+          "text": "w10",
+          "startMs": 69195,
+          "endMs": 69555
+        },
+        {
+          "text": "w11",
+          "startMs": 69635,
+          "endMs": 69795
+        },
+        {
+          "text": "w12",
+          "startMs": 69875,
+          "endMs": 69975
+        },
+        {
+          "text": "w13",
+          "startMs": 70015,
+          "endMs": 70095
+        },
+        {
+          "text": "w14",
+          "startMs": 70135,
+          "endMs": 70535
+        },
+        {
+          "text": "w15",
+          "startMs": 71355,
+          "endMs": 71455
+        },
+        {
+          "text": "w16",
+          "startMs": 71495,
+          "endMs": 71555
+        },
+        {
+          "text": "w17",
+          "startMs": 71595,
+          "endMs": 71715
+        },
+        {
+          "text": "w18",
+          "startMs": 71775,
+          "endMs": 71795
+        },
+        {
+          "text": "w19",
+          "startMs": 71835,
+          "endMs": 71935
+        },
+        {
+          "text": "w20",
+          "startMs": 72035,
+          "endMs": 72395
+        },
+        {
+          "text": "w21",
+          "startMs": 72575,
+          "endMs": 72655
+        },
+        {
+          "text": "w22",
+          "startMs": 72715,
+          "endMs": 72815
+        },
+        {
+          "text": "w23",
+          "startMs": 72875,
+          "endMs": 73075
+        },
+        {
+          "text": "w24",
+          "startMs": 73135,
+          "endMs": 73355
+        },
+        {
+          "text": "w25",
+          "startMs": 73815,
+          "endMs": 73895
+        },
+        {
+          "text": "w26",
+          "startMs": 73955,
+          "endMs": 73975
+        },
+        {
+          "text": "w27",
+          "startMs": 73995,
+          "endMs": 74115
+        },
+        {
+          "text": "w28",
+          "startMs": 74155,
+          "endMs": 74255
+        },
+        {
+          "text": "w29",
+          "startMs": 74275,
+          "endMs": 74355
+        },
+        {
+          "text": "w30",
+          "startMs": 74395,
+          "endMs": 74975
+        },
+        {
+          "text": "w31",
+          "startMs": 75075,
+          "endMs": 75255
+        },
+        {
+          "text": "w32",
+          "startMs": 75275,
+          "endMs": 75395
+        },
+        {
+          "text": "w33",
+          "startMs": 75415,
+          "endMs": 75535
+        },
+        {
+          "text": "w34",
+          "startMs": 75555,
+          "endMs": 75655
+        },
+        {
+          "text": "w35",
+          "startMs": 75695,
+          "endMs": 75935
+        },
+        {
+          "text": "w36",
+          "startMs": 75995,
+          "endMs": 76235
+        },
+        {
+          "text": "w37",
+          "startMs": 76995,
+          "endMs": 77095
+        },
+        {
+          "text": "w38",
+          "startMs": 77135,
+          "endMs": 77295
+        },
+        {
+          "text": "w39",
+          "startMs": 77395,
+          "endMs": 77695
+        },
+        {
+          "text": "w40",
+          "startMs": 77795,
+          "endMs": 78055
+        },
+        {
+          "text": "w41",
+          "startMs": 78155,
+          "endMs": 78335
+        },
+        {
+          "text": "w42",
+          "startMs": 78395,
+          "endMs": 78535
+        },
+        {
+          "text": "w43",
+          "startMs": 78575,
+          "endMs": 78655
+        },
+        {
+          "text": "w44",
+          "startMs": 78695,
+          "endMs": 79015
+        },
+        {
+          "text": "w45",
+          "startMs": 79095,
+          "endMs": 79335
+        },
+        {
+          "text": "w46",
+          "startMs": 79455,
+          "endMs": 79615
+        },
+        {
+          "text": "w47",
+          "startMs": 79675,
+          "endMs": 79875
+        },
+        {
+          "text": "w48",
+          "startMs": 79895,
+          "endMs": 80155
+        },
+        {
+          "text": "w49",
+          "startMs": 80195,
+          "endMs": 80295
+        },
+        {
+          "text": "w50",
+          "startMs": 80375,
+          "endMs": 80635
+        },
+        {
+          "text": "w51",
+          "startMs": 80715,
+          "endMs": 80954
+        },
+        {
+          "text": "w52",
+          "startMs": 80995,
+          "endMs": 81155
+        },
+        {
+          "text": "w53",
+          "startMs": 81195,
+          "endMs": 81255
+        },
+        {
+          "text": "w54",
+          "startMs": 81295,
+          "endMs": 81375
+        },
+        {
+          "text": "w55",
+          "startMs": 81475,
+          "endMs": 81815
+        },
+        {
+          "text": "w56",
+          "startMs": 81915,
+          "endMs": 82075
+        },
+        {
+          "text": "w57",
+          "startMs": 82135,
+          "endMs": 82635
+        },
+        {
+          "text": "w58",
+          "startMs": 82975,
+          "endMs": 83255
+        },
+        {
+          "text": "w59",
+          "startMs": 83315,
+          "endMs": 83515
+        },
+        {
+          "text": "w60",
+          "startMs": 83595,
+          "endMs": 83855
+        },
+        {
+          "text": "w61",
+          "startMs": 83895,
+          "endMs": 84135
+        },
+        {
+          "text": "w62",
+          "startMs": 84195,
+          "endMs": 84455
+        },
+        {
+          "text": "w63",
+          "startMs": 84495,
+          "endMs": 84775
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-7",
+      "startMs": 90115,
+      "endMs": 103255,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 90115,
+          "endMs": 90175
+        },
+        {
+          "text": "w1",
+          "startMs": 90195,
+          "endMs": 90275
+        },
+        {
+          "text": "w2",
+          "startMs": 90335,
+          "endMs": 90435
+        },
+        {
+          "text": "w3",
+          "startMs": 90475,
+          "endMs": 90595
+        },
+        {
+          "text": "w4",
+          "startMs": 90635,
+          "endMs": 90935
+        },
+        {
+          "text": "w5",
+          "startMs": 90995,
+          "endMs": 91135
+        },
+        {
+          "text": "w6",
+          "startMs": 91175,
+          "endMs": 91335
+        },
+        {
+          "text": "w7",
+          "startMs": 91375,
+          "endMs": 91515
+        },
+        {
+          "text": "w8",
+          "startMs": 91575,
+          "endMs": 91855
+        },
+        {
+          "text": "w9",
+          "startMs": 92115,
+          "endMs": 92655
+        },
+        {
+          "text": "w10",
+          "startMs": 93655,
+          "endMs": 93935
+        },
+        {
+          "text": "w11",
+          "startMs": 93975,
+          "endMs": 94075
+        },
+        {
+          "text": "w12",
+          "startMs": 94115,
+          "endMs": 94235
+        },
+        {
+          "text": "w13",
+          "startMs": 94275,
+          "endMs": 94335
+        },
+        {
+          "text": "w14",
+          "startMs": 94375,
+          "endMs": 94515
+        },
+        {
+          "text": "w15",
+          "startMs": 94555,
+          "endMs": 94695
+        },
+        {
+          "text": "w16",
+          "startMs": 94735,
+          "endMs": 94855
+        },
+        {
+          "text": "w17",
+          "startMs": 94875,
+          "endMs": 94934
+        },
+        {
+          "text": "w18",
+          "startMs": 94995,
+          "endMs": 95055
+        },
+        {
+          "text": "w19",
+          "startMs": 95075,
+          "endMs": 95355
+        },
+        {
+          "text": "w20",
+          "startMs": 95375,
+          "endMs": 95455
+        },
+        {
+          "text": "w21",
+          "startMs": 95495,
+          "endMs": 95535
+        },
+        {
+          "text": "w22",
+          "startMs": 95575,
+          "endMs": 95995
+        },
+        {
+          "text": "w23",
+          "startMs": 96075,
+          "endMs": 96335
+        },
+        {
+          "text": "w24",
+          "startMs": 96355,
+          "endMs": 96435
+        },
+        {
+          "text": "w25",
+          "startMs": 96495,
+          "endMs": 96555
+        },
+        {
+          "text": "w26",
+          "startMs": 96635,
+          "endMs": 97095
+        },
+        {
+          "text": "w27",
+          "startMs": 97135,
+          "endMs": 97215
+        },
+        {
+          "text": "w28",
+          "startMs": 97255,
+          "endMs": 97355
+        },
+        {
+          "text": "w29",
+          "startMs": 97415,
+          "endMs": 97975
+        },
+        {
+          "text": "w30",
+          "startMs": 98015,
+          "endMs": 98115
+        },
+        {
+          "text": "w31",
+          "startMs": 98155,
+          "endMs": 98295
+        },
+        {
+          "text": "w32",
+          "startMs": 98375,
+          "endMs": 98675
+        },
+        {
+          "text": "w33",
+          "startMs": 98715,
+          "endMs": 98775
+        },
+        {
+          "text": "w34",
+          "startMs": 98815,
+          "endMs": 99095
+        },
+        {
+          "text": "w35",
+          "startMs": 99115,
+          "endMs": 99395
+        },
+        {
+          "text": "w36",
+          "startMs": 99415,
+          "endMs": 99495
+        },
+        {
+          "text": "w37",
+          "startMs": 99535,
+          "endMs": 99615
+        },
+        {
+          "text": "w38",
+          "startMs": 99675,
+          "endMs": 99855
+        },
+        {
+          "text": "w39",
+          "startMs": 99875,
+          "endMs": 99955
+        },
+        {
+          "text": "w40",
+          "startMs": 99975,
+          "endMs": 100095
+        },
+        {
+          "text": "w41",
+          "startMs": 100135,
+          "endMs": 100495
+        },
+        {
+          "text": "w42",
+          "startMs": 100515,
+          "endMs": 100595
+        },
+        {
+          "text": "w43",
+          "startMs": 100655,
+          "endMs": 100775
+        },
+        {
+          "text": "w44",
+          "startMs": 100835,
+          "endMs": 101055
+        },
+        {
+          "text": "w45",
+          "startMs": 101095,
+          "endMs": 101515
+        },
+        {
+          "text": "w46",
+          "startMs": 102415,
+          "endMs": 102555
+        },
+        {
+          "text": "w47",
+          "startMs": 102595,
+          "endMs": 102735
+        },
+        {
+          "text": "w48",
+          "startMs": 102775,
+          "endMs": 102915
+        },
+        {
+          "text": "w49",
+          "startMs": 102935,
+          "endMs": 103255
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-8",
+      "startMs": 107875,
+      "endMs": 116395,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 107875,
+          "endMs": 107995
+        },
+        {
+          "text": "w1",
+          "startMs": 108195,
+          "endMs": 108294
+        },
+        {
+          "text": "w2",
+          "startMs": 108334,
+          "endMs": 108575
+        },
+        {
+          "text": "w3",
+          "startMs": 108615,
+          "endMs": 108735
+        },
+        {
+          "text": "w4",
+          "startMs": 108775,
+          "endMs": 109015
+        },
+        {
+          "text": "w5",
+          "startMs": 109075,
+          "endMs": 109455
+        },
+        {
+          "text": "w6",
+          "startMs": 111035,
+          "endMs": 111435
+        },
+        {
+          "text": "w7",
+          "startMs": 111935,
+          "endMs": 112455
+        },
+        {
+          "text": "w8",
+          "startMs": 112675,
+          "endMs": 112875
+        },
+        {
+          "text": "w9",
+          "startMs": 113115,
+          "endMs": 113495
+        },
+        {
+          "text": "w10",
+          "startMs": 113575,
+          "endMs": 113635
+        },
+        {
+          "text": "w11",
+          "startMs": 113675,
+          "endMs": 113755
+        },
+        {
+          "text": "w12",
+          "startMs": 114215,
+          "endMs": 114895
+        },
+        {
+          "text": "w13",
+          "startMs": 114955,
+          "endMs": 115195
+        },
+        {
+          "text": "w14",
+          "startMs": 115335,
+          "endMs": 115515
+        },
+        {
+          "text": "w15",
+          "startMs": 115555,
+          "endMs": 115655
+        },
+        {
+          "text": "w16",
+          "startMs": 115715,
+          "endMs": 115875
+        },
+        {
+          "text": "w17",
+          "startMs": 115975,
+          "endMs": 116395
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-9",
+      "startMs": 118835,
+      "endMs": 118975,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 118835,
+          "endMs": 118975
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-10",
+      "startMs": 121395,
+      "endMs": 122975,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 121395,
+          "endMs": 121475
+        },
+        {
+          "text": "w1",
+          "startMs": 121535,
+          "endMs": 121695
+        },
+        {
+          "text": "w2",
+          "startMs": 121775,
+          "endMs": 122095
+        },
+        {
+          "text": "w3",
+          "startMs": 122135,
+          "endMs": 122415
+        },
+        {
+          "text": "w4",
+          "startMs": 122535,
+          "endMs": 122975
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-11",
+      "startMs": 125199,
+      "endMs": 128259,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 125199,
+          "endMs": 125200
+        },
+        {
+          "text": "w1",
+          "startMs": 125239,
+          "endMs": 125499
+        },
+        {
+          "text": "w2",
+          "startMs": 125559,
+          "endMs": 125959
+        },
+        {
+          "text": "w3",
+          "startMs": 126139,
+          "endMs": 126279
+        },
+        {
+          "text": "w4",
+          "startMs": 126339,
+          "endMs": 126439
+        },
+        {
+          "text": "w5",
+          "startMs": 126499,
+          "endMs": 126679
+        },
+        {
+          "text": "w6",
+          "startMs": 126739,
+          "endMs": 126879
+        },
+        {
+          "text": "w7",
+          "startMs": 127019,
+          "endMs": 127119
+        },
+        {
+          "text": "w8",
+          "startMs": 127159,
+          "endMs": 127239
+        },
+        {
+          "text": "w9",
+          "startMs": 127259,
+          "endMs": 127539
+        },
+        {
+          "text": "w10",
+          "startMs": 127599,
+          "endMs": 128259
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-12",
+      "startMs": 131739,
+      "endMs": 132219,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 131739,
+          "endMs": 132219
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-13",
+      "startMs": 144923,
+      "endMs": 147323,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 144923,
+          "endMs": 145043
+        },
+        {
+          "text": "w1",
+          "startMs": 145083,
+          "endMs": 145263
+        },
+        {
+          "text": "w2",
+          "startMs": 145303,
+          "endMs": 145363
+        },
+        {
+          "text": "w3",
+          "startMs": 145403,
+          "endMs": 145503
+        },
+        {
+          "text": "w4",
+          "startMs": 145543,
+          "endMs": 145963
+        },
+        {
+          "text": "w5",
+          "startMs": 146123,
+          "endMs": 146343
+        },
+        {
+          "text": "w6",
+          "startMs": 146403,
+          "endMs": 146883
+        },
+        {
+          "text": "w7",
+          "startMs": 146923,
+          "endMs": 147323
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-14",
+      "startMs": 170663,
+      "endMs": 177363,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 170663,
+          "endMs": 171063
+        },
+        {
+          "text": "w1",
+          "startMs": 174543,
+          "endMs": 175043
+        },
+        {
+          "text": "w2",
+          "startMs": 175083,
+          "endMs": 175143
+        },
+        {
+          "text": "w3",
+          "startMs": 175223,
+          "endMs": 175643
+        },
+        {
+          "text": "w4",
+          "startMs": 175763,
+          "endMs": 175883
+        },
+        {
+          "text": "w5",
+          "startMs": 175983,
+          "endMs": 176263
+        },
+        {
+          "text": "w6",
+          "startMs": 176303,
+          "endMs": 176503
+        },
+        {
+          "text": "w7",
+          "startMs": 176543,
+          "endMs": 176603
+        },
+        {
+          "text": "w8",
+          "startMs": 176643,
+          "endMs": 176723
+        },
+        {
+          "text": "w9",
+          "startMs": 176763,
+          "endMs": 176963
+        },
+        {
+          "text": "w10",
+          "startMs": 177063,
+          "endMs": 177363
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-15",
+      "startMs": 179643,
+      "endMs": 189043,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 179643,
+          "endMs": 179843
+        },
+        {
+          "text": "w1",
+          "startMs": 179883,
+          "endMs": 180023
+        },
+        {
+          "text": "w2",
+          "startMs": 180163,
+          "endMs": 180603
+        },
+        {
+          "text": "w3",
+          "startMs": 180743,
+          "endMs": 180923
+        },
+        {
+          "text": "w4",
+          "startMs": 181203,
+          "endMs": 181823
+        },
+        {
+          "text": "w5",
+          "startMs": 181883,
+          "endMs": 181983
+        },
+        {
+          "text": "w6",
+          "startMs": 182023,
+          "endMs": 182123
+        },
+        {
+          "text": "w7",
+          "startMs": 182283,
+          "endMs": 182883
+        },
+        {
+          "text": "w8",
+          "startMs": 183703,
+          "endMs": 183863
+        },
+        {
+          "text": "w9",
+          "startMs": 183963,
+          "endMs": 184203
+        },
+        {
+          "text": "w10",
+          "startMs": 184363,
+          "endMs": 185103
+        },
+        {
+          "text": "w11",
+          "startMs": 185143,
+          "endMs": 186163
+        },
+        {
+          "text": "w12",
+          "startMs": 186643,
+          "endMs": 186923
+        },
+        {
+          "text": "w13",
+          "startMs": 186983,
+          "endMs": 187203
+        },
+        {
+          "text": "w14",
+          "startMs": 187263,
+          "endMs": 187403
+        },
+        {
+          "text": "w15",
+          "startMs": 187443,
+          "endMs": 187743
+        },
+        {
+          "text": "w16",
+          "startMs": 187843,
+          "endMs": 187863
+        },
+        {
+          "text": "w17",
+          "startMs": 187903,
+          "endMs": 188063
+        },
+        {
+          "text": "w18",
+          "startMs": 188103,
+          "endMs": 188423
+        },
+        {
+          "text": "w19",
+          "startMs": 188463,
+          "endMs": 188543
+        },
+        {
+          "text": "w20",
+          "startMs": 188623,
+          "endMs": 189043
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-16",
+      "startMs": 194443,
+      "endMs": 195843,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 194443,
+          "endMs": 194663
+        },
+        {
+          "text": "w1",
+          "startMs": 194703,
+          "endMs": 195023
+        },
+        {
+          "text": "w2",
+          "startMs": 195063,
+          "endMs": 195303
+        },
+        {
+          "text": "w3",
+          "startMs": 195363,
+          "endMs": 195423
+        },
+        {
+          "text": "w4",
+          "startMs": 195483,
+          "endMs": 195543
+        },
+        {
+          "text": "w5",
+          "startMs": 195703,
+          "endMs": 195843
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-17",
+      "startMs": 201163,
+      "endMs": 201543,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 201163,
+          "endMs": 201543
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-18",
+      "startMs": 207131,
+      "endMs": 208211,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 207131,
+          "endMs": 207211
+        },
+        {
+          "text": "w1",
+          "startMs": 207251,
+          "endMs": 207371
+        },
+        {
+          "text": "w2",
+          "startMs": 207431,
+          "endMs": 207551
+        },
+        {
+          "text": "w3",
+          "startMs": 207591,
+          "endMs": 207651
+        },
+        {
+          "text": "w4",
+          "startMs": 207691,
+          "endMs": 207831
+        },
+        {
+          "text": "w5",
+          "startMs": 207871,
+          "endMs": 208211
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-19",
+      "startMs": 213351,
+      "endMs": 220331,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 213351,
+          "endMs": 213391
+        },
+        {
+          "text": "w1",
+          "startMs": 213411,
+          "endMs": 213491
+        },
+        {
+          "text": "w2",
+          "startMs": 213511,
+          "endMs": 213571
+        },
+        {
+          "text": "w3",
+          "startMs": 213591,
+          "endMs": 213691
+        },
+        {
+          "text": "w4",
+          "startMs": 213751,
+          "endMs": 213911
+        },
+        {
+          "text": "w5",
+          "startMs": 213971,
+          "endMs": 214211
+        },
+        {
+          "text": "w6",
+          "startMs": 214511,
+          "endMs": 214571
+        },
+        {
+          "text": "w7",
+          "startMs": 214611,
+          "endMs": 214711
+        },
+        {
+          "text": "w8",
+          "startMs": 214771,
+          "endMs": 214951
+        },
+        {
+          "text": "w9",
+          "startMs": 214991,
+          "endMs": 215171
+        },
+        {
+          "text": "w10",
+          "startMs": 215331,
+          "endMs": 215671
+        },
+        {
+          "text": "w11",
+          "startMs": 216731,
+          "endMs": 217051
+        },
+        {
+          "text": "w12",
+          "startMs": 217111,
+          "endMs": 217911
+        },
+        {
+          "text": "w13",
+          "startMs": 218351,
+          "endMs": 218711
+        },
+        {
+          "text": "w14",
+          "startMs": 218771,
+          "endMs": 219051
+        },
+        {
+          "text": "w15",
+          "startMs": 219131,
+          "endMs": 219311
+        },
+        {
+          "text": "w16",
+          "startMs": 219411,
+          "endMs": 219651
+        },
+        {
+          "text": "w17",
+          "startMs": 219691,
+          "endMs": 219771
+        },
+        {
+          "text": "w18",
+          "startMs": 219991,
+          "endMs": 220331
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-20",
+      "startMs": 225051,
+      "endMs": 226771,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 225051,
+          "endMs": 225151
+        },
+        {
+          "text": "w1",
+          "startMs": 225191,
+          "endMs": 225451
+        },
+        {
+          "text": "w2",
+          "startMs": 225511,
+          "endMs": 225770
+        },
+        {
+          "text": "w3",
+          "startMs": 226431,
+          "endMs": 226771
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-21",
+      "startMs": 228807,
+      "endMs": 237867,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 228807,
+          "endMs": 228867
+        },
+        {
+          "text": "w1",
+          "startMs": 228907,
+          "endMs": 229007
+        },
+        {
+          "text": "w2",
+          "startMs": 229047,
+          "endMs": 229127
+        },
+        {
+          "text": "w3",
+          "startMs": 229187,
+          "endMs": 229427
+        },
+        {
+          "text": "w4",
+          "startMs": 229467,
+          "endMs": 229547
+        },
+        {
+          "text": "w5",
+          "startMs": 229587,
+          "endMs": 229747
+        },
+        {
+          "text": "w6",
+          "startMs": 229787,
+          "endMs": 229887
+        },
+        {
+          "text": "w7",
+          "startMs": 229927,
+          "endMs": 230127
+        },
+        {
+          "text": "w8",
+          "startMs": 230207,
+          "endMs": 230627
+        },
+        {
+          "text": "w9",
+          "startMs": 232547,
+          "endMs": 232667
+        },
+        {
+          "text": "w10",
+          "startMs": 232727,
+          "endMs": 232947
+        },
+        {
+          "text": "w11",
+          "startMs": 233007,
+          "endMs": 233147
+        },
+        {
+          "text": "w12",
+          "startMs": 233187,
+          "endMs": 233267
+        },
+        {
+          "text": "w13",
+          "startMs": 233307,
+          "endMs": 233387
+        },
+        {
+          "text": "w14",
+          "startMs": 233427,
+          "endMs": 233607
+        },
+        {
+          "text": "w15",
+          "startMs": 233667,
+          "endMs": 233947
+        },
+        {
+          "text": "w16",
+          "startMs": 234387,
+          "endMs": 234547
+        },
+        {
+          "text": "w17",
+          "startMs": 234587,
+          "endMs": 234847
+        },
+        {
+          "text": "w18",
+          "startMs": 235007,
+          "endMs": 235307
+        },
+        {
+          "text": "w19",
+          "startMs": 235367,
+          "endMs": 235527
+        },
+        {
+          "text": "w20",
+          "startMs": 235587,
+          "endMs": 235947
+        },
+        {
+          "text": "w21",
+          "startMs": 236027,
+          "endMs": 236127
+        },
+        {
+          "text": "w22",
+          "startMs": 236207,
+          "endMs": 236307
+        },
+        {
+          "text": "w23",
+          "startMs": 236347,
+          "endMs": 236487
+        },
+        {
+          "text": "w24",
+          "startMs": 236527,
+          "endMs": 236827
+        },
+        {
+          "text": "w25",
+          "startMs": 236867,
+          "endMs": 236907
+        },
+        {
+          "text": "w26",
+          "startMs": 236947,
+          "endMs": 237227
+        },
+        {
+          "text": "w27",
+          "startMs": 237267,
+          "endMs": 237367
+        },
+        {
+          "text": "w28",
+          "startMs": 237447,
+          "endMs": 237527
+        },
+        {
+          "text": "w29",
+          "startMs": 237587,
+          "endMs": 237867
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-22",
+      "startMs": 317287,
+      "endMs": 318047,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 317287,
+          "endMs": 317407
+        },
+        {
+          "text": "w1",
+          "startMs": 317687,
+          "endMs": 318047
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-23",
+      "startMs": 322487,
+      "endMs": 323587,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 322487,
+          "endMs": 322547
+        },
+        {
+          "text": "w1",
+          "startMs": 322587,
+          "endMs": 322867
+        },
+        {
+          "text": "w2",
+          "startMs": 322967,
+          "endMs": 323067
+        },
+        {
+          "text": "w3",
+          "startMs": 323127,
+          "endMs": 323287
+        },
+        {
+          "text": "w4",
+          "startMs": 323327,
+          "endMs": 323587
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    }
+  ]
+}

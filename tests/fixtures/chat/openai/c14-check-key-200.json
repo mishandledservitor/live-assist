@@ -1,0 +1,8 @@
+{
+  "description": "C14: key check GET /v1/models succeeds",
+  "status": 200,
+  "headers": {
+    "content-type": "application/json"
+  },
+  "body": "{\"object\":\"list\",\"data\":[{\"id\":\"gpt-6-luna\",\"object\":\"model\",\"created\":1791000000,\"owned_by\":\"openai\"}]}"
+}

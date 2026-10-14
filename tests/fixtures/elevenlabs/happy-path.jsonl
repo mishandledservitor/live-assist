@@ -1,0 +1,10 @@
+{"at":0,"dir":"in","msg":{"message_type":"session_started","session_id":"sess-fixture-1","config":{"model_id":"scribe_v2_realtime","audio_format":"pcm_16000","commit_strategy":"vad","include_timestamps":true,"include_language_detection":true}}}
+{"at":100,"dir":"out","msg":{"message_type":"input_audio_chunk","audio_base_64":"<100 ms PCM16 frame>","commit":false,"sample_rate":16000}}
+{"at":2100,"dir":"in","msg":{"message_type":"partial_transcript","text":"Hello"}}
+{"at":2400,"dir":"in","msg":{"message_type":"partial_transcript","text":"Hello every"}}
+{"at":2600,"dir":"in","msg":{"message_type":"partial_transcript","text":""}}
+{"at":3000,"dir":"in","msg":{"message_type":"committed_transcript","text":"Hello everyone."}}
+{"at":3050,"dir":"in","msg":{"message_type":"committed_transcript_with_timestamps","text":"Hello everyone.","language_code":"en","words":[{"text":"Hello","start":2.1,"end":2.4,"type":"word","logprob":-0.05},{"text":" ","start":2.4,"end":2.45,"type":"spacing","logprob":0},{"text":"everyone.","start":2.45,"end":2.9,"type":"word","logprob":-0.1}]}}
+{"at":4200,"dir":"in","msg":{"message_type":"partial_transcript","text":"Καλημέρα"}}
+{"at":5000,"dir":"in","msg":{"message_type":"committed_transcript","text":"Καλημέρα σε όλους."}}
+{"at":5040,"dir":"in","msg":{"message_type":"committed_transcript_with_timestamps","text":"Καλημέρα σε όλους.","language_code":"el","words":[{"text":"Καλημέρα","start":4.1,"end":4.5,"type":"word","logprob":-0.2},{"text":" ","start":4.5,"end":4.52,"type":"spacing","logprob":0},{"text":"σε","start":4.52,"end":4.6,"type":"word","logprob":-0.1},{"text":" ","start":4.6,"end":4.62,"type":"spacing","logprob":0},{"text":"όλους.","start":4.62,"end":4.95,"type":"word","logprob":-0.15}]}}

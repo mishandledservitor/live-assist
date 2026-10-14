@@ -1,0 +1,882 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    {
+      "turnKey": "p4:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        3500,
+        3900,
+        4200,
+        4650,
+        5000,
+        5500,
+        5900,
+        6200,
+        6750,
+        7150,
+        7450,
+        7900,
+        8250,
+        8750,
+        9150,
+        9450,
+        10000,
+        10400,
+        10700,
+        11150,
+        11500,
+        12000,
+        12400,
+        12700,
+        13250,
+        13650,
+        13950,
+        14400,
+        14750,
+        15250,
+        15650,
+        15950,
+        16500,
+        16900,
+        17200,
+        17650,
+        18000,
+        18500,
+        18900,
+        19200,
+        19750,
+        20150,
+        20450,
+        20900,
+        21250,
+        21750,
+        22150,
+        22450,
+        22500
+      ]
+    },
+    {
+      "turnKey": "p4:2",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        23000,
+        23500,
+        23900,
+        24200,
+        24750,
+        25150,
+        25450,
+        25900,
+        26250,
+        26750,
+        27150,
+        27450,
+        28000,
+        28400,
+        28700,
+        29150,
+        29500,
+        30000,
+        30400,
+        30700,
+        31000
+      ]
+    },
+    {
+      "turnKey": "p4:3",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        32200,
+        32500,
+        33050,
+        33450,
+        33750,
+        34200,
+        34550,
+        35050,
+        35450,
+        35750,
+        36300,
+        36700,
+        37000,
+        37450,
+        37800,
+        38200
+      ]
+    },
+    {
+      "turnKey": "p4:4",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        39500,
+        39900,
+        40200,
+        40650,
+        41000,
+        41500,
+        41900,
+        42200,
+        42750,
+        43150,
+        43450,
+        43900,
+        44250,
+        44750,
+        45150,
+        45450,
+        46000,
+        46400,
+        46700,
+        47150,
+        47500,
+        48000,
+        48400,
+        48700,
+        49250,
+        49650,
+        49950,
+        50400,
+        50750,
+        51250,
+        51650,
+        51950,
+        52500
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "monologue-caption-lag-2s:mixed:0",
+      "startMs": 1000,
+      "endMs": 5980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1300
+        },
+        {
+          "text": "w1",
+          "startMs": 1360,
+          "endMs": 1660
+        },
+        {
+          "text": "w2",
+          "startMs": 1720,
+          "endMs": 2020
+        },
+        {
+          "text": "w3",
+          "startMs": 2080,
+          "endMs": 2380
+        },
+        {
+          "text": "w4",
+          "startMs": 2440,
+          "endMs": 2740
+        },
+        {
+          "text": "w5",
+          "startMs": 2800,
+          "endMs": 3100
+        },
+        {
+          "text": "w6",
+          "startMs": 3160,
+          "endMs": 3460
+        },
+        {
+          "text": "w7",
+          "startMs": 3520,
+          "endMs": 3820
+        },
+        {
+          "text": "w8",
+          "startMs": 3880,
+          "endMs": 4180
+        },
+        {
+          "text": "w9",
+          "startMs": 4240,
+          "endMs": 4540
+        },
+        {
+          "text": "w10",
+          "startMs": 4600,
+          "endMs": 4900
+        },
+        {
+          "text": "w11",
+          "startMs": 4960,
+          "endMs": 5260
+        },
+        {
+          "text": "w12",
+          "startMs": 5320,
+          "endMs": 5620
+        },
+        {
+          "text": "w13",
+          "startMs": 5680,
+          "endMs": 5980
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:1",
+      "startMs": 6000,
+      "endMs": 10980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 6000,
+          "endMs": 6300
+        },
+        {
+          "text": "w1",
+          "startMs": 6360,
+          "endMs": 6660
+        },
+        {
+          "text": "w2",
+          "startMs": 6720,
+          "endMs": 7020
+        },
+        {
+          "text": "w3",
+          "startMs": 7080,
+          "endMs": 7380
+        },
+        {
+          "text": "w4",
+          "startMs": 7440,
+          "endMs": 7740
+        },
+        {
+          "text": "w5",
+          "startMs": 7800,
+          "endMs": 8100
+        },
+        {
+          "text": "w6",
+          "startMs": 8160,
+          "endMs": 8460
+        },
+        {
+          "text": "w7",
+          "startMs": 8520,
+          "endMs": 8820
+        },
+        {
+          "text": "w8",
+          "startMs": 8880,
+          "endMs": 9180
+        },
+        {
+          "text": "w9",
+          "startMs": 9240,
+          "endMs": 9540
+        },
+        {
+          "text": "w10",
+          "startMs": 9600,
+          "endMs": 9900
+        },
+        {
+          "text": "w11",
+          "startMs": 9960,
+          "endMs": 10260
+        },
+        {
+          "text": "w12",
+          "startMs": 10320,
+          "endMs": 10620
+        },
+        {
+          "text": "w13",
+          "startMs": 10680,
+          "endMs": 10980
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:2",
+      "startMs": 11000,
+      "endMs": 15980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 11000,
+          "endMs": 11300
+        },
+        {
+          "text": "w1",
+          "startMs": 11360,
+          "endMs": 11660
+        },
+        {
+          "text": "w2",
+          "startMs": 11720,
+          "endMs": 12020
+        },
+        {
+          "text": "w3",
+          "startMs": 12080,
+          "endMs": 12380
+        },
+        {
+          "text": "w4",
+          "startMs": 12440,
+          "endMs": 12740
+        },
+        {
+          "text": "w5",
+          "startMs": 12800,
+          "endMs": 13100
+        },
+        {
+          "text": "w6",
+          "startMs": 13160,
+          "endMs": 13460
+        },
+        {
+          "text": "w7",
+          "startMs": 13520,
+          "endMs": 13820
+        },
+        {
+          "text": "w8",
+          "startMs": 13880,
+          "endMs": 14180
+        },
+        {
+          "text": "w9",
+          "startMs": 14240,
+          "endMs": 14540
+        },
+        {
+          "text": "w10",
+          "startMs": 14600,
+          "endMs": 14900
+        },
+        {
+          "text": "w11",
+          "startMs": 14960,
+          "endMs": 15260
+        },
+        {
+          "text": "w12",
+          "startMs": 15320,
+          "endMs": 15620
+        },
+        {
+          "text": "w13",
+          "startMs": 15680,
+          "endMs": 15980
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:3",
+      "startMs": 16000,
+      "endMs": 19900,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 16000,
+          "endMs": 16300
+        },
+        {
+          "text": "w1",
+          "startMs": 16360,
+          "endMs": 16660
+        },
+        {
+          "text": "w2",
+          "startMs": 16720,
+          "endMs": 17020
+        },
+        {
+          "text": "w3",
+          "startMs": 17080,
+          "endMs": 17380
+        },
+        {
+          "text": "w4",
+          "startMs": 17440,
+          "endMs": 17740
+        },
+        {
+          "text": "w5",
+          "startMs": 17800,
+          "endMs": 18100
+        },
+        {
+          "text": "w6",
+          "startMs": 18160,
+          "endMs": 18460
+        },
+        {
+          "text": "w7",
+          "startMs": 18520,
+          "endMs": 18820
+        },
+        {
+          "text": "w8",
+          "startMs": 18880,
+          "endMs": 19180
+        },
+        {
+          "text": "w9",
+          "startMs": 19240,
+          "endMs": 19540
+        },
+        {
+          "text": "w10",
+          "startMs": 19600,
+          "endMs": 19900
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:4",
+      "startMs": 21000,
+      "endMs": 24900,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 21000,
+          "endMs": 21300
+        },
+        {
+          "text": "w1",
+          "startMs": 21360,
+          "endMs": 21660
+        },
+        {
+          "text": "w2",
+          "startMs": 21720,
+          "endMs": 22020
+        },
+        {
+          "text": "w3",
+          "startMs": 22080,
+          "endMs": 22380
+        },
+        {
+          "text": "w4",
+          "startMs": 22440,
+          "endMs": 22740
+        },
+        {
+          "text": "w5",
+          "startMs": 22800,
+          "endMs": 23100
+        },
+        {
+          "text": "w6",
+          "startMs": 23160,
+          "endMs": 23460
+        },
+        {
+          "text": "w7",
+          "startMs": 23520,
+          "endMs": 23820
+        },
+        {
+          "text": "w8",
+          "startMs": 23880,
+          "endMs": 24180
+        },
+        {
+          "text": "w9",
+          "startMs": 24240,
+          "endMs": 24540
+        },
+        {
+          "text": "w10",
+          "startMs": 24600,
+          "endMs": 24900
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:5",
+      "startMs": 25000,
+      "endMs": 28900,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 25000,
+          "endMs": 25300
+        },
+        {
+          "text": "w1",
+          "startMs": 25360,
+          "endMs": 25660
+        },
+        {
+          "text": "w2",
+          "startMs": 25720,
+          "endMs": 26020
+        },
+        {
+          "text": "w3",
+          "startMs": 26080,
+          "endMs": 26380
+        },
+        {
+          "text": "w4",
+          "startMs": 26440,
+          "endMs": 26740
+        },
+        {
+          "text": "w5",
+          "startMs": 26800,
+          "endMs": 27100
+        },
+        {
+          "text": "w6",
+          "startMs": 27160,
+          "endMs": 27460
+        },
+        {
+          "text": "w7",
+          "startMs": 27520,
+          "endMs": 27820
+        },
+        {
+          "text": "w8",
+          "startMs": 27880,
+          "endMs": 28180
+        },
+        {
+          "text": "w9",
+          "startMs": 28240,
+          "endMs": 28540
+        },
+        {
+          "text": "w10",
+          "startMs": 28600,
+          "endMs": 28900
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:6",
+      "startMs": 30000,
+      "endMs": 32820,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 30000,
+          "endMs": 30300
+        },
+        {
+          "text": "w1",
+          "startMs": 30360,
+          "endMs": 30660
+        },
+        {
+          "text": "w2",
+          "startMs": 30720,
+          "endMs": 31020
+        },
+        {
+          "text": "w3",
+          "startMs": 31080,
+          "endMs": 31380
+        },
+        {
+          "text": "w4",
+          "startMs": 31440,
+          "endMs": 31740
+        },
+        {
+          "text": "w5",
+          "startMs": 31800,
+          "endMs": 32100
+        },
+        {
+          "text": "w6",
+          "startMs": 32160,
+          "endMs": 32460
+        },
+        {
+          "text": "w7",
+          "startMs": 32520,
+          "endMs": 32820
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:7",
+      "startMs": 33000,
+      "endMs": 35820,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 33000,
+          "endMs": 33300
+        },
+        {
+          "text": "w1",
+          "startMs": 33360,
+          "endMs": 33660
+        },
+        {
+          "text": "w2",
+          "startMs": 33720,
+          "endMs": 34020
+        },
+        {
+          "text": "w3",
+          "startMs": 34080,
+          "endMs": 34380
+        },
+        {
+          "text": "w4",
+          "startMs": 34440,
+          "endMs": 34740
+        },
+        {
+          "text": "w5",
+          "startMs": 34800,
+          "endMs": 35100
+        },
+        {
+          "text": "w6",
+          "startMs": 35160,
+          "endMs": 35460
+        },
+        {
+          "text": "w7",
+          "startMs": 35520,
+          "endMs": 35820
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:8",
+      "startMs": 37000,
+      "endMs": 43420,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 37000,
+          "endMs": 37300
+        },
+        {
+          "text": "w1",
+          "startMs": 37360,
+          "endMs": 37660
+        },
+        {
+          "text": "w2",
+          "startMs": 37720,
+          "endMs": 38020
+        },
+        {
+          "text": "w3",
+          "startMs": 38080,
+          "endMs": 38380
+        },
+        {
+          "text": "w4",
+          "startMs": 38440,
+          "endMs": 38740
+        },
+        {
+          "text": "w5",
+          "startMs": 38800,
+          "endMs": 39100
+        },
+        {
+          "text": "w6",
+          "startMs": 39160,
+          "endMs": 39460
+        },
+        {
+          "text": "w7",
+          "startMs": 39520,
+          "endMs": 39820
+        },
+        {
+          "text": "w8",
+          "startMs": 39880,
+          "endMs": 40180
+        },
+        {
+          "text": "w9",
+          "startMs": 40240,
+          "endMs": 40540
+        },
+        {
+          "text": "w10",
+          "startMs": 40600,
+          "endMs": 40900
+        },
+        {
+          "text": "w11",
+          "startMs": 40960,
+          "endMs": 41260
+        },
+        {
+          "text": "w12",
+          "startMs": 41320,
+          "endMs": 41620
+        },
+        {
+          "text": "w13",
+          "startMs": 41680,
+          "endMs": 41980
+        },
+        {
+          "text": "w14",
+          "startMs": 42040,
+          "endMs": 42340
+        },
+        {
+          "text": "w15",
+          "startMs": 42400,
+          "endMs": 42700
+        },
+        {
+          "text": "w16",
+          "startMs": 42760,
+          "endMs": 43060
+        },
+        {
+          "text": "w17",
+          "startMs": 43120,
+          "endMs": 43420
+        }
+      ]
+    },
+    {
+      "id": "monologue-caption-lag-2s:mixed:9",
+      "startMs": 43500,
+      "endMs": 49920,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 43500,
+          "endMs": 43800
+        },
+        {
+          "text": "w1",
+          "startMs": 43860,
+          "endMs": 44160
+        },
+        {
+          "text": "w2",
+          "startMs": 44220,
+          "endMs": 44520
+        },
+        {
+          "text": "w3",
+          "startMs": 44580,
+          "endMs": 44880
+        },
+        {
+          "text": "w4",
+          "startMs": 44940,
+          "endMs": 45240
+        },
+        {
+          "text": "w5",
+          "startMs": 45300,
+          "endMs": 45600
+        },
+        {
+          "text": "w6",
+          "startMs": 45660,
+          "endMs": 45960
+        },
+        {
+          "text": "w7",
+          "startMs": 46020,
+          "endMs": 46320
+        },
+        {
+          "text": "w8",
+          "startMs": 46380,
+          "endMs": 46680
+        },
+        {
+          "text": "w9",
+          "startMs": 46740,
+          "endMs": 47040
+        },
+        {
+          "text": "w10",
+          "startMs": 47100,
+          "endMs": 47400
+        },
+        {
+          "text": "w11",
+          "startMs": 47460,
+          "endMs": 47760
+        },
+        {
+          "text": "w12",
+          "startMs": 47820,
+          "endMs": 48120
+        },
+        {
+          "text": "w13",
+          "startMs": 48180,
+          "endMs": 48480
+        },
+        {
+          "text": "w14",
+          "startMs": 48540,
+          "endMs": 48840
+        },
+        {
+          "text": "w15",
+          "startMs": 48900,
+          "endMs": 49200
+        },
+        {
+          "text": "w16",
+          "startMs": 49260,
+          "endMs": 49560
+        },
+        {
+          "text": "w17",
+          "startMs": 49620,
+          "endMs": 49920
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "monologue-caption-lag-2s:mixed:0": "Emma Jones",
+    "monologue-caption-lag-2s:mixed:1": "Emma Jones",
+    "monologue-caption-lag-2s:mixed:2": "Emma Jones",
+    "monologue-caption-lag-2s:mixed:3": "Emma Jones",
+    "monologue-caption-lag-2s:mixed:4": "Tom Brown",
+    "monologue-caption-lag-2s:mixed:5": "Tom Brown",
+    "monologue-caption-lag-2s:mixed:6": "$user",
+    "monologue-caption-lag-2s:mixed:7": "$user",
+    "monologue-caption-lag-2s:mixed:8": "Emma Jones",
+    "monologue-caption-lag-2s:mixed:9": "Emma Jones"
+  }
+}

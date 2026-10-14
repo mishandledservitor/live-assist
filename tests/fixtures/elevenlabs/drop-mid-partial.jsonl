@@ -1,0 +1,3 @@
+{"at":0,"dir":"in","msg":{"message_type":"session_started","session_id":"sess-fixture-drop","config":{"model_id":"scribe_v2_realtime"}}}
+{"at":2100,"dir":"in","msg":{"message_type":"partial_transcript","text":"we were talking about"}}
+{"at":2500,"dir":"close","msg":{"code":1006}}

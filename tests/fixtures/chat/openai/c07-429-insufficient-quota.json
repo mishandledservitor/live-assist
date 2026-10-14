@@ -1,0 +1,9 @@
+{
+  "description": "C7: HTTP 429 insufficient_quota → billing",
+  "status": 429,
+  "headers": {
+    "content-type": "application/json",
+    "x-request-id": "req_fixture_01"
+  },
+  "body": "{\"error\":{\"message\":\"You exceeded your current quota, please check your plan and billing details.\",\"type\":\"insufficient_quota\",\"param\":null,\"code\":\"insufficient_quota\"}}"
+}

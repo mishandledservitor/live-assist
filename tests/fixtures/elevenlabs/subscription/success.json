@@ -1,0 +1,20 @@
+{
+  "status": 200,
+  "body": {
+    "tier": "creator",
+    "character_count": 19360,
+    "character_limit": 121000,
+    "next_character_count_reset_unix": 1792454400,
+    "status": "active",
+    "voice_slots_used": 3,
+    "voice_limit": 30,
+    "professional_voice_limit": 1,
+    "can_extend_character_limit": true,
+    "allowed_to_extend_character_limit": true,
+    "currency": "usd",
+    "billing_period": "monthly_period",
+    "character_refresh_period": "monthly_period",
+    "has_open_invoices": false,
+    "open_invoices": []
+  }
+}

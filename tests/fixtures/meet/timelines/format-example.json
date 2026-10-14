@@ -1,0 +1,33 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    { "turnKey": "p1:1", "speakerName": "Emma Jones", "self": null, "observedAtMs": [1400, 1900, 2600, 3300] },
+    { "turnKey": "p1:2", "speakerName": "You", "self": true, "observedAtMs": [5400, 6100, 6900] }
+  ],
+  "segments": [
+    {
+      "id": "fixture:mixed:0",
+      "startMs": 1000,
+      "endMs": 3000,
+      "timing": "words",
+      "words": [
+        { "text": "Kickoff", "startMs": 1000, "endMs": 1500 },
+        { "text": "is", "startMs": 1500, "endMs": 1700 },
+        { "text": "tomorrow.", "startMs": 1700, "endMs": 3000 }
+      ]
+    },
+    {
+      "id": "fixture:mixed:1",
+      "startMs": 5000,
+      "endMs": 6800,
+      "timing": "words",
+      "words": [
+        { "text": "I'll", "startMs": 5000, "endMs": 5300 },
+        { "text": "post", "startMs": 5300, "endMs": 5800 },
+        { "text": "notes.", "startMs": 5800, "endMs": 6800 }
+      ]
+    }
+  ],
+  "expected": { "fixture:mixed:0": "Emma Jones", "fixture:mixed:1": "$user" }
+}

@@ -1,0 +1,169 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Alex Doe",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2300,
+        2800,
+        3300,
+        3800,
+        4300
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        7300,
+        7800,
+        8300,
+        8800,
+        9300
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "Alex  Doe",
+      "self": null,
+      "observedAtMs": [
+        12300,
+        12800,
+        13300,
+        13800,
+        14300
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "same:mixed:0",
+      "startMs": 1000,
+      "endMs": 4000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1429
+        },
+        {
+          "text": "w1",
+          "startMs": 1429,
+          "endMs": 1857
+        },
+        {
+          "text": "w2",
+          "startMs": 1857,
+          "endMs": 2286
+        },
+        {
+          "text": "w3",
+          "startMs": 2286,
+          "endMs": 2714
+        },
+        {
+          "text": "w4",
+          "startMs": 2714,
+          "endMs": 3143
+        },
+        {
+          "text": "w5",
+          "startMs": 3143,
+          "endMs": 3571
+        },
+        {
+          "text": "w6",
+          "startMs": 3571,
+          "endMs": 4000
+        }
+      ]
+    },
+    {
+      "id": "same:mixed:1",
+      "startMs": 6500,
+      "endMs": 9000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 6500,
+          "endMs": 6917
+        },
+        {
+          "text": "w1",
+          "startMs": 6917,
+          "endMs": 7333
+        },
+        {
+          "text": "w2",
+          "startMs": 7333,
+          "endMs": 7750
+        },
+        {
+          "text": "w3",
+          "startMs": 7750,
+          "endMs": 8167
+        },
+        {
+          "text": "w4",
+          "startMs": 8167,
+          "endMs": 8583
+        },
+        {
+          "text": "w5",
+          "startMs": 8583,
+          "endMs": 9000
+        }
+      ]
+    },
+    {
+      "id": "same:mixed:2",
+      "startMs": 11500,
+      "endMs": 14000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 11500,
+          "endMs": 11917
+        },
+        {
+          "text": "w1",
+          "startMs": 11917,
+          "endMs": 12333
+        },
+        {
+          "text": "w2",
+          "startMs": 12333,
+          "endMs": 12750
+        },
+        {
+          "text": "w3",
+          "startMs": 12750,
+          "endMs": 13167
+        },
+        {
+          "text": "w4",
+          "startMs": 13167,
+          "endMs": 13583
+        },
+        {
+          "text": "w5",
+          "startMs": 13583,
+          "endMs": 14000
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "same:mixed:0": "Alex Doe",
+    "same:mixed:1": "Tom Brown",
+    "same:mixed:2": "Alex Doe"
+  }
+}

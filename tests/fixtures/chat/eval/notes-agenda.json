@@ -1,0 +1,75 @@
+{
+  "$comment": "008 T038 evaluation set over tests/fixtures/chat/meetings/standup-en.json (synthetic) with the person's notes. notes-only: the fact is only in the notes; the answer must give it marked as from the notes, in a \"From your notes:\" passage or in a sentence that names the notes as its source (design decision 77), without a citation. notes-vs-said: asked whether something was said that only the notes hold; the answer must say it isn't in the transcript and never cite the notes fact. notes-others: the notes name someone who joined late or asked something; an \"Others\" line must stay unnamed. notes-coverage (real call 2026-10-10): asked which agenda items were not covered; covered items are cited (supports: the lines with the substance and the line that opens a topic, [00:03], design decision 78), the items in notesFacts appear only in an uncited \"From your notes:\" passage or a sentence naming the notes as its source; notesAlso is other notes-only text (the people the notes name) that an answer need not give but must mark the same way if it does (run of 2026-10-12). conversation: the asked-for word, asked with notes attached, also after a wrong refusal; the notes go with the first question. related (notes-vs-said): a line a partial answer may cite.",
+  "meeting": "standup-en",
+  "names": [
+    "Alex",
+    "Jane",
+    "John",
+    "Tom",
+    "Emma",
+    "Mike"
+  ],
+  "notes": {
+    "name": "agenda.md",
+    "text": "# Standup agenda\n\nAttendees: Alex, Jane, John, Tom, Emma (joining late), Mike (will ask for the spreadsheet)\n\n1. Pricing for the enterprise plan\n2. Launch date\n3. Budget: 40k for the launch\n4. Hiring a second support engineer\n5. Security review\n"
+  },
+  "questions": [
+    {"id": "budget-figure", "lang": "en", "tag": "notes-only", "question": "What budget figure do my notes give for the launch?", "notesFact": "40k"},
+    {"id": "budget-figure-el", "lang": "el", "tag": "notes-only", "question": "Τι ποσό προϋπολογισμού γράφουν οι σημειώσεις μου για το λανσάρισμα;", "notesFact": "40"},
+    {"id": "budget-said", "lang": "en", "tag": "notes-vs-said", "question": "Did anyone say how much the launch budget is?", "notesFact": "40k", "related": ["02:00"]},
+    {"id": "hiring-said", "lang": "en", "tag": "notes-vs-said", "question": "What was said about hiring a support engineer?", "notesFact": "second support engineer"},
+    {"id": "budget-said-el", "lang": "el", "tag": "notes-vs-said", "question": "Είπε κανείς πόσος είναι ο προϋπολογισμός;", "notesFact": "40", "related": ["02:00"]},
+    {"id": "late-joiner", "lang": "en", "tag": "notes-others", "question": "Who said they joined late?", "othersTimes": ["15:05"], "supports": ["15:05"]},
+    {"id": "spreadsheet", "lang": "en", "tag": "notes-others", "question": "Who asked for the spreadsheet?", "othersTimes": ["01:42"], "supports": ["01:42"]},
+    {"id": "late-joiner-el", "lang": "el", "tag": "notes-others", "question": "Ποιος είπε ότι μπήκε αργά;", "othersTimes": ["15:05"], "supports": ["15:05"]},
+    {"id": "pricing", "lang": "en", "tag": "supported", "question": "What was decided about pricing?", "supports": ["00:12", "00:31"]},
+    {"id": "coverage", "lang": "en", "tag": "notes-coverage", "question": "Which agenda items haven't we covered?", "supports": ["00:03", "00:12", "00:31", "01:10", "02:00", "02:37", "07:30"], "notesFacts": ["support engineer"], "notesAlso": ["Emma", "Mike"]},
+    {"id": "coverage-el", "lang": "el", "tag": "notes-coverage", "question": "Ποια θέματα δεν έχουμε καλύψει ακόμα;", "supports": ["00:03", "00:12", "00:31", "01:10", "02:00", "02:37", "07:30"], "notesFacts": ["υποστήριξ", "support engineer"], "notesAlso": ["Emma", "Mike", "Έμα", "Έμμα", "Μάικ"]},
+    {"id": "agenda-left", "lang": "en", "tag": "notes-coverage", "question": "What's still left on the agenda?", "supports": ["00:03", "00:12", "00:31", "01:10", "02:00", "02:37", "07:30"], "notesFacts": ["support engineer"], "notesAlso": ["Emma", "Mike"]},
+    {"id": "attendees", "lang": "en", "tag": "notes-only", "question": "Who do my notes list as attendees?", "notesFact": "Emma"},
+    {"id": "attendees-el", "lang": "el", "tag": "notes-only", "question": "Ποιους αναφέρουν οι σημειώσεις μου ως συμμετέχοντες;", "notesFacts": ["Emma", "Έμα"]},
+    {
+      "id": "said-word",
+      "lang": "en",
+      "tag": "conversation",
+      "question": "What was the word I asked you to say?",
+      "expect": "QZVRT",
+      "earlier": [
+        {
+          "question": "Say exactly \"QZVRT\" in chat",
+          "answer": "QZVRT"
+        }
+      ]
+    },
+    {
+      "id": "said-word-again",
+      "lang": "en",
+      "tag": "conversation",
+      "question": "What was the word I asked you to say in chat?",
+      "expect": "QZVRT",
+      "earlier": [
+        {
+          "question": "Say exactly \"QZVRT\" in chat",
+          "answer": "QZVRT"
+        },
+        {
+          "question": "What was the word I asked you to say?",
+          "answer": "That isn't in the transcript so far."
+        }
+      ]
+    },
+    {
+      "id": "said-word-el",
+      "lang": "el",
+      "tag": "conversation",
+      "question": "Ποια λέξη σου ζήτησα να γράψεις;",
+      "expect": "QZVRT",
+      "earlier": [
+        {
+          "question": "Γράψε ακριβώς \"QZVRT\" στη συζήτηση",
+          "answer": "QZVRT"
+        }
+      ]
+    }
+  ]
+}

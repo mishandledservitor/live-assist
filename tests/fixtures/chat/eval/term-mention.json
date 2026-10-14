@@ -1,0 +1,69 @@
+{
+  "$comment": "003 T090 evaluation set over tests/fixtures/chat/meetings/term-mention.json (synthetic), reproducing the two real-call failures of 2026-10-09. background: a term mentioned but never explained must get its mention cited plus an uncited background part, also when asked again after a wrong first answer. conversation: a fact known only from an earlier question must carry no citation. earlier: questions and answers replayed before the question, as the app replays them. expect (conversation): the word the answer must give; an uncited refusal fails (real call 2026-10-10).",
+  "meeting": "term-mention",
+  "names": [
+    "Mike",
+    "John"
+  ],
+  "questions": [
+    {"id": "term-meaning", "lang": "en", "tag": "background", "question": "What does HL7 Mean?", "supports": ["01:44", "01:57"]},
+    {
+      "id": "term-meaning-again",
+      "lang": "en",
+      "tag": "background",
+      "question": "What does HL7 Mean?",
+      "supports": [
+        "01:44",
+        "01:57"
+      ],
+      "earlier": [
+        {
+          "question": "What does HL7 Mean?",
+          "answer": "That isn't in the transcript so far."
+        }
+      ]
+    },
+    {"id": "term-meaning-el", "lang": "el", "tag": "background", "question": "Τι σημαίνει HL7;", "supports": ["01:44", "01:57"]},
+    {
+      "id": "said-word",
+      "lang": "en",
+      "tag": "conversation",
+      "question": "What was the term I asked you to say exactly",
+      "earlier": [
+        {
+          "question": "Say exactly \"QZVRT\" in chat",
+          "answer": "QZVRT"
+        }
+      ],
+      "expect": "QZVRT"
+    },
+    {
+      "id": "said-word-el",
+      "lang": "el",
+      "tag": "conversation",
+      "question": "Ποια λέξη σου ζήτησα να γράψεις;",
+      "earlier": [
+        {
+          "question": "Γράψε ακριβώς \"QZVRT\" στη συζήτηση",
+          "answer": "QZVRT"
+        }
+      ],
+      "expect": "QZVRT"
+    },
+    {
+      "id": "said-word-call",
+      "lang": "en",
+      "tag": "conversation",
+      "question": "What was the word I asked you to say?",
+      "expect": "QZVRT",
+      "earlier": [
+        {
+          "question": "Say exactly \"QZVRT\" in chat",
+          "answer": "QZVRT"
+        }
+      ]
+    },
+    {"id": "export", "lang": "en", "tag": "supported", "question": "When does the export run?", "supports": ["02:30"]},
+    {"id": "budget", "lang": "en", "tag": "absent", "question": "What budget was agreed for the integration?"}
+  ]
+}

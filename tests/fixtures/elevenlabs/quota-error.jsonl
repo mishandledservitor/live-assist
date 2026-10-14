@@ -1,0 +1,4 @@
+{"at":0,"dir":"in","msg":{"message_type":"session_started","session_id":"sess-fixture-quota","config":{"model_id":"scribe_v2_realtime"}}}
+{"at":2100,"dir":"in","msg":{"message_type":"partial_transcript","text":"and the"}}
+{"at":2200,"dir":"in","msg":{"message_type":"quota_exceeded","error":"Quota exceeded for this account."}}
+{"at":2210,"dir":"close","msg":{"code":1008}}

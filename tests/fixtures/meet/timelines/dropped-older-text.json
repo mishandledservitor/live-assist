@@ -1,0 +1,805 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    {
+      "turnKey": "p3:1",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        2000,
+        2400,
+        2700,
+        3150,
+        3500,
+        4000,
+        4400,
+        4700,
+        5250,
+        5650,
+        5950,
+        6400,
+        6750,
+        7250,
+        7650,
+        7950,
+        8500,
+        8900,
+        9200,
+        9650,
+        10000,
+        10500,
+        10900,
+        11200,
+        11750,
+        12150,
+        12450,
+        12900,
+        13250,
+        13750,
+        14150,
+        14450,
+        15000,
+        15400,
+        15700,
+        16150,
+        16500,
+        17000,
+        17400,
+        17700,
+        22650,
+        23000,
+        23500,
+        23900,
+        24200,
+        24750,
+        25150,
+        25450,
+        25900,
+        26250,
+        26750,
+        27150,
+        27450,
+        28000,
+        28400,
+        28700,
+        29150,
+        29500,
+        30000,
+        30400,
+        30700,
+        31250,
+        31650,
+        31950,
+        32400,
+        32750,
+        33250,
+        33650,
+        33950,
+        34500,
+        34900,
+        35200,
+        35650,
+        36000,
+        36500,
+        36900,
+        37200,
+        37750,
+        38150,
+        38450,
+        38900,
+        39250,
+        39750,
+        40150,
+        40450,
+        41000,
+        41400,
+        41500
+      ]
+    },
+    {
+      "turnKey": "p3:2",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        43000,
+        43300,
+        43850,
+        44250,
+        44550,
+        45000,
+        45350,
+        45850,
+        46250,
+        46550,
+        47100,
+        47500,
+        47800,
+        48250,
+        48500
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "dropped-older-text:mixed:0",
+      "startMs": 500,
+      "endMs": 6920,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 500,
+          "endMs": 800
+        },
+        {
+          "text": "w1",
+          "startMs": 860,
+          "endMs": 1160
+        },
+        {
+          "text": "w2",
+          "startMs": 1220,
+          "endMs": 1520
+        },
+        {
+          "text": "w3",
+          "startMs": 1580,
+          "endMs": 1880
+        },
+        {
+          "text": "w4",
+          "startMs": 1940,
+          "endMs": 2240
+        },
+        {
+          "text": "w5",
+          "startMs": 2300,
+          "endMs": 2600
+        },
+        {
+          "text": "w6",
+          "startMs": 2660,
+          "endMs": 2960
+        },
+        {
+          "text": "w7",
+          "startMs": 3020,
+          "endMs": 3320
+        },
+        {
+          "text": "w8",
+          "startMs": 3380,
+          "endMs": 3680
+        },
+        {
+          "text": "w9",
+          "startMs": 3740,
+          "endMs": 4040
+        },
+        {
+          "text": "w10",
+          "startMs": 4100,
+          "endMs": 4400
+        },
+        {
+          "text": "w11",
+          "startMs": 4460,
+          "endMs": 4760
+        },
+        {
+          "text": "w12",
+          "startMs": 4820,
+          "endMs": 5120
+        },
+        {
+          "text": "w13",
+          "startMs": 5180,
+          "endMs": 5480
+        },
+        {
+          "text": "w14",
+          "startMs": 5540,
+          "endMs": 5840
+        },
+        {
+          "text": "w15",
+          "startMs": 5900,
+          "endMs": 6200
+        },
+        {
+          "text": "w16",
+          "startMs": 6260,
+          "endMs": 6560
+        },
+        {
+          "text": "w17",
+          "startMs": 6620,
+          "endMs": 6920
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:1",
+      "startMs": 7000,
+      "endMs": 13420,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 7000,
+          "endMs": 7300
+        },
+        {
+          "text": "w1",
+          "startMs": 7360,
+          "endMs": 7660
+        },
+        {
+          "text": "w2",
+          "startMs": 7720,
+          "endMs": 8020
+        },
+        {
+          "text": "w3",
+          "startMs": 8080,
+          "endMs": 8380
+        },
+        {
+          "text": "w4",
+          "startMs": 8440,
+          "endMs": 8740
+        },
+        {
+          "text": "w5",
+          "startMs": 8800,
+          "endMs": 9100
+        },
+        {
+          "text": "w6",
+          "startMs": 9160,
+          "endMs": 9460
+        },
+        {
+          "text": "w7",
+          "startMs": 9520,
+          "endMs": 9820
+        },
+        {
+          "text": "w8",
+          "startMs": 9880,
+          "endMs": 10180
+        },
+        {
+          "text": "w9",
+          "startMs": 10240,
+          "endMs": 10540
+        },
+        {
+          "text": "w10",
+          "startMs": 10600,
+          "endMs": 10900
+        },
+        {
+          "text": "w11",
+          "startMs": 10960,
+          "endMs": 11260
+        },
+        {
+          "text": "w12",
+          "startMs": 11320,
+          "endMs": 11620
+        },
+        {
+          "text": "w13",
+          "startMs": 11680,
+          "endMs": 11980
+        },
+        {
+          "text": "w14",
+          "startMs": 12040,
+          "endMs": 12340
+        },
+        {
+          "text": "w15",
+          "startMs": 12400,
+          "endMs": 12700
+        },
+        {
+          "text": "w16",
+          "startMs": 12760,
+          "endMs": 13060
+        },
+        {
+          "text": "w17",
+          "startMs": 13120,
+          "endMs": 13420
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:2",
+      "startMs": 13500,
+      "endMs": 19920,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 13500,
+          "endMs": 13800
+        },
+        {
+          "text": "w1",
+          "startMs": 13860,
+          "endMs": 14160
+        },
+        {
+          "text": "w2",
+          "startMs": 14220,
+          "endMs": 14520
+        },
+        {
+          "text": "w3",
+          "startMs": 14580,
+          "endMs": 14880
+        },
+        {
+          "text": "w4",
+          "startMs": 14940,
+          "endMs": 15240
+        },
+        {
+          "text": "w5",
+          "startMs": 15300,
+          "endMs": 15600
+        },
+        {
+          "text": "w6",
+          "startMs": 15660,
+          "endMs": 15960
+        },
+        {
+          "text": "w7",
+          "startMs": 16020,
+          "endMs": 16320
+        },
+        {
+          "text": "w8",
+          "startMs": 16380,
+          "endMs": 16680
+        },
+        {
+          "text": "w9",
+          "startMs": 16740,
+          "endMs": 17040
+        },
+        {
+          "text": "w10",
+          "startMs": 17100,
+          "endMs": 17400
+        },
+        {
+          "text": "w11",
+          "startMs": 17460,
+          "endMs": 17760
+        },
+        {
+          "text": "w12",
+          "startMs": 17820,
+          "endMs": 18120
+        },
+        {
+          "text": "w13",
+          "startMs": 18180,
+          "endMs": 18480
+        },
+        {
+          "text": "w14",
+          "startMs": 18540,
+          "endMs": 18840
+        },
+        {
+          "text": "w15",
+          "startMs": 18900,
+          "endMs": 19200
+        },
+        {
+          "text": "w16",
+          "startMs": 19260,
+          "endMs": 19560
+        },
+        {
+          "text": "w17",
+          "startMs": 19620,
+          "endMs": 19920
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:3",
+      "startMs": 20000,
+      "endMs": 26420,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 20000,
+          "endMs": 20300
+        },
+        {
+          "text": "w1",
+          "startMs": 20360,
+          "endMs": 20660
+        },
+        {
+          "text": "w2",
+          "startMs": 20720,
+          "endMs": 21020
+        },
+        {
+          "text": "w3",
+          "startMs": 21080,
+          "endMs": 21380
+        },
+        {
+          "text": "w4",
+          "startMs": 21440,
+          "endMs": 21740
+        },
+        {
+          "text": "w5",
+          "startMs": 21800,
+          "endMs": 22100
+        },
+        {
+          "text": "w6",
+          "startMs": 22160,
+          "endMs": 22460
+        },
+        {
+          "text": "w7",
+          "startMs": 22520,
+          "endMs": 22820
+        },
+        {
+          "text": "w8",
+          "startMs": 22880,
+          "endMs": 23180
+        },
+        {
+          "text": "w9",
+          "startMs": 23240,
+          "endMs": 23540
+        },
+        {
+          "text": "w10",
+          "startMs": 23600,
+          "endMs": 23900
+        },
+        {
+          "text": "w11",
+          "startMs": 23960,
+          "endMs": 24260
+        },
+        {
+          "text": "w12",
+          "startMs": 24320,
+          "endMs": 24620
+        },
+        {
+          "text": "w13",
+          "startMs": 24680,
+          "endMs": 24980
+        },
+        {
+          "text": "w14",
+          "startMs": 25040,
+          "endMs": 25340
+        },
+        {
+          "text": "w15",
+          "startMs": 25400,
+          "endMs": 25700
+        },
+        {
+          "text": "w16",
+          "startMs": 25760,
+          "endMs": 26060
+        },
+        {
+          "text": "w17",
+          "startMs": 26120,
+          "endMs": 26420
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:4",
+      "startMs": 26500,
+      "endMs": 32920,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 26500,
+          "endMs": 26800
+        },
+        {
+          "text": "w1",
+          "startMs": 26860,
+          "endMs": 27160
+        },
+        {
+          "text": "w2",
+          "startMs": 27220,
+          "endMs": 27520
+        },
+        {
+          "text": "w3",
+          "startMs": 27580,
+          "endMs": 27880
+        },
+        {
+          "text": "w4",
+          "startMs": 27940,
+          "endMs": 28240
+        },
+        {
+          "text": "w5",
+          "startMs": 28300,
+          "endMs": 28600
+        },
+        {
+          "text": "w6",
+          "startMs": 28660,
+          "endMs": 28960
+        },
+        {
+          "text": "w7",
+          "startMs": 29020,
+          "endMs": 29320
+        },
+        {
+          "text": "w8",
+          "startMs": 29380,
+          "endMs": 29680
+        },
+        {
+          "text": "w9",
+          "startMs": 29740,
+          "endMs": 30040
+        },
+        {
+          "text": "w10",
+          "startMs": 30100,
+          "endMs": 30400
+        },
+        {
+          "text": "w11",
+          "startMs": 30460,
+          "endMs": 30760
+        },
+        {
+          "text": "w12",
+          "startMs": 30820,
+          "endMs": 31120
+        },
+        {
+          "text": "w13",
+          "startMs": 31180,
+          "endMs": 31480
+        },
+        {
+          "text": "w14",
+          "startMs": 31540,
+          "endMs": 31840
+        },
+        {
+          "text": "w15",
+          "startMs": 31900,
+          "endMs": 32200
+        },
+        {
+          "text": "w16",
+          "startMs": 32260,
+          "endMs": 32560
+        },
+        {
+          "text": "w17",
+          "startMs": 32620,
+          "endMs": 32920
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:5",
+      "startMs": 33000,
+      "endMs": 39420,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 33000,
+          "endMs": 33300
+        },
+        {
+          "text": "w1",
+          "startMs": 33360,
+          "endMs": 33660
+        },
+        {
+          "text": "w2",
+          "startMs": 33720,
+          "endMs": 34020
+        },
+        {
+          "text": "w3",
+          "startMs": 34080,
+          "endMs": 34380
+        },
+        {
+          "text": "w4",
+          "startMs": 34440,
+          "endMs": 34740
+        },
+        {
+          "text": "w5",
+          "startMs": 34800,
+          "endMs": 35100
+        },
+        {
+          "text": "w6",
+          "startMs": 35160,
+          "endMs": 35460
+        },
+        {
+          "text": "w7",
+          "startMs": 35520,
+          "endMs": 35820
+        },
+        {
+          "text": "w8",
+          "startMs": 35880,
+          "endMs": 36180
+        },
+        {
+          "text": "w9",
+          "startMs": 36240,
+          "endMs": 36540
+        },
+        {
+          "text": "w10",
+          "startMs": 36600,
+          "endMs": 36900
+        },
+        {
+          "text": "w11",
+          "startMs": 36960,
+          "endMs": 37260
+        },
+        {
+          "text": "w12",
+          "startMs": 37320,
+          "endMs": 37620
+        },
+        {
+          "text": "w13",
+          "startMs": 37680,
+          "endMs": 37980
+        },
+        {
+          "text": "w14",
+          "startMs": 38040,
+          "endMs": 38340
+        },
+        {
+          "text": "w15",
+          "startMs": 38400,
+          "endMs": 38700
+        },
+        {
+          "text": "w16",
+          "startMs": 38760,
+          "endMs": 39060
+        },
+        {
+          "text": "w17",
+          "startMs": 39120,
+          "endMs": 39420
+        }
+      ]
+    },
+    {
+      "id": "dropped-older-text:mixed:6",
+      "startMs": 41500,
+      "endMs": 46840,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 41500,
+          "endMs": 41800
+        },
+        {
+          "text": "w1",
+          "startMs": 41860,
+          "endMs": 42160
+        },
+        {
+          "text": "w2",
+          "startMs": 42220,
+          "endMs": 42520
+        },
+        {
+          "text": "w3",
+          "startMs": 42580,
+          "endMs": 42880
+        },
+        {
+          "text": "w4",
+          "startMs": 42940,
+          "endMs": 43240
+        },
+        {
+          "text": "w5",
+          "startMs": 43300,
+          "endMs": 43600
+        },
+        {
+          "text": "w6",
+          "startMs": 43660,
+          "endMs": 43960
+        },
+        {
+          "text": "w7",
+          "startMs": 44020,
+          "endMs": 44320
+        },
+        {
+          "text": "w8",
+          "startMs": 44380,
+          "endMs": 44680
+        },
+        {
+          "text": "w9",
+          "startMs": 44740,
+          "endMs": 45040
+        },
+        {
+          "text": "w10",
+          "startMs": 45100,
+          "endMs": 45400
+        },
+        {
+          "text": "w11",
+          "startMs": 45460,
+          "endMs": 45760
+        },
+        {
+          "text": "w12",
+          "startMs": 45820,
+          "endMs": 46120
+        },
+        {
+          "text": "w13",
+          "startMs": 46180,
+          "endMs": 46480
+        },
+        {
+          "text": "w14",
+          "startMs": 46540,
+          "endMs": 46840
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "dropped-older-text:mixed:0": "Tom Brown",
+    "dropped-older-text:mixed:1": "Tom Brown",
+    "dropped-older-text:mixed:2": "Tom Brown",
+    "dropped-older-text:mixed:3": "Tom Brown",
+    "dropped-older-text:mixed:4": "Tom Brown",
+    "dropped-older-text:mixed:5": "Tom Brown",
+    "dropped-older-text:mixed:6": "$user"
+  }
+}

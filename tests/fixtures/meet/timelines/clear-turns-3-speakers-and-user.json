@@ -1,0 +1,437 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2300,
+        2800,
+        3300,
+        3800,
+        4300
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        7300,
+        7800,
+        8300,
+        8800,
+        9300
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        12300,
+        12800,
+        13300,
+        13800,
+        14300,
+        14800
+      ]
+    },
+    {
+      "turnKey": "p1:4",
+      "speakerName": "John Doe",
+      "self": null,
+      "observedAtMs": [
+        17800,
+        18300,
+        18800,
+        19300,
+        19800
+      ]
+    },
+    {
+      "turnKey": "p1:5",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        22800,
+        23300,
+        23800,
+        24300,
+        24800,
+        25300
+      ]
+    },
+    {
+      "turnKey": "p1:6",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        28300,
+        28800,
+        29300
+      ]
+    },
+    {
+      "turnKey": "p1:7",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        32300,
+        32800,
+        33300,
+        33800,
+        34300,
+        34800
+      ]
+    },
+    {
+      "turnKey": "p1:8",
+      "speakerName": "John Doe",
+      "self": null,
+      "observedAtMs": [
+        37800,
+        38300,
+        38800,
+        39300,
+        39800,
+        40300,
+        40800
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "clear:mixed:0",
+      "startMs": 1000,
+      "endMs": 4000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1429
+        },
+        {
+          "text": "w1",
+          "startMs": 1429,
+          "endMs": 1857
+        },
+        {
+          "text": "w2",
+          "startMs": 1857,
+          "endMs": 2286
+        },
+        {
+          "text": "w3",
+          "startMs": 2286,
+          "endMs": 2714
+        },
+        {
+          "text": "w4",
+          "startMs": 2714,
+          "endMs": 3143
+        },
+        {
+          "text": "w5",
+          "startMs": 3143,
+          "endMs": 3571
+        },
+        {
+          "text": "w6",
+          "startMs": 3571,
+          "endMs": 4000
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:1",
+      "startMs": 6500,
+      "endMs": 9000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 6500,
+          "endMs": 6917
+        },
+        {
+          "text": "w1",
+          "startMs": 6917,
+          "endMs": 7333
+        },
+        {
+          "text": "w2",
+          "startMs": 7333,
+          "endMs": 7750
+        },
+        {
+          "text": "w3",
+          "startMs": 7750,
+          "endMs": 8167
+        },
+        {
+          "text": "w4",
+          "startMs": 8167,
+          "endMs": 8583
+        },
+        {
+          "text": "w5",
+          "startMs": 8583,
+          "endMs": 9000
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:2",
+      "startMs": 11500,
+      "endMs": 14500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 11500,
+          "endMs": 11929
+        },
+        {
+          "text": "w1",
+          "startMs": 11929,
+          "endMs": 12357
+        },
+        {
+          "text": "w2",
+          "startMs": 12357,
+          "endMs": 12786
+        },
+        {
+          "text": "w3",
+          "startMs": 12786,
+          "endMs": 13214
+        },
+        {
+          "text": "w4",
+          "startMs": 13214,
+          "endMs": 13643
+        },
+        {
+          "text": "w5",
+          "startMs": 13643,
+          "endMs": 14071
+        },
+        {
+          "text": "w6",
+          "startMs": 14071,
+          "endMs": 14500
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:3",
+      "startMs": 17000,
+      "endMs": 19500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 17000,
+          "endMs": 17417
+        },
+        {
+          "text": "w1",
+          "startMs": 17417,
+          "endMs": 17833
+        },
+        {
+          "text": "w2",
+          "startMs": 17833,
+          "endMs": 18250
+        },
+        {
+          "text": "w3",
+          "startMs": 18250,
+          "endMs": 18667
+        },
+        {
+          "text": "w4",
+          "startMs": 18667,
+          "endMs": 19083
+        },
+        {
+          "text": "w5",
+          "startMs": 19083,
+          "endMs": 19500
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:4",
+      "startMs": 22000,
+      "endMs": 25000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 22000,
+          "endMs": 22429
+        },
+        {
+          "text": "w1",
+          "startMs": 22429,
+          "endMs": 22857
+        },
+        {
+          "text": "w2",
+          "startMs": 22857,
+          "endMs": 23286
+        },
+        {
+          "text": "w3",
+          "startMs": 23286,
+          "endMs": 23714
+        },
+        {
+          "text": "w4",
+          "startMs": 23714,
+          "endMs": 24143
+        },
+        {
+          "text": "w5",
+          "startMs": 24143,
+          "endMs": 24571
+        },
+        {
+          "text": "w6",
+          "startMs": 24571,
+          "endMs": 25000
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:5",
+      "startMs": 27500,
+      "endMs": 29000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 27500,
+          "endMs": 28000
+        },
+        {
+          "text": "w1",
+          "startMs": 28000,
+          "endMs": 28500
+        },
+        {
+          "text": "w2",
+          "startMs": 28500,
+          "endMs": 29000
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:6",
+      "startMs": 31500,
+      "endMs": 34500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 31500,
+          "endMs": 31929
+        },
+        {
+          "text": "w1",
+          "startMs": 31929,
+          "endMs": 32357
+        },
+        {
+          "text": "w2",
+          "startMs": 32357,
+          "endMs": 32786
+        },
+        {
+          "text": "w3",
+          "startMs": 32786,
+          "endMs": 33214
+        },
+        {
+          "text": "w4",
+          "startMs": 33214,
+          "endMs": 33643
+        },
+        {
+          "text": "w5",
+          "startMs": 33643,
+          "endMs": 34071
+        },
+        {
+          "text": "w6",
+          "startMs": 34071,
+          "endMs": 34500
+        }
+      ]
+    },
+    {
+      "id": "clear:mixed:7",
+      "startMs": 37000,
+      "endMs": 40500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 37000,
+          "endMs": 37438
+        },
+        {
+          "text": "w1",
+          "startMs": 37438,
+          "endMs": 37875
+        },
+        {
+          "text": "w2",
+          "startMs": 37875,
+          "endMs": 38312
+        },
+        {
+          "text": "w3",
+          "startMs": 38312,
+          "endMs": 38750
+        },
+        {
+          "text": "w4",
+          "startMs": 38750,
+          "endMs": 39188
+        },
+        {
+          "text": "w5",
+          "startMs": 39188,
+          "endMs": 39625
+        },
+        {
+          "text": "w6",
+          "startMs": 39625,
+          "endMs": 40062
+        },
+        {
+          "text": "w7",
+          "startMs": 40062,
+          "endMs": 40500
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "clear:mixed:0": "Emma Jones",
+    "clear:mixed:1": "$user",
+    "clear:mixed:2": "Tom Brown",
+    "clear:mixed:3": "John Doe",
+    "clear:mixed:4": "Emma Jones",
+    "clear:mixed:5": "$user",
+    "clear:mixed:6": "Tom Brown",
+    "clear:mixed:7": "John Doe"
+  }
+}

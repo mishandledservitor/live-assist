@@ -1,0 +1,280 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p9:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2150,
+        2500,
+        2850,
+        3200,
+        3550,
+        3900,
+        4250,
+        4600,
+        4950,
+        5300,
+        5500
+      ]
+    },
+    {
+      "turnKey": "p9:2",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        4900,
+        5250,
+        5600,
+        5950,
+        6300,
+        6650,
+        7000,
+        7350,
+        7700
+      ]
+    },
+    {
+      "turnKey": "p9:3",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        7100,
+        7450,
+        7800,
+        8150,
+        8500,
+        8850,
+        9200,
+        9550,
+        9900,
+        10250,
+        10300
+      ]
+    },
+    {
+      "turnKey": "p9:4",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        9700,
+        10050,
+        10400,
+        10750,
+        11100,
+        11450,
+        11800,
+        12150,
+        12500,
+        12850,
+        12900
+      ]
+    },
+    {
+      "turnKey": "p9:5",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        12300,
+        12650,
+        13000,
+        13350,
+        13700,
+        14050,
+        14400,
+        14750,
+        15100,
+        15200
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "rapid:mixed:0",
+      "startMs": 1000,
+      "endMs": 14200,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1460,
+          "endMs": 1860
+        },
+        {
+          "text": "w2",
+          "startMs": 1920,
+          "endMs": 2320
+        },
+        {
+          "text": "w3",
+          "startMs": 2380,
+          "endMs": 2780
+        },
+        {
+          "text": "w4",
+          "startMs": 2840,
+          "endMs": 3240
+        },
+        {
+          "text": "w5",
+          "startMs": 3300,
+          "endMs": 3700
+        },
+        {
+          "text": "w6",
+          "startMs": 4100,
+          "endMs": 4500
+        },
+        {
+          "text": "w7",
+          "startMs": 4560,
+          "endMs": 4960
+        },
+        {
+          "text": "w8",
+          "startMs": 5020,
+          "endMs": 5420
+        },
+        {
+          "text": "w9",
+          "startMs": 5480,
+          "endMs": 5880
+        },
+        {
+          "text": "w10",
+          "startMs": 6300,
+          "endMs": 6700
+        },
+        {
+          "text": "w11",
+          "startMs": 6760,
+          "endMs": 7160
+        },
+        {
+          "text": "w12",
+          "startMs": 7220,
+          "endMs": 7620
+        },
+        {
+          "text": "w13",
+          "startMs": 7680,
+          "endMs": 8080
+        },
+        {
+          "text": "w14",
+          "startMs": 8140,
+          "endMs": 8540
+        },
+        {
+          "text": "w15",
+          "startMs": 8900,
+          "endMs": 9300
+        },
+        {
+          "text": "w16",
+          "startMs": 9360,
+          "endMs": 9760
+        },
+        {
+          "text": "w17",
+          "startMs": 9820,
+          "endMs": 10220
+        },
+        {
+          "text": "w18",
+          "startMs": 10280,
+          "endMs": 10680
+        },
+        {
+          "text": "w19",
+          "startMs": 10740,
+          "endMs": 11140
+        },
+        {
+          "text": "w20",
+          "startMs": 11500,
+          "endMs": 11900
+        },
+        {
+          "text": "w21",
+          "startMs": 11960,
+          "endMs": 12360
+        },
+        {
+          "text": "w22",
+          "startMs": 12420,
+          "endMs": 12820
+        },
+        {
+          "text": "w23",
+          "startMs": 12880,
+          "endMs": 13280
+        },
+        {
+          "text": "w24",
+          "startMs": 13340,
+          "endMs": 13740
+        },
+        {
+          "text": "w25",
+          "startMs": 13800,
+          "endMs": 14200
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "rapid:mixed:0": [
+      {
+        "label": "Emma Jones",
+        "words": 2
+      },
+      {
+        "label": "Others",
+        "words": 19
+      },
+      {
+        "label": "Tom Brown",
+        "words": 5
+      }
+    ]
+  },
+  "spokenBy": {
+    "rapid:mixed:0": [
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "$user",
+      "$user",
+      "$user",
+      "$user",
+      "$user",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown",
+      "Tom Brown"
+    ]
+  }
+}

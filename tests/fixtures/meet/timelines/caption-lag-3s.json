@@ -1,0 +1,241 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": true,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        4000,
+        4500,
+        5000,
+        5500,
+        6000,
+        6500,
+        7000,
+        7500,
+        8000
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        14000,
+        14500,
+        15000,
+        15500,
+        16000,
+        16500,
+        17000,
+        17500,
+        18000,
+        18500
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        24000,
+        24500,
+        25000,
+        25500,
+        26000,
+        26500,
+        27000,
+        27500,
+        28000
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "lag:mixed:0",
+      "startMs": 1000,
+      "endMs": 5000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1400,
+          "endMs": 1800
+        },
+        {
+          "text": "w2",
+          "startMs": 1800,
+          "endMs": 2200
+        },
+        {
+          "text": "w3",
+          "startMs": 2200,
+          "endMs": 2600
+        },
+        {
+          "text": "w4",
+          "startMs": 2600,
+          "endMs": 3000
+        },
+        {
+          "text": "w5",
+          "startMs": 3000,
+          "endMs": 3400
+        },
+        {
+          "text": "w6",
+          "startMs": 3400,
+          "endMs": 3800
+        },
+        {
+          "text": "w7",
+          "startMs": 3800,
+          "endMs": 4200
+        },
+        {
+          "text": "w8",
+          "startMs": 4200,
+          "endMs": 4600
+        },
+        {
+          "text": "w9",
+          "startMs": 4600,
+          "endMs": 5000
+        }
+      ]
+    },
+    {
+      "id": "lag:mixed:1",
+      "startMs": 11000,
+      "endMs": 15500,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 11000,
+          "endMs": 11409
+        },
+        {
+          "text": "w1",
+          "startMs": 11409,
+          "endMs": 11818
+        },
+        {
+          "text": "w2",
+          "startMs": 11818,
+          "endMs": 12227
+        },
+        {
+          "text": "w3",
+          "startMs": 12227,
+          "endMs": 12636
+        },
+        {
+          "text": "w4",
+          "startMs": 12636,
+          "endMs": 13045
+        },
+        {
+          "text": "w5",
+          "startMs": 13045,
+          "endMs": 13455
+        },
+        {
+          "text": "w6",
+          "startMs": 13455,
+          "endMs": 13864
+        },
+        {
+          "text": "w7",
+          "startMs": 13864,
+          "endMs": 14273
+        },
+        {
+          "text": "w8",
+          "startMs": 14273,
+          "endMs": 14682
+        },
+        {
+          "text": "w9",
+          "startMs": 14682,
+          "endMs": 15091
+        },
+        {
+          "text": "w10",
+          "startMs": 15091,
+          "endMs": 15500
+        }
+      ]
+    },
+    {
+      "id": "lag:mixed:2",
+      "startMs": 21000,
+      "endMs": 25000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 21000,
+          "endMs": 21400
+        },
+        {
+          "text": "w1",
+          "startMs": 21400,
+          "endMs": 21800
+        },
+        {
+          "text": "w2",
+          "startMs": 21800,
+          "endMs": 22200
+        },
+        {
+          "text": "w3",
+          "startMs": 22200,
+          "endMs": 22600
+        },
+        {
+          "text": "w4",
+          "startMs": 22600,
+          "endMs": 23000
+        },
+        {
+          "text": "w5",
+          "startMs": 23000,
+          "endMs": 23400
+        },
+        {
+          "text": "w6",
+          "startMs": 23400,
+          "endMs": 23800
+        },
+        {
+          "text": "w7",
+          "startMs": 23800,
+          "endMs": 24200
+        },
+        {
+          "text": "w8",
+          "startMs": 24200,
+          "endMs": 24600
+        },
+        {
+          "text": "w9",
+          "startMs": 24600,
+          "endMs": 25000
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "lag:mixed:0": "Emma Jones",
+    "lag:mixed:1": "$user",
+    "lag:mixed:2": "Tom Brown"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$comment": "003 T054 evaluation set over tests/fixtures/chat/meetings/long-1h20.json (synthetic): citations past one hour use h:mm:ss.",
+  "meeting": "long-1h20",
+  "names": ["Alex", "Jane", "John", "Tom"],
+  "questions": [
+    { "id": "mobile", "lang": "en", "tag": "supported", "question": "When does the mobile app ship?", "supports": ["1:15:12"] },
+    { "id": "revenue", "lang": "en", "tag": "supported", "question": "How did revenue do?", "supports": ["12:40"] },
+    { "id": "office", "lang": "en", "tag": "absent", "question": "Are we moving to a new office?" },
+    { "id": "recording", "lang": "en", "tag": "others-attribution", "question": "Who asked whether the recording was running?", "supports": ["1:00:02"], "othersTimes": ["1:00:02"] },
+    { "id": "hiring-el", "lang": "el", "tag": "supported", "question": "Τι ειπώθηκε για τις προσλήψεις;", "supports": ["45:10"] }
+  ]
+}

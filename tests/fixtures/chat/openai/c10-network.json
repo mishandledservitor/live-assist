@@ -1,0 +1,7 @@
+{
+  "description": "C10: network failure: the injected fetch rejects (no response)",
+  "status": 0,
+  "headers": {},
+  "body": "",
+  "reject": true
+}

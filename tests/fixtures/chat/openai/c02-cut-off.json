@@ -1,0 +1,10 @@
+{
+  "description": "C2: stops at the output limit (response.incomplete, max_output_tokens)",
+  "status": 200,
+  "headers": {
+    "content-type": "text/event-stream; charset=utf-8"
+  },
+  "body": "event: response.created\ndata: {\"type\":\"response.created\",\"sequence_number\":0,\"response\":{\"id\":\"resp_fixture_01\",\"object\":\"response\",\"created_at\":1791000000,\"status\":\"in_progress\",\"model\":\"gpt-6-luna\",\"output\":[]}}\n\nevent: response.in_progress\ndata: {\"type\":\"response.in_progress\",\"sequence_number\":1,\"response\":{\"id\":\"resp_fixture_01\",\"object\":\"response\",\"created_at\":1791000000,\"status\":\"in_progress\",\"model\":\"gpt-6-luna\",\"output\":[]}}\n\nevent: response.output_item.added\ndata: {\"type\":\"response.output_item.added\",\"sequence_number\":2,\"output_index\":0,\"item\":{\"id\":\"msg_fixture_01\",\"type\":\"message\",\"status\":\"in_progress\",\"role\":\"assistant\",\"content\":[]}}\n\nevent: response.content_part.added\ndata: {\"type\":\"response.content_part.added\",\"sequence_number\":3,\"item_id\":\"msg_fixture_01\",\"output_index\":0,\"content_index\":0,\"part\":{\"type\":\"output_text\",\"text\":\"\",\"annotations\":[]}}\n\nevent: response.output_text.delta\ndata: {\"type\":\"response.output_text.delta\",\"sequence_number\":4,\"item_id\":\"msg_fixture_01\",\"output_index\":0,\"content_index\":0,\"delta\":\"The team discussed three options \",\"logprobs\":[]}\n\nevent: response.output_text.delta\ndata: {\"type\":\"response.output_text.delta\",\"sequence_number\":5,\"item_id\":\"msg_fixture_01\",\"output_index\":0,\"content_index\":0,\"delta\":\"[01:10], then\",\"logprobs\":[]}\n\nevent: response.incomplete\ndata: {\"type\":\"response.incomplete\",\"sequence_number\":6,\"response\":{\"id\":\"resp_fixture_01\",\"object\":\"response\",\"created_at\":1791000000,\"status\":\"incomplete\",\"model\":\"gpt-6-luna\",\"output\":[],\"incomplete_details\":{\"reason\":\"max_output_tokens\"}}}\n\n",
+  "answer": "The team discussed three options [01:10], then",
+  "model": "gpt-6-luna"
+}

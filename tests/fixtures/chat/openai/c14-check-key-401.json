@@ -1,0 +1,9 @@
+{
+  "description": "C14: key check rejected",
+  "status": 401,
+  "headers": {
+    "content-type": "application/json",
+    "x-request-id": "req_fixture_01"
+  },
+  "body": "{\"error\":{\"message\":\"Incorrect API key provided.\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":\"invalid_api_key\"}}"
+}

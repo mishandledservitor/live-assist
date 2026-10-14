@@ -1,0 +1,131 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [],
+  "segments": [
+    {
+      "id": "none:mixed:0",
+      "startMs": 1000,
+      "endMs": 3000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1400,
+          "endMs": 1800
+        },
+        {
+          "text": "w2",
+          "startMs": 1800,
+          "endMs": 2200
+        },
+        {
+          "text": "w3",
+          "startMs": 2200,
+          "endMs": 2600
+        },
+        {
+          "text": "w4",
+          "startMs": 2600,
+          "endMs": 3000
+        }
+      ]
+    },
+    {
+      "id": "none:mixed:1",
+      "startMs": 5000,
+      "endMs": 8000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 5000,
+          "endMs": 5429
+        },
+        {
+          "text": "w1",
+          "startMs": 5429,
+          "endMs": 5857
+        },
+        {
+          "text": "w2",
+          "startMs": 5857,
+          "endMs": 6286
+        },
+        {
+          "text": "w3",
+          "startMs": 6286,
+          "endMs": 6714
+        },
+        {
+          "text": "w4",
+          "startMs": 6714,
+          "endMs": 7143
+        },
+        {
+          "text": "w5",
+          "startMs": 7143,
+          "endMs": 7571
+        },
+        {
+          "text": "w6",
+          "startMs": 7571,
+          "endMs": 8000
+        }
+      ]
+    },
+    {
+      "id": "none:mixed:2",
+      "startMs": 9000,
+      "endMs": 12000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 9000,
+          "endMs": 9429
+        },
+        {
+          "text": "w1",
+          "startMs": 9429,
+          "endMs": 9857
+        },
+        {
+          "text": "w2",
+          "startMs": 9857,
+          "endMs": 10286
+        },
+        {
+          "text": "w3",
+          "startMs": 10286,
+          "endMs": 10714
+        },
+        {
+          "text": "w4",
+          "startMs": 10714,
+          "endMs": 11143
+        },
+        {
+          "text": "w5",
+          "startMs": 11143,
+          "endMs": 11571
+        },
+        {
+          "text": "w6",
+          "startMs": 11571,
+          "endMs": 12000
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "none:mixed:0": "Others",
+    "none:mixed:1": "Others",
+    "none:mixed:2": "Others"
+  }
+}

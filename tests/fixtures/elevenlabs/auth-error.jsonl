@@ -1,0 +1,2 @@
+{"at":0,"dir":"in","msg":{"message_type":"auth_error","error":"Invalid or expired token."}}
+{"at":10,"dir":"close","msg":{"code":1008}}

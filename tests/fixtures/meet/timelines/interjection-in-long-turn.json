@@ -1,0 +1,558 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p9:1",
+      "speakerName": "Hannah Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2150,
+        2500,
+        2850,
+        3200,
+        3550,
+        3900,
+        4250,
+        4600,
+        4950,
+        5300,
+        5650,
+        6000,
+        6350,
+        6700,
+        7050,
+        7400,
+        7750,
+        8100,
+        8450,
+        8800,
+        9150,
+        9500,
+        9850,
+        10200,
+        10550,
+        10900,
+        11250,
+        11600,
+        11950,
+        12300,
+        12650,
+        13000,
+        13350,
+        13700,
+        14050,
+        14400,
+        14750,
+        15100,
+        15450,
+        15800,
+        16000
+      ]
+    },
+    {
+      "turnKey": "p9:2",
+      "speakerName": "Oliver Smith",
+      "self": null,
+      "observedAtMs": [
+        15100,
+        15450,
+        15800,
+        16150,
+        16500,
+        16850,
+        17200,
+        17550,
+        17900,
+        18250,
+        18300
+      ]
+    },
+    {
+      "turnKey": "p9:3",
+      "speakerName": "Hannah Jones",
+      "self": null,
+      "observedAtMs": [
+        17400,
+        17750,
+        18100,
+        18450,
+        18800,
+        19150,
+        19500,
+        19850,
+        20200,
+        20550,
+        20900,
+        21250,
+        21600,
+        21950,
+        22300,
+        22650,
+        23000,
+        23350,
+        23700,
+        24050,
+        24400,
+        24750,
+        25100,
+        25450,
+        25800,
+        26150,
+        26500,
+        26850,
+        27200,
+        27550,
+        27900,
+        28250,
+        28600,
+        28950,
+        29300,
+        29650,
+        29700
+      ]
+    },
+    {
+      "turnKey": "p9:4",
+      "speakerName": "Oliver Smith",
+      "self": null,
+      "observedAtMs": [
+        28800,
+        29150,
+        29500,
+        29850,
+        30200,
+        30550,
+        30900,
+        31250,
+        31600,
+        31950,
+        32300,
+        32650,
+        33000,
+        33350,
+        33600
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "interjection:mixed:0",
+      "startMs": 1000,
+      "endMs": 25740,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1460,
+          "endMs": 1860
+        },
+        {
+          "text": "w2",
+          "startMs": 1920,
+          "endMs": 2320
+        },
+        {
+          "text": "w3",
+          "startMs": 2380,
+          "endMs": 2780
+        },
+        {
+          "text": "w4",
+          "startMs": 2840,
+          "endMs": 3240
+        },
+        {
+          "text": "w5",
+          "startMs": 3300,
+          "endMs": 3700
+        },
+        {
+          "text": "w6",
+          "startMs": 3760,
+          "endMs": 4160
+        },
+        {
+          "text": "w7",
+          "startMs": 4220,
+          "endMs": 4620
+        },
+        {
+          "text": "w8",
+          "startMs": 4680,
+          "endMs": 5080
+        },
+        {
+          "text": "w9",
+          "startMs": 5140,
+          "endMs": 5540
+        },
+        {
+          "text": "w10",
+          "startMs": 5600,
+          "endMs": 6000
+        },
+        {
+          "text": "w11",
+          "startMs": 6060,
+          "endMs": 6460
+        },
+        {
+          "text": "w12",
+          "startMs": 6520,
+          "endMs": 6920
+        },
+        {
+          "text": "w13",
+          "startMs": 6980,
+          "endMs": 7380
+        },
+        {
+          "text": "w14",
+          "startMs": 7440,
+          "endMs": 7840
+        },
+        {
+          "text": "w15",
+          "startMs": 7900,
+          "endMs": 8300
+        },
+        {
+          "text": "w16",
+          "startMs": 8360,
+          "endMs": 8760
+        },
+        {
+          "text": "w17",
+          "startMs": 8820,
+          "endMs": 9220
+        },
+        {
+          "text": "w18",
+          "startMs": 9280,
+          "endMs": 9680
+        },
+        {
+          "text": "w19",
+          "startMs": 9740,
+          "endMs": 10140
+        },
+        {
+          "text": "w20",
+          "startMs": 10200,
+          "endMs": 10600
+        },
+        {
+          "text": "w21",
+          "startMs": 10660,
+          "endMs": 11060
+        },
+        {
+          "text": "w22",
+          "startMs": 11120,
+          "endMs": 11520
+        },
+        {
+          "text": "w23",
+          "startMs": 11580,
+          "endMs": 11980
+        },
+        {
+          "text": "w24",
+          "startMs": 12040,
+          "endMs": 12440
+        },
+        {
+          "text": "w25",
+          "startMs": 12500,
+          "endMs": 12900
+        },
+        {
+          "text": "w26",
+          "startMs": 12960,
+          "endMs": 13360
+        },
+        {
+          "text": "w27",
+          "startMs": 13420,
+          "endMs": 13820
+        },
+        {
+          "text": "w28",
+          "startMs": 14300,
+          "endMs": 14700
+        },
+        {
+          "text": "w29",
+          "startMs": 14760,
+          "endMs": 15160
+        },
+        {
+          "text": "w30",
+          "startMs": 15220,
+          "endMs": 15620
+        },
+        {
+          "text": "w31",
+          "startMs": 15680,
+          "endMs": 16080
+        },
+        {
+          "text": "w32",
+          "startMs": 16600,
+          "endMs": 17000
+        },
+        {
+          "text": "w33",
+          "startMs": 17060,
+          "endMs": 17460
+        },
+        {
+          "text": "w34",
+          "startMs": 17520,
+          "endMs": 17920
+        },
+        {
+          "text": "w35",
+          "startMs": 17980,
+          "endMs": 18380
+        },
+        {
+          "text": "w36",
+          "startMs": 18440,
+          "endMs": 18840
+        },
+        {
+          "text": "w37",
+          "startMs": 18900,
+          "endMs": 19300
+        },
+        {
+          "text": "w38",
+          "startMs": 19360,
+          "endMs": 19760
+        },
+        {
+          "text": "w39",
+          "startMs": 19820,
+          "endMs": 20220
+        },
+        {
+          "text": "w40",
+          "startMs": 20280,
+          "endMs": 20680
+        },
+        {
+          "text": "w41",
+          "startMs": 20740,
+          "endMs": 21140
+        },
+        {
+          "text": "w42",
+          "startMs": 21200,
+          "endMs": 21600
+        },
+        {
+          "text": "w43",
+          "startMs": 21660,
+          "endMs": 22060
+        },
+        {
+          "text": "w44",
+          "startMs": 22120,
+          "endMs": 22520
+        },
+        {
+          "text": "w45",
+          "startMs": 22580,
+          "endMs": 22980
+        },
+        {
+          "text": "w46",
+          "startMs": 23040,
+          "endMs": 23440
+        },
+        {
+          "text": "w47",
+          "startMs": 23500,
+          "endMs": 23900
+        },
+        {
+          "text": "w48",
+          "startMs": 23960,
+          "endMs": 24360
+        },
+        {
+          "text": "w49",
+          "startMs": 24420,
+          "endMs": 24820
+        },
+        {
+          "text": "w50",
+          "startMs": 24880,
+          "endMs": 25280
+        },
+        {
+          "text": "w51",
+          "startMs": 25340,
+          "endMs": 25740
+        }
+      ]
+    },
+    {
+      "id": "interjection:mixed:1",
+      "startMs": 28000,
+      "endMs": 33000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 28000,
+          "endMs": 28400
+        },
+        {
+          "text": "w1",
+          "startMs": 28460,
+          "endMs": 28860
+        },
+        {
+          "text": "w2",
+          "startMs": 28920,
+          "endMs": 29320
+        },
+        {
+          "text": "w3",
+          "startMs": 29380,
+          "endMs": 29780
+        },
+        {
+          "text": "w4",
+          "startMs": 29840,
+          "endMs": 30240
+        },
+        {
+          "text": "w5",
+          "startMs": 30300,
+          "endMs": 30700
+        },
+        {
+          "text": "w6",
+          "startMs": 30760,
+          "endMs": 31160
+        },
+        {
+          "text": "w7",
+          "startMs": 31220,
+          "endMs": 31620
+        },
+        {
+          "text": "w8",
+          "startMs": 31680,
+          "endMs": 32080
+        },
+        {
+          "text": "w9",
+          "startMs": 32140,
+          "endMs": 32540
+        },
+        {
+          "text": "w10",
+          "startMs": 32600,
+          "endMs": 33000
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "interjection:mixed:0": [
+      {
+        "label": "Hannah Jones",
+        "words": 24
+      },
+      {
+        "label": "Others",
+        "words": 9
+      },
+      {
+        "label": "Hannah Jones",
+        "words": 19
+      }
+    ],
+    "interjection:mixed:1": "Oliver Smith"
+  },
+  "spokenBy": {
+    "interjection:mixed:0": [
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones",
+      "Hannah Jones"
+    ],
+    "interjection:mixed:1": [
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith",
+      "Oliver Smith"
+    ]
+  }
+}

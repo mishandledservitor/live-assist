@@ -1,0 +1,207 @@
+{
+  "meeting": {
+    "id": "mtg-relabel",
+    "startedAt": 1791277200000,
+    "endedAt": 1791278400000,
+    "endReason": "user-stop",
+    "source": {
+      "url": "https://meet.google.com/abc-defg-hij",
+      "title": "Weekly standup",
+      "platform": "meet"
+    },
+    "languageMode": {
+      "kind": "auto"
+    },
+    "userName": "Alex",
+    "speakerRenames": {},
+    "schemaVersion": 2
+  },
+  "segments": [
+    {
+      "id": "mtg-relabel:mixed:0",
+      "meetingId": "mtg-relabel",
+      "stream": "mixed",
+      "seq": 0,
+      "startMs": 4000,
+      "endMs": 8000,
+      "text": "Quick sync on the release.",
+      "language": "en",
+      "words": [],
+      "timing": "estimated",
+      "sessionId": "sess-fixture-1",
+      "createdAt": 1791277208500,
+      "schemaVersion": 2,
+      "labelOverride": null,
+      "speakerLabel": "Alex",
+      "labelSource": "caption",
+      "captionName": "You",
+      "captionSelf": true
+    },
+    {
+      "id": "mtg-relabel:mixed:1",
+      "meetingId": "mtg-relabel",
+      "stream": "mixed",
+      "seq": 1,
+      "startMs": 12000,
+      "endMs": 16000,
+      "text": "The build is green since this morning.",
+      "language": "en",
+      "words": [],
+      "timing": "estimated",
+      "sessionId": "sess-fixture-1",
+      "createdAt": 1791277216500,
+      "schemaVersion": 2,
+      "labelOverride": null,
+      "speakerLabel": "John",
+      "labelSource": "caption",
+      "captionName": "John",
+      "captionSelf": false
+    },
+    {
+      "id": "mtg-relabel:mixed:2",
+      "meetingId": "mtg-relabel",
+      "stream": "mixed",
+      "seq": 2,
+      "startMs": 20000,
+      "endMs": 24000,
+      "text": "The release notes are still missing.",
+      "language": "en",
+      "words": [],
+      "timing": "estimated",
+      "sessionId": "sess-fixture-1",
+      "createdAt": 1791277224500,
+      "schemaVersion": 2,
+      "labelOverride": null,
+      "speakerLabel": "Others",
+      "labelSource": "fallback",
+      "captionName": null,
+      "captionSelf": false
+    },
+    {
+      "id": "mtg-relabel:mixed:3",
+      "meetingId": "mtg-relabel",
+      "stream": "mixed",
+      "seq": 3,
+      "startMs": 35000,
+      "endMs": 39000,
+      "text": "I can write them after lunch.",
+      "language": "en",
+      "words": [],
+      "timing": "estimated",
+      "sessionId": "sess-fixture-1",
+      "createdAt": 1791277239500,
+      "schemaVersion": 2,
+      "labelOverride": null,
+      "speakerLabel": "John",
+      "labelSource": "caption",
+      "captionName": "John",
+      "captionSelf": false
+    }
+  ],
+  "after": {
+    "meeting": {
+      "id": "mtg-relabel",
+      "startedAt": 1791277200000,
+      "endedAt": 1791278400000,
+      "endReason": "user-stop",
+      "source": {
+        "url": "https://meet.google.com/abc-defg-hij",
+        "title": "Weekly standup",
+        "platform": "meet"
+      },
+      "languageMode": {
+        "kind": "auto"
+      },
+      "userName": "Alex",
+      "speakerRenames": {
+        "caption:john": {
+          "name": "John B.",
+          "origin": "manual"
+        }
+      },
+      "schemaVersion": 2
+    },
+    "segments": [
+      {
+        "id": "mtg-relabel:mixed:0",
+        "meetingId": "mtg-relabel",
+        "stream": "mixed",
+        "seq": 0,
+        "startMs": 4000,
+        "endMs": 8000,
+        "text": "Quick sync on the release.",
+        "language": "en",
+        "words": [],
+        "timing": "estimated",
+        "sessionId": "sess-fixture-1",
+        "createdAt": 1791277208500,
+        "schemaVersion": 2,
+        "labelOverride": null,
+        "speakerLabel": "Alex",
+        "labelSource": "caption",
+        "captionName": "You",
+        "captionSelf": true
+      },
+      {
+        "id": "mtg-relabel:mixed:1",
+        "meetingId": "mtg-relabel",
+        "stream": "mixed",
+        "seq": 1,
+        "startMs": 12000,
+        "endMs": 16000,
+        "text": "The build is green since this morning.",
+        "language": "en",
+        "words": [],
+        "timing": "estimated",
+        "sessionId": "sess-fixture-1",
+        "createdAt": 1791277216500,
+        "schemaVersion": 2,
+        "labelOverride": null,
+        "speakerLabel": "John",
+        "labelSource": "caption",
+        "captionName": "John",
+        "captionSelf": false
+      },
+      {
+        "id": "mtg-relabel:mixed:2",
+        "meetingId": "mtg-relabel",
+        "stream": "mixed",
+        "seq": 2,
+        "startMs": 20000,
+        "endMs": 24000,
+        "text": "The release notes are still missing.",
+        "language": "en",
+        "words": [],
+        "timing": "estimated",
+        "sessionId": "sess-fixture-1",
+        "createdAt": 1791277224500,
+        "schemaVersion": 2,
+        "labelOverride": null,
+        "speakerLabel": "Jane",
+        "labelSource": "caption",
+        "captionName": "Jane",
+        "captionSelf": false
+      },
+      {
+        "id": "mtg-relabel:mixed:3",
+        "meetingId": "mtg-relabel",
+        "stream": "mixed",
+        "seq": 3,
+        "startMs": 35000,
+        "endMs": 39000,
+        "text": "I can write them after lunch.",
+        "language": "en",
+        "words": [],
+        "timing": "estimated",
+        "sessionId": "sess-fixture-1",
+        "createdAt": 1791277239500,
+        "schemaVersion": 2,
+        "labelOverride": null,
+        "speakerLabel": "John",
+        "labelSource": "caption",
+        "captionName": "John",
+        "captionSelf": false
+      }
+    ]
+  }
+}

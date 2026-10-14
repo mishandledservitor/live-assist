@@ -1,0 +1,4 @@
+{"at":0,"dir":"in","msg":{"message_type":"session_started","session_id":"sess-fixture-nodetail","config":{"model_id":"scribe_v2_realtime"}}}
+{"at":2100,"dir":"in","msg":{"message_type":"partial_transcript","text":"No timestamps"}}
+{"at":3000,"dir":"in","msg":{"message_type":"committed_transcript","text":"No timestamps for this one."}}
+{"at":6000,"dir":"in","msg":{"message_type":"partial_transcript","text":"Next"}}

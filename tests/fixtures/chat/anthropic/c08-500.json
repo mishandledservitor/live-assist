@@ -1,0 +1,9 @@
+{
+  "description": "C8 (Anthropic 500): HTTP 500 → unavailable",
+  "status": 500,
+  "headers": {
+    "content-type": "application/json",
+    "request-id": "req_fixture_01"
+  },
+  "body": "{\"type\":\"error\",\"error\":{\"type\":\"api_error\",\"message\":\"Internal server error\"},\"request_id\":\"req_fixture_01\"}"
+}

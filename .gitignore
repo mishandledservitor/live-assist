@@ -1,0 +1,96 @@
+# ─── OS junk ───
+.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Icon?
+
+# ─── Editor / IDE ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Secrets & credentials — keep broad; add narrower project excludes ON TOP, never instead ───
+# Some builds (e.g. Vite) deliberately TRACK a .env whose values are inlined at build time. Never
+# `git rm --cached` or narrow these patterns to "fix" that — ask the user first (CLAUDE.md rule 12).
+.env
+.env.*
+!.env.example
+.envrc
+.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+.hf_token
+secrets/
+credentials/
+# Source code dirs for the CredentialSource abstraction (plan.md) — code, never secrets.
+!src/providers/credentials/
+!tests/unit/providers/credentials/
+credentials.json
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# ─── Logs ───
+*.log
+logs/
+
+# ─── Personal scratch space (pre-ignored so adopting the habit later needs no .gitignore edit) ───
+.scratch/
+
+# ─── Claude Code local/session state — narrow, so agents/ & skills/ stay committed if you add them ───
+.claude/settings.local.json
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+
+# ─── Local working notes and personal process skills: kept on the machine, not in the repo ───
+HANDOFF.md
+.claude/skills/salience/
+.claude/skills/grilling/
+.claude/skills/grill-me/
+.claude/skills/anti-ai-writing/
+.claude/skills/context-preservation/
+.claude/skills/embody-dont-announce/
+
+# ─── Node (inert until this becomes a JS/TS repo) ───
+node_modules/
+dist/
+dist-ssr/
+*.local
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── WXT / Playwright build and test output ───
+.output/
+.wxt/
+playwright-report/
+test-results/
+
+# ─── Spike audio and results: real meeting audio never leaves the machine ───
+spikes/data/
+
+# ─── CodeGraph index: local per machine (CodeGraph's own .codegraph/.gitignore says the same) ───
+.codegraph/
+
+# ─── Python (inert until this becomes a Python repo) ───
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/

@@ -1,0 +1,9 @@
+{
+  "description": "C8: HTTP 503 → unavailable",
+  "status": 503,
+  "headers": {
+    "content-type": "application/json",
+    "x-request-id": "req_fixture_01"
+  },
+  "body": "{\"error\":{\"message\":\"The server is overloaded or not ready yet.\",\"type\":\"server_error\",\"param\":null,\"code\":null}}"
+}

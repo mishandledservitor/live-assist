@@ -1,0 +1,133 @@
+/* Transcripts screen (012): the list of stored meetings and one meeting's transcript. A flex column in which only the
+   list or the transcript scrolls; every scroll container is positioned, so visually hidden text inside it cannot
+   stretch the page (006 FR-023). */
+
+.transcripts-screen {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.transcripts-list {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.transcripts-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.transcripts-list > p {
+  color: var(--muted);
+}
+
+.transcripts-list > p[role='alert'] {
+  color: var(--error);
+}
+
+/* A row: the meeting's title when it has one, the date line under it, each on one line, then marker, names and
+   actions wrapping beneath (320 px). Title and date line are one control. */
+
+.meeting-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  padding: 8px 2px;
+  border-bottom: 1px solid var(--line);
+}
+
+.meeting-open {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  text-align: left;
+}
+
+.meeting-open:hover {
+  text-decoration: underline;
+}
+
+/* A title never wraps and never widens the row or the page (FR-031, 006 FR-023): it is cut with an ellipsis, and the
+   whole of it is in the control's accessible name and on hover. */
+.meeting-title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.meeting-when {
+  display: block;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Under a title the date line is the second line, not the row's name. */
+.meeting-title + .meeting-when {
+  font-weight: 400;
+}
+
+/* The heading over one meeting: its title can shrink beside Back instead of pushing the bar wider. */
+.transcripts-screen .screen-bar h2 {
+  min-width: 0;
+}
+
+.transcripts-screen .screen-bar h2 .meeting-title + .meeting-when {
+  font-size: 13px;
+}
+
+.meeting-marker {
+  font-size: 12px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.meeting-names,
+.meeting-empty {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.meeting-actions {
+  flex-basis: 100%;
+  padding-top: 4px;
+}
+
+.meeting-actions button {
+  font-size: 13px;
+}
+
+/* One meeting: its actions stay under the title while the transcript scrolls. */
+
+.past-transcript {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.past-actions {
+  padding: 6px 0;
+}
+
+.past-transcript > p {
+  color: var(--muted);
+}

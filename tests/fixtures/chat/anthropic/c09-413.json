@@ -1,0 +1,9 @@
+{
+  "description": "C9: HTTP 413 → too-large",
+  "status": 413,
+  "headers": {
+    "content-type": "application/json",
+    "request-id": "req_fixture_01"
+  },
+  "body": "{\"type\":\"error\",\"error\":{\"type\":\"request_too_large\",\"message\":\"Request exceeds the maximum allowed number of bytes.\"},\"request_id\":\"req_fixture_01\"}"
+}

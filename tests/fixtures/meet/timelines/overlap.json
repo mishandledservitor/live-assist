@@ -1,0 +1,170 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2300,
+        2800,
+        3300
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        6800,
+        7300,
+        7800,
+        8300,
+        8800,
+        9300
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        6900,
+        7400,
+        7900,
+        8400,
+        8900,
+        9100
+      ]
+    },
+    {
+      "turnKey": "p1:4",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        12800,
+        13300,
+        13800,
+        14300
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "overlap:mixed:0",
+      "startMs": 1000,
+      "endMs": 3000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1400,
+          "endMs": 1800
+        },
+        {
+          "text": "w2",
+          "startMs": 1800,
+          "endMs": 2200
+        },
+        {
+          "text": "w3",
+          "startMs": 2200,
+          "endMs": 2600
+        },
+        {
+          "text": "w4",
+          "startMs": 2600,
+          "endMs": 3000
+        }
+      ]
+    },
+    {
+      "id": "overlap:mixed:1",
+      "startMs": 6000,
+      "endMs": 9000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 6000,
+          "endMs": 6429
+        },
+        {
+          "text": "w1",
+          "startMs": 6429,
+          "endMs": 6857
+        },
+        {
+          "text": "w2",
+          "startMs": 6857,
+          "endMs": 7286
+        },
+        {
+          "text": "w3",
+          "startMs": 7286,
+          "endMs": 7714
+        },
+        {
+          "text": "w4",
+          "startMs": 7714,
+          "endMs": 8143
+        },
+        {
+          "text": "w5",
+          "startMs": 8143,
+          "endMs": 8571
+        },
+        {
+          "text": "w6",
+          "startMs": 8571,
+          "endMs": 9000
+        }
+      ]
+    },
+    {
+      "id": "overlap:mixed:2",
+      "startMs": 12000,
+      "endMs": 14000,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 12000,
+          "endMs": 12400
+        },
+        {
+          "text": "w1",
+          "startMs": 12400,
+          "endMs": 12800
+        },
+        {
+          "text": "w2",
+          "startMs": 12800,
+          "endMs": 13200
+        },
+        {
+          "text": "w3",
+          "startMs": 13200,
+          "endMs": 13600
+        },
+        {
+          "text": "w4",
+          "startMs": 13600,
+          "endMs": 14000
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "overlap:mixed:0": "Emma Jones",
+    "overlap:mixed:1": "Others",
+    "overlap:mixed:2": "Tom Brown"
+  }
+}

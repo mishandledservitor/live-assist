@@ -1,0 +1,9 @@
+{
+  "description": "C7 (Anthropic billing, research R4): HTTP 402 → billing",
+  "status": 402,
+  "headers": {
+    "content-type": "application/json",
+    "request-id": "req_fixture_01"
+  },
+  "body": "{\"type\":\"error\",\"error\":{\"type\":\"billing_error\",\"message\":\"Your credit balance is too low to access the Anthropic API.\"},\"request_id\":\"req_fixture_01\"}"
+}

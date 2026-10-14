@@ -1,0 +1,9 @@
+{
+  "description": "C3: safety decline after partial output; the partial is discarded",
+  "status": 200,
+  "headers": {
+    "content-type": "text/event-stream; charset=utf-8"
+  },
+  "body": "event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"id\":\"msg_fixture_01\",\"type\":\"message\",\"role\":\"assistant\",\"model\":\"claude-haiku-5-5\",\"content\":[],\"stop_reason\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":1820,\"output_tokens\":1,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":1536}}}\n\nevent: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":0,\"content_block\":{\"type\":\"text\",\"text\":\"\"}}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"text_delta\",\"text\":\"Someone (not identified) said \"}}\n\nevent: content_block_stop\ndata: {\"type\":\"content_block_stop\",\"index\":0}\n\nevent: message_delta\ndata: {\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"refusal\",\"stop_sequence\":null,\"stop_details\":{\"type\":\"refusal\",\"category\":null,\"explanation\":null}},\"usage\":{\"output_tokens\":6}}\n\nevent: message_stop\ndata: {\"type\":\"message_stop\"}\n\n",
+  "model": "claude-haiku-5-5"
+}

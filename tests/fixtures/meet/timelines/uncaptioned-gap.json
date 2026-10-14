@@ -1,0 +1,521 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p5:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        2500,
+        2900,
+        3200,
+        3650,
+        4000,
+        4500,
+        4900,
+        5200,
+        5750,
+        6150,
+        6450,
+        6900,
+        7250,
+        7750,
+        8150,
+        8450,
+        9000,
+        9400,
+        9700,
+        10150,
+        10500,
+        11000,
+        11400,
+        11500,
+        25500,
+        26000,
+        26400,
+        26700,
+        27250,
+        27650,
+        27950,
+        28400,
+        28750,
+        29250,
+        29650,
+        29950,
+        30500,
+        30900,
+        31200,
+        31650,
+        32000,
+        32500,
+        32900,
+        33200,
+        33750,
+        34150,
+        34450,
+        34900,
+        35250,
+        35500
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "uncaptioned-gap:mixed:0",
+      "startMs": 1000,
+      "endMs": 5260,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1300
+        },
+        {
+          "text": "w1",
+          "startMs": 1360,
+          "endMs": 1660
+        },
+        {
+          "text": "w2",
+          "startMs": 1720,
+          "endMs": 2020
+        },
+        {
+          "text": "w3",
+          "startMs": 2080,
+          "endMs": 2380
+        },
+        {
+          "text": "w4",
+          "startMs": 2440,
+          "endMs": 2740
+        },
+        {
+          "text": "w5",
+          "startMs": 2800,
+          "endMs": 3100
+        },
+        {
+          "text": "w6",
+          "startMs": 3160,
+          "endMs": 3460
+        },
+        {
+          "text": "w7",
+          "startMs": 3520,
+          "endMs": 3820
+        },
+        {
+          "text": "w8",
+          "startMs": 3880,
+          "endMs": 4180
+        },
+        {
+          "text": "w9",
+          "startMs": 4240,
+          "endMs": 4540
+        },
+        {
+          "text": "w10",
+          "startMs": 4600,
+          "endMs": 4900
+        },
+        {
+          "text": "w11",
+          "startMs": 4960,
+          "endMs": 5260
+        }
+      ]
+    },
+    {
+      "id": "uncaptioned-gap:mixed:1",
+      "startMs": 5500,
+      "endMs": 9760,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 5500,
+          "endMs": 5800
+        },
+        {
+          "text": "w1",
+          "startMs": 5860,
+          "endMs": 6160
+        },
+        {
+          "text": "w2",
+          "startMs": 6220,
+          "endMs": 6520
+        },
+        {
+          "text": "w3",
+          "startMs": 6580,
+          "endMs": 6880
+        },
+        {
+          "text": "w4",
+          "startMs": 6940,
+          "endMs": 7240
+        },
+        {
+          "text": "w5",
+          "startMs": 7300,
+          "endMs": 7600
+        },
+        {
+          "text": "w6",
+          "startMs": 7660,
+          "endMs": 7960
+        },
+        {
+          "text": "w7",
+          "startMs": 8020,
+          "endMs": 8320
+        },
+        {
+          "text": "w8",
+          "startMs": 8380,
+          "endMs": 8680
+        },
+        {
+          "text": "w9",
+          "startMs": 8740,
+          "endMs": 9040
+        },
+        {
+          "text": "w10",
+          "startMs": 9100,
+          "endMs": 9400
+        },
+        {
+          "text": "w11",
+          "startMs": 9460,
+          "endMs": 9760
+        }
+      ]
+    },
+    {
+      "id": "uncaptioned-gap:mixed:2",
+      "startMs": 12000,
+      "endMs": 16980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 12000,
+          "endMs": 12300
+        },
+        {
+          "text": "w1",
+          "startMs": 12360,
+          "endMs": 12660
+        },
+        {
+          "text": "w2",
+          "startMs": 12720,
+          "endMs": 13020
+        },
+        {
+          "text": "w3",
+          "startMs": 13080,
+          "endMs": 13380
+        },
+        {
+          "text": "w4",
+          "startMs": 13440,
+          "endMs": 13740
+        },
+        {
+          "text": "w5",
+          "startMs": 13800,
+          "endMs": 14100
+        },
+        {
+          "text": "w6",
+          "startMs": 14160,
+          "endMs": 14460
+        },
+        {
+          "text": "w7",
+          "startMs": 14520,
+          "endMs": 14820
+        },
+        {
+          "text": "w8",
+          "startMs": 14880,
+          "endMs": 15180
+        },
+        {
+          "text": "w9",
+          "startMs": 15240,
+          "endMs": 15540
+        },
+        {
+          "text": "w10",
+          "startMs": 15600,
+          "endMs": 15900
+        },
+        {
+          "text": "w11",
+          "startMs": 15960,
+          "endMs": 16260
+        },
+        {
+          "text": "w12",
+          "startMs": 16320,
+          "endMs": 16620
+        },
+        {
+          "text": "w13",
+          "startMs": 16680,
+          "endMs": 16980
+        }
+      ]
+    },
+    {
+      "id": "uncaptioned-gap:mixed:3",
+      "startMs": 17000,
+      "endMs": 21980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 17000,
+          "endMs": 17300
+        },
+        {
+          "text": "w1",
+          "startMs": 17360,
+          "endMs": 17660
+        },
+        {
+          "text": "w2",
+          "startMs": 17720,
+          "endMs": 18020
+        },
+        {
+          "text": "w3",
+          "startMs": 18080,
+          "endMs": 18380
+        },
+        {
+          "text": "w4",
+          "startMs": 18440,
+          "endMs": 18740
+        },
+        {
+          "text": "w5",
+          "startMs": 18800,
+          "endMs": 19100
+        },
+        {
+          "text": "w6",
+          "startMs": 19160,
+          "endMs": 19460
+        },
+        {
+          "text": "w7",
+          "startMs": 19520,
+          "endMs": 19820
+        },
+        {
+          "text": "w8",
+          "startMs": 19880,
+          "endMs": 20180
+        },
+        {
+          "text": "w9",
+          "startMs": 20240,
+          "endMs": 20540
+        },
+        {
+          "text": "w10",
+          "startMs": 20600,
+          "endMs": 20900
+        },
+        {
+          "text": "w11",
+          "startMs": 20960,
+          "endMs": 21260
+        },
+        {
+          "text": "w12",
+          "startMs": 21320,
+          "endMs": 21620
+        },
+        {
+          "text": "w13",
+          "startMs": 21680,
+          "endMs": 21980
+        }
+      ]
+    },
+    {
+      "id": "uncaptioned-gap:mixed:4",
+      "startMs": 24000,
+      "endMs": 28980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 24000,
+          "endMs": 24300
+        },
+        {
+          "text": "w1",
+          "startMs": 24360,
+          "endMs": 24660
+        },
+        {
+          "text": "w2",
+          "startMs": 24720,
+          "endMs": 25020
+        },
+        {
+          "text": "w3",
+          "startMs": 25080,
+          "endMs": 25380
+        },
+        {
+          "text": "w4",
+          "startMs": 25440,
+          "endMs": 25740
+        },
+        {
+          "text": "w5",
+          "startMs": 25800,
+          "endMs": 26100
+        },
+        {
+          "text": "w6",
+          "startMs": 26160,
+          "endMs": 26460
+        },
+        {
+          "text": "w7",
+          "startMs": 26520,
+          "endMs": 26820
+        },
+        {
+          "text": "w8",
+          "startMs": 26880,
+          "endMs": 27180
+        },
+        {
+          "text": "w9",
+          "startMs": 27240,
+          "endMs": 27540
+        },
+        {
+          "text": "w10",
+          "startMs": 27600,
+          "endMs": 27900
+        },
+        {
+          "text": "w11",
+          "startMs": 27960,
+          "endMs": 28260
+        },
+        {
+          "text": "w12",
+          "startMs": 28320,
+          "endMs": 28620
+        },
+        {
+          "text": "w13",
+          "startMs": 28680,
+          "endMs": 28980
+        }
+      ]
+    },
+    {
+      "id": "uncaptioned-gap:mixed:5",
+      "startMs": 29000,
+      "endMs": 33980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 29000,
+          "endMs": 29300
+        },
+        {
+          "text": "w1",
+          "startMs": 29360,
+          "endMs": 29660
+        },
+        {
+          "text": "w2",
+          "startMs": 29720,
+          "endMs": 30020
+        },
+        {
+          "text": "w3",
+          "startMs": 30080,
+          "endMs": 30380
+        },
+        {
+          "text": "w4",
+          "startMs": 30440,
+          "endMs": 30740
+        },
+        {
+          "text": "w5",
+          "startMs": 30800,
+          "endMs": 31100
+        },
+        {
+          "text": "w6",
+          "startMs": 31160,
+          "endMs": 31460
+        },
+        {
+          "text": "w7",
+          "startMs": 31520,
+          "endMs": 31820
+        },
+        {
+          "text": "w8",
+          "startMs": 31880,
+          "endMs": 32180
+        },
+        {
+          "text": "w9",
+          "startMs": 32240,
+          "endMs": 32540
+        },
+        {
+          "text": "w10",
+          "startMs": 32600,
+          "endMs": 32900
+        },
+        {
+          "text": "w11",
+          "startMs": 32960,
+          "endMs": 33260
+        },
+        {
+          "text": "w12",
+          "startMs": 33320,
+          "endMs": 33620
+        },
+        {
+          "text": "w13",
+          "startMs": 33680,
+          "endMs": 33980
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "uncaptioned-gap:mixed:0": "Emma Jones",
+    "uncaptioned-gap:mixed:1": "Emma Jones",
+    "uncaptioned-gap:mixed:2": "Others",
+    "uncaptioned-gap:mixed:3": "Others",
+    "uncaptioned-gap:mixed:4": "Emma Jones",
+    "uncaptioned-gap:mixed:5": "Emma Jones"
+  }
+}

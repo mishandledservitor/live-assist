@@ -1,0 +1,60 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p1:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2300,
+        2800,
+        3300,
+        3800,
+        4300
+      ]
+    },
+    {
+      "turnKey": "p1:2",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        8800,
+        9300,
+        9800
+      ]
+    },
+    {
+      "turnKey": "p1:3",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        10800,
+        11300,
+        11800,
+        12300
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "est:mixed:0",
+      "startMs": 1000,
+      "endMs": 4000,
+      "timing": "estimated",
+      "words": []
+    },
+    {
+      "id": "est:mixed:1",
+      "startMs": 8000,
+      "endMs": 12000,
+      "timing": "estimated",
+      "words": []
+    }
+  ],
+  "expected": {
+    "est:mixed:0": "Emma Jones",
+    "est:mixed:1": "Others"
+  }
+}

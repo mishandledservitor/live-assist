@@ -1,0 +1,1350 @@
+{
+  "format": "live-assist-alignment-trace/2",
+  "userName": "The user",
+  "meetingStartedAtMs": 1791530795147,
+  "captions": [
+    {
+      "turnKey": "0b23fe56:1",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        2473,
+        2806,
+        3373,
+        3690,
+        4069,
+        13166,
+        13500,
+        13834,
+        14167,
+        14501,
+        14835,
+        15168,
+        15502,
+        15836,
+        16185,
+        16736,
+        17820,
+        18155,
+        18488,
+        18972,
+        20173,
+        20974,
+        21374,
+        21708,
+        22075,
+        24894,
+        25228,
+        25562,
+        26462,
+        26963,
+        28171,
+        45832,
+        46166,
+        46499,
+        46834,
+        47368,
+        47700,
+        48051,
+        49670
+      ]
+    },
+    {
+      "turnKey": "0b23fe56:2",
+      "speakerName": "Participant A",
+      "self": null,
+      "observedAtMs": [
+        65085,
+        65418,
+        66085,
+        66412,
+        69672,
+        70007,
+        70340,
+        70673,
+        71007,
+        71341,
+        71675,
+        72025,
+        72726,
+        75153,
+        75488,
+        76813,
+        77781,
+        78114,
+        78632,
+        83886,
+        84286,
+        84621,
+        84954,
+        85288,
+        85639,
+        86522,
+        86856,
+        87191,
+        87623,
+        88091,
+        88491,
+        88825,
+        91260,
+        91611,
+        91944,
+        92278,
+        92645,
+        92995,
+        93396,
+        93729,
+        94063,
+        97250,
+        97583,
+        97917,
+        98251,
+        98601,
+        98935,
+        99368,
+        99702,
+        100037,
+        100670,
+        101583,
+        101921,
+        102306,
+        102641,
+        104373,
+        104707,
+        105041,
+        105575,
+        110996,
+        111330,
+        111897,
+        113832,
+        114166,
+        114501,
+        114833,
+        115534,
+        115869,
+        116202,
+        116535,
+        116869,
+        117203,
+        117536,
+        117870,
+        133869,
+        134203,
+        137172,
+        137539,
+        137873,
+        138207,
+        138540,
+        138866,
+        142394,
+        142728,
+        143061,
+        143445,
+        143779,
+        149735,
+        150069,
+        150402,
+        150752,
+        151086,
+        151405,
+        151753,
+        152087,
+        152421,
+        156911,
+        157409,
+        157776,
+        158126,
+        158443,
+        158777,
+        159127,
+        159461,
+        159795,
+        160128,
+        160596,
+        161254,
+        161597,
+        161922,
+        162264,
+        162598,
+        163641,
+        167286,
+        167687,
+        168136,
+        168470,
+        168804,
+        169129,
+        169472,
+        169796
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "seg-0",
+      "startMs": 1260,
+      "endMs": 2780,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1260,
+          "endMs": 1380
+        },
+        {
+          "text": "w1",
+          "startMs": 1440,
+          "endMs": 1940
+        },
+        {
+          "text": "w2",
+          "startMs": 2040,
+          "endMs": 2440
+        },
+        {
+          "text": "w3",
+          "startMs": 2540,
+          "endMs": 2780
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "$user",
+        "coverage": 1,
+        "shares": {
+          "$user": 1
+        }
+      }
+    },
+    {
+      "id": "seg-1",
+      "startMs": 12120,
+      "endMs": 21480,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 12120,
+          "endMs": 12320
+        },
+        {
+          "text": "w1",
+          "startMs": 12380,
+          "endMs": 12500
+        },
+        {
+          "text": "w2",
+          "startMs": 12580,
+          "endMs": 13140
+        },
+        {
+          "text": "w3",
+          "startMs": 13200,
+          "endMs": 13320
+        },
+        {
+          "text": "w4",
+          "startMs": 13360,
+          "endMs": 13680
+        },
+        {
+          "text": "w5",
+          "startMs": 13800,
+          "endMs": 13960
+        },
+        {
+          "text": "w6",
+          "startMs": 14080,
+          "endMs": 14220
+        },
+        {
+          "text": "w7",
+          "startMs": 14300,
+          "endMs": 14440
+        },
+        {
+          "text": "w8",
+          "startMs": 14500,
+          "endMs": 14700
+        },
+        {
+          "text": "w9",
+          "startMs": 14760,
+          "endMs": 14840
+        },
+        {
+          "text": "w10",
+          "startMs": 14880,
+          "endMs": 15480
+        },
+        {
+          "text": "w11",
+          "startMs": 16740,
+          "endMs": 16840
+        },
+        {
+          "text": "w12",
+          "startMs": 16880,
+          "endMs": 17060
+        },
+        {
+          "text": "w13",
+          "startMs": 17120,
+          "endMs": 17380
+        },
+        {
+          "text": "w14",
+          "startMs": 17420,
+          "endMs": 17560
+        },
+        {
+          "text": "w15",
+          "startMs": 17740,
+          "endMs": 18320
+        },
+        {
+          "text": "w16",
+          "startMs": 18740,
+          "endMs": 18760
+        },
+        {
+          "text": "w17",
+          "startMs": 20000,
+          "endMs": 20400
+        },
+        {
+          "text": "w18",
+          "startMs": 20460,
+          "endMs": 20600
+        },
+        {
+          "text": "w19",
+          "startMs": 20660,
+          "endMs": 20780
+        },
+        {
+          "text": "w20",
+          "startMs": 20940,
+          "endMs": 21480
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "$user",
+        "coverage": 1,
+        "shares": {
+          "$user": 1
+        }
+      }
+    },
+    {
+      "id": "seg-2",
+      "startMs": 23760,
+      "endMs": 26460,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 23760,
+          "endMs": 23860
+        },
+        {
+          "text": "w1",
+          "startMs": 23980,
+          "endMs": 24280
+        },
+        {
+          "text": "w2",
+          "startMs": 24320,
+          "endMs": 24880
+        },
+        {
+          "text": "w3",
+          "startMs": 24980,
+          "endMs": 25160
+        },
+        {
+          "text": "w4",
+          "startMs": 25240,
+          "endMs": 25380
+        },
+        {
+          "text": "w5",
+          "startMs": 25440,
+          "endMs": 25480
+        },
+        {
+          "text": "w6",
+          "startMs": 25640,
+          "endMs": 26460
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "$user",
+        "coverage": 1,
+        "shares": {
+          "$user": 1
+        }
+      }
+    },
+    {
+      "id": "seg-3",
+      "startMs": 44100,
+      "endMs": 47440,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 44100,
+          "endMs": 44300
+        },
+        {
+          "text": "w1",
+          "startMs": 44420,
+          "endMs": 44500
+        },
+        {
+          "text": "w2",
+          "startMs": 44560,
+          "endMs": 44860
+        },
+        {
+          "text": "w3",
+          "startMs": 44900,
+          "endMs": 45000
+        },
+        {
+          "text": "w4",
+          "startMs": 45060,
+          "endMs": 45320
+        },
+        {
+          "text": "w5",
+          "startMs": 45360,
+          "endMs": 45480
+        },
+        {
+          "text": "w6",
+          "startMs": 45540,
+          "endMs": 46000
+        },
+        {
+          "text": "w7",
+          "startMs": 46340,
+          "endMs": 46341
+        },
+        {
+          "text": "w8",
+          "startMs": 46341,
+          "endMs": 46500
+        },
+        {
+          "text": "w9",
+          "startMs": 46560,
+          "endMs": 46760
+        },
+        {
+          "text": "w10",
+          "startMs": 46800,
+          "endMs": 46840
+        },
+        {
+          "text": "w11",
+          "startMs": 46880,
+          "endMs": 47440
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "$user",
+        "coverage": 1,
+        "shares": {
+          "$user": 1
+        }
+      }
+    },
+    {
+      "id": "seg-4",
+      "startMs": 62360,
+      "endMs": 66100,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 62360,
+          "endMs": 62440
+        },
+        {
+          "text": "w1",
+          "startMs": 62460,
+          "endMs": 62620
+        },
+        {
+          "text": "w2",
+          "startMs": 62860,
+          "endMs": 63380
+        },
+        {
+          "text": "w3",
+          "startMs": 63860,
+          "endMs": 64040
+        },
+        {
+          "text": "w4",
+          "startMs": 64160,
+          "endMs": 64420
+        },
+        {
+          "text": "w5",
+          "startMs": 64460,
+          "endMs": 64840
+        },
+        {
+          "text": "w6",
+          "startMs": 64919,
+          "endMs": 65240
+        },
+        {
+          "text": "w7",
+          "startMs": 65660,
+          "endMs": 66100
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 0.8,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-5",
+      "startMs": 69036,
+      "endMs": 71816,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 69036,
+          "endMs": 69136
+        },
+        {
+          "text": "w1",
+          "startMs": 69256,
+          "endMs": 69376
+        },
+        {
+          "text": "w2",
+          "startMs": 69416,
+          "endMs": 69496
+        },
+        {
+          "text": "w3",
+          "startMs": 69536,
+          "endMs": 69696
+        },
+        {
+          "text": "w4",
+          "startMs": 69736,
+          "endMs": 70256
+        },
+        {
+          "text": "w5",
+          "startMs": 70276,
+          "endMs": 70436
+        },
+        {
+          "text": "w6",
+          "startMs": 70516,
+          "endMs": 70616
+        },
+        {
+          "text": "w7",
+          "startMs": 70656,
+          "endMs": 70856
+        },
+        {
+          "text": "w8",
+          "startMs": 70876,
+          "endMs": 71016
+        },
+        {
+          "text": "w9",
+          "startMs": 71056,
+          "endMs": 71116
+        },
+        {
+          "text": "w10",
+          "startMs": 71156,
+          "endMs": 71316
+        },
+        {
+          "text": "w11",
+          "startMs": 71356,
+          "endMs": 71816
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-6",
+      "startMs": 74736,
+      "endMs": 78236,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 74736,
+          "endMs": 74816
+        },
+        {
+          "text": "w1",
+          "startMs": 74876,
+          "endMs": 75136
+        },
+        {
+          "text": "w2",
+          "startMs": 76116,
+          "endMs": 76755
+        },
+        {
+          "text": "w3",
+          "startMs": 77316,
+          "endMs": 77396
+        },
+        {
+          "text": "w4",
+          "startMs": 77436,
+          "endMs": 77696
+        },
+        {
+          "text": "w5",
+          "startMs": 77856,
+          "endMs": 78236
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-7",
+      "startMs": 83044,
+      "endMs": 88744,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 83044,
+          "endMs": 83664
+        },
+        {
+          "text": "w1",
+          "startMs": 83744,
+          "endMs": 83864
+        },
+        {
+          "text": "w2",
+          "startMs": 83924,
+          "endMs": 84044
+        },
+        {
+          "text": "w3",
+          "startMs": 84084,
+          "endMs": 84224
+        },
+        {
+          "text": "w4",
+          "startMs": 84384,
+          "endMs": 84844
+        },
+        {
+          "text": "w5",
+          "startMs": 85024,
+          "endMs": 85604
+        },
+        {
+          "text": "w6",
+          "startMs": 85844,
+          "endMs": 85984
+        },
+        {
+          "text": "w7",
+          "startMs": 86044,
+          "endMs": 86464
+        },
+        {
+          "text": "w8",
+          "startMs": 86684,
+          "endMs": 86904
+        },
+        {
+          "text": "w9",
+          "startMs": 87184,
+          "endMs": 87944
+        },
+        {
+          "text": "w10",
+          "startMs": 88004,
+          "endMs": 88124
+        },
+        {
+          "text": "w11",
+          "startMs": 88164,
+          "endMs": 88264
+        },
+        {
+          "text": "w12",
+          "startMs": 88364,
+          "endMs": 88744
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-8",
+      "startMs": 90764,
+      "endMs": 93844,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 90764,
+          "endMs": 90984
+        },
+        {
+          "text": "w1",
+          "startMs": 91124,
+          "endMs": 91244
+        },
+        {
+          "text": "w2",
+          "startMs": 91284,
+          "endMs": 91424
+        },
+        {
+          "text": "w3",
+          "startMs": 91504,
+          "endMs": 91664
+        },
+        {
+          "text": "w4",
+          "startMs": 91764,
+          "endMs": 91984
+        },
+        {
+          "text": "w5",
+          "startMs": 92084,
+          "endMs": 92504
+        },
+        {
+          "text": "w6",
+          "startMs": 92624,
+          "endMs": 92744
+        },
+        {
+          "text": "w7",
+          "startMs": 92804,
+          "endMs": 93064
+        },
+        {
+          "text": "w8",
+          "startMs": 93104,
+          "endMs": 93284
+        },
+        {
+          "text": "w9",
+          "startMs": 93364,
+          "endMs": 93844
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-9",
+      "startMs": 96024,
+      "endMs": 105484,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 96024,
+          "endMs": 96744
+        },
+        {
+          "text": "w1",
+          "startMs": 97084,
+          "endMs": 97324
+        },
+        {
+          "text": "w2",
+          "startMs": 97384,
+          "endMs": 98044
+        },
+        {
+          "text": "w3",
+          "startMs": 98184,
+          "endMs": 98284
+        },
+        {
+          "text": "w4",
+          "startMs": 98324,
+          "endMs": 98784
+        },
+        {
+          "text": "w5",
+          "startMs": 98804,
+          "endMs": 98924
+        },
+        {
+          "text": "w6",
+          "startMs": 98964,
+          "endMs": 99084
+        },
+        {
+          "text": "w7",
+          "startMs": 99124,
+          "endMs": 99804
+        },
+        {
+          "text": "w8",
+          "startMs": 101044,
+          "endMs": 101264
+        },
+        {
+          "text": "w9",
+          "startMs": 101304,
+          "endMs": 101564
+        },
+        {
+          "text": "w10",
+          "startMs": 101604,
+          "endMs": 101684
+        },
+        {
+          "text": "w11",
+          "startMs": 101824,
+          "endMs": 102364
+        },
+        {
+          "text": "w12",
+          "startMs": 103724,
+          "endMs": 104044
+        },
+        {
+          "text": "w13",
+          "startMs": 104104,
+          "endMs": 104324
+        },
+        {
+          "text": "w14",
+          "startMs": 104424,
+          "endMs": 105484
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-10",
+      "startMs": 109144,
+      "endMs": 110484,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 109144,
+          "endMs": 109504
+        },
+        {
+          "text": "w1",
+          "startMs": 109564,
+          "endMs": 109884
+        },
+        {
+          "text": "w2",
+          "startMs": 109944,
+          "endMs": 110484
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-11",
+      "startMs": 113521,
+      "endMs": 117861,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 113521,
+          "endMs": 113561
+        },
+        {
+          "text": "w1",
+          "startMs": 113581,
+          "endMs": 113821
+        },
+        {
+          "text": "w2",
+          "startMs": 113861,
+          "endMs": 114801
+        },
+        {
+          "text": "w3",
+          "startMs": 115081,
+          "endMs": 115421
+        },
+        {
+          "text": "w4",
+          "startMs": 115461,
+          "endMs": 115961
+        },
+        {
+          "text": "w5",
+          "startMs": 116341,
+          "endMs": 116581
+        },
+        {
+          "text": "w6",
+          "startMs": 116701,
+          "endMs": 116761
+        },
+        {
+          "text": "w7",
+          "startMs": 116801,
+          "endMs": 117161
+        },
+        {
+          "text": "w8",
+          "startMs": 117321,
+          "endMs": 117861
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 0.85,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-12",
+      "startMs": 136821,
+      "endMs": 138441,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 136821,
+          "endMs": 137101
+        },
+        {
+          "text": "w1",
+          "startMs": 137141,
+          "endMs": 137261
+        },
+        {
+          "text": "w2",
+          "startMs": 137301,
+          "endMs": 137561
+        },
+        {
+          "text": "w3",
+          "startMs": 137661,
+          "endMs": 137741
+        },
+        {
+          "text": "w4",
+          "startMs": 137781,
+          "endMs": 137841
+        },
+        {
+          "text": "w5",
+          "startMs": 137881,
+          "endMs": 138141
+        },
+        {
+          "text": "w6",
+          "startMs": 138201,
+          "endMs": 138441
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-13",
+      "startMs": 142021,
+      "endMs": 143601,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 142021,
+          "endMs": 142181
+        },
+        {
+          "text": "w1",
+          "startMs": 142381,
+          "endMs": 142741
+        },
+        {
+          "text": "w2",
+          "startMs": 143021,
+          "endMs": 143161
+        },
+        {
+          "text": "w3",
+          "startMs": 143181,
+          "endMs": 143241
+        },
+        {
+          "text": "w4",
+          "startMs": 143281,
+          "endMs": 143601
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 0.69,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-14",
+      "startMs": 146241,
+      "endMs": 146781,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 146241,
+          "endMs": 146361
+        },
+        {
+          "text": "w1",
+          "startMs": 146401,
+          "endMs": 146781
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-15",
+      "startMs": 148661,
+      "endMs": 152401,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 148661,
+          "endMs": 149161
+        },
+        {
+          "text": "w1",
+          "startMs": 149381,
+          "endMs": 149581
+        },
+        {
+          "text": "w2",
+          "startMs": 149601,
+          "endMs": 149681
+        },
+        {
+          "text": "w3",
+          "startMs": 149741,
+          "endMs": 149981
+        },
+        {
+          "text": "w4",
+          "startMs": 150181,
+          "endMs": 150781
+        },
+        {
+          "text": "w5",
+          "startMs": 150961,
+          "endMs": 151081
+        },
+        {
+          "text": "w6",
+          "startMs": 151141,
+          "endMs": 151401
+        },
+        {
+          "text": "w7",
+          "startMs": 151441,
+          "endMs": 151541
+        },
+        {
+          "text": "w8",
+          "startMs": 151621,
+          "endMs": 151841
+        },
+        {
+          "text": "w9",
+          "startMs": 151960,
+          "endMs": 152401
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-16",
+      "startMs": 155481,
+      "endMs": 162601,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 155481,
+          "endMs": 156041
+        },
+        {
+          "text": "w1",
+          "startMs": 157101,
+          "endMs": 157361
+        },
+        {
+          "text": "w2",
+          "startMs": 157521,
+          "endMs": 157760
+        },
+        {
+          "text": "w3",
+          "startMs": 157781,
+          "endMs": 157881
+        },
+        {
+          "text": "w4",
+          "startMs": 157961,
+          "endMs": 158301
+        },
+        {
+          "text": "w5",
+          "startMs": 158401,
+          "endMs": 159041
+        },
+        {
+          "text": "w6",
+          "startMs": 159161,
+          "endMs": 159261
+        },
+        {
+          "text": "w7",
+          "startMs": 159301,
+          "endMs": 159401
+        },
+        {
+          "text": "w8",
+          "startMs": 159441,
+          "endMs": 159521
+        },
+        {
+          "text": "w9",
+          "startMs": 159541,
+          "endMs": 159821
+        },
+        {
+          "text": "w10",
+          "startMs": 159901,
+          "endMs": 160001
+        },
+        {
+          "text": "w11",
+          "startMs": 160061,
+          "endMs": 160461
+        },
+        {
+          "text": "w12",
+          "startMs": 160501,
+          "endMs": 160981
+        },
+        {
+          "text": "w13",
+          "startMs": 161081,
+          "endMs": 161181
+        },
+        {
+          "text": "w14",
+          "startMs": 161241,
+          "endMs": 161401
+        },
+        {
+          "text": "w15",
+          "startMs": 161461,
+          "endMs": 161681
+        },
+        {
+          "text": "w16",
+          "startMs": 161740,
+          "endMs": 161861
+        },
+        {
+          "text": "w17",
+          "startMs": 161941,
+          "endMs": 162121
+        },
+        {
+          "text": "w18",
+          "startMs": 162221,
+          "endMs": 162601
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-17",
+      "startMs": 166361,
+      "endMs": 169261,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 166361,
+          "endMs": 166461
+        },
+        {
+          "text": "w1",
+          "startMs": 167241,
+          "endMs": 167421
+        },
+        {
+          "text": "w2",
+          "startMs": 167481,
+          "endMs": 167521
+        },
+        {
+          "text": "w3",
+          "startMs": 167581,
+          "endMs": 167821
+        },
+        {
+          "text": "w4",
+          "startMs": 168701,
+          "endMs": 168901
+        },
+        {
+          "text": "w5",
+          "startMs": 168961,
+          "endMs": 169261
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    }
+  ]
+}

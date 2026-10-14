@@ -1,0 +1,9 @@
+{
+  "description": "C8: HTTP 529 → overloaded",
+  "status": 529,
+  "headers": {
+    "content-type": "application/json",
+    "request-id": "req_fixture_01"
+  },
+  "body": "{\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_fixture_01\"}"
+}

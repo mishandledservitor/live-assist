@@ -1,0 +1,9 @@
+{
+  "description": "C3: safety decline before any output (Haiku 5.5 has no fallback): stop_reason refusal",
+  "status": 200,
+  "headers": {
+    "content-type": "text/event-stream; charset=utf-8"
+  },
+  "body": "event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"id\":\"msg_fixture_01\",\"type\":\"message\",\"role\":\"assistant\",\"model\":\"claude-haiku-5-5\",\"content\":[],\"stop_reason\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":1820,\"output_tokens\":1,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":1536}}}\n\nevent: message_delta\ndata: {\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"refusal\",\"stop_sequence\":null,\"stop_details\":{\"type\":\"refusal\",\"category\":\"general_harms\",\"explanation\":null}},\"usage\":{\"output_tokens\":0}}\n\nevent: message_stop\ndata: {\"type\":\"message_stop\"}\n\n",
+  "model": "claude-haiku-5-5"
+}

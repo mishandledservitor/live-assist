@@ -1,0 +1,13 @@
+.output/
+.wxt/
+node_modules/
+pnpm-lock.yaml
+playwright-report/
+test-results/
+spikes/data/
+.codegraph/
+.specify/
+.claude/
+specs/
+*.md
+tests/fixtures/

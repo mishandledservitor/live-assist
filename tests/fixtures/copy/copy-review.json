@@ -1,0 +1,592 @@
+{
+  "$comment": "copy-review.md Delete/Rewrite entries (feature 006). absent: fragments no user-facing literal may contain; present: fragments some literal must contain; dom: checked on the rendered DOM, not by the text scan.",
+  "entries": [
+    {
+      "id": "D1",
+      "enabled": true,
+      "absent": [
+        "one stream: meeting tab and your microphone"
+      ],
+      "present": []
+    },
+    {
+      "id": "D2",
+      "enabled": true,
+      "absent": [
+        "(reconnected "
+      ],
+      "present": []
+    },
+    {
+      "id": "D3",
+      "enabled": true,
+      "absent": [
+        "Speaker names start with transcription"
+      ],
+      "present": []
+    },
+    {
+      "id": "D4",
+      "enabled": true,
+      "absent": [
+        "New lines are labelled Others"
+      ],
+      "present": []
+    },
+    {
+      "id": "D5",
+      "enabled": true,
+      "absent": [
+        "session time limit reached"
+      ],
+      "present": []
+    },
+    {
+      "id": "D6",
+      "enabled": true,
+      "absent": [
+        "The transcript so far is kept"
+      ],
+      "present": []
+    },
+    {
+      "id": "D7",
+      "enabled": true,
+      "absent": [
+        "ElevenLabs reports no credit allowance for this plan"
+      ],
+      "present": []
+    },
+    {
+      "id": "D8",
+      "enabled": true,
+      "absent": [
+        "There is no estimate of transcription minutes"
+      ],
+      "present": []
+    },
+    {
+      "id": "D9",
+      "enabled": true,
+      "dom": true,
+      "absent": [
+        "Details"
+      ],
+      "present": []
+    },
+    {
+      "id": "D10",
+      "enabled": true,
+      "absent": [
+        "If Chrome blocked the microphone, allow it again here"
+      ],
+      "present": []
+    },
+    {
+      "id": "D11",
+      "enabled": true,
+      "dom": true,
+      "absent": [
+        "Your name"
+      ],
+      "present": []
+    },
+    {
+      "id": "D12",
+      "enabled": true,
+      "dom": true,
+      "absent": [
+        "Retention",
+        "What ElevenLabs keeps"
+      ],
+      "present": []
+    },
+    {
+      "id": "R1",
+      "enabled": true,
+      "absent": [
+        "Live meeting transcript in a side panel"
+      ],
+      "present": [
+        "Transcribes your meeting live and names speakers from Google Meet captions."
+      ]
+    },
+    {
+      "id": "R2",
+      "enabled": true,
+      "absent": [
+        "Only one meeting can be transcribed at a time"
+      ],
+      "present": [
+        "Already transcribing ",
+        "another tab"
+      ]
+    },
+    {
+      "id": "R3",
+      "enabled": true,
+      "absent": [
+        "Chrome does not allow it on its own pages or the Web Store"
+      ],
+      "present": [
+        "This tab can't be captured. Go to your meeting tab, click the live-assist icon there, then press Start."
+      ]
+    },
+    {
+      "id": "R4",
+      "enabled": true,
+      "absent": [
+        "Automatic (detect)"
+      ],
+      "present": [
+        "Auto-detect"
+      ]
+    },
+    {
+      "id": "R5",
+      "enabled": true,
+      "absent": [
+        "one stream: meeting tab and your microphone",
+        "(reconnected "
+      ],
+      "present": [
+        "Transcribing"
+      ]
+    },
+    {
+      "id": "R6",
+      "enabled": true,
+      "absent": [
+        "Active — names from Meet captions",
+        "names from Meet captions"
+      ],
+      "present": [
+        "On"
+      ]
+    },
+    {
+      "id": "R7",
+      "enabled": true,
+      "absent": [
+        "New lines are labelled Others"
+      ],
+      "present": [
+        "Unavailable"
+      ]
+    },
+    {
+      "id": "R8",
+      "enabled": true,
+      "absent": [
+        "Not available here",
+        "every line is labelled Others"
+      ],
+      "present": [
+        "Not available"
+      ]
+    },
+    {
+      "id": "R9",
+      "enabled": true,
+      "absent": [
+        "every line is labelled \"Others\""
+      ],
+      "present": [
+        "Speaker names work on Google Meet only."
+      ]
+    },
+    {
+      "id": "R10",
+      "enabled": true,
+      "absent": [
+        "new lines are labelled Others"
+      ],
+      "present": [
+        "No captions seen for a while"
+      ]
+    },
+    {
+      "id": "R11",
+      "enabled": true,
+      "absent": [
+        "follows Meet's mute"
+      ],
+      "present": [
+        "Live"
+      ]
+    },
+    {
+      "id": "R12",
+      "enabled": true,
+      "absent": [
+        "mute state unknown — mic is being sent"
+      ],
+      "present": [
+        "sent even while muted"
+      ]
+    },
+    {
+      "id": "R13",
+      "enabled": true,
+      "absent": [
+        "open Settings and press \"Allow microphone\""
+      ],
+      "present": [
+        "Microphone permission needed. ",
+        "Only the meeting tab is being transcribed; your own speech is not."
+      ]
+    },
+    {
+      "id": "R14",
+      "enabled": true,
+      "absent": [
+        "Connection to ElevenLabs lost — reconnecting"
+      ],
+      "present": [
+        "Connection to ElevenLabs lost"
+      ]
+    },
+    {
+      "id": "R15",
+      "enabled": true,
+      "absent": [
+        "The transcript so far is kept"
+      ],
+      "present": [
+        "ElevenLabs rejected the API key — check or replace it in Settings, then press Start again.",
+        "Your ElevenLabs quota is used up — add credits or change plan in your ElevenLabs account, then press Start again.",
+        "ElevenLabs needs you to accept its terms — sign in to your ElevenLabs account and accept them, then press Start again.",
+        "Internal error talking to ElevenLabs — press Start again; if it keeps happening, report it.",
+        "Could not reconnect to ElevenLabs for about a minute — check your internet connection, then press Start again."
+      ]
+    },
+    {
+      "id": "R16",
+      "enabled": true,
+      "absent": [
+        "unless you turn off \"Improve the models for everyone\" in your ElevenLabs account"
+      ],
+      "present": [
+        "Audio is sent to ElevenLabs for transcription. ElevenLabs may keep audio and transcripts under your account's settings and may use them to improve its models."
+      ]
+    },
+    {
+      "id": "R17",
+      "enabled": true,
+      "absent": [
+        "mixed on this computer first"
+      ],
+      "present": [
+        "ElevenLabs bills about the length of each meeting."
+      ]
+    },
+    {
+      "id": "R18",
+      "enabled": true,
+      "absent": [
+        "it labels your own lines in the transcript"
+      ],
+      "present": [
+        "Enter your name."
+      ]
+    },
+    {
+      "id": "R19",
+      "enabled": true,
+      "absent": [
+        "Key checked with ElevenLabs"
+      ],
+      "present": [
+        "Key saved on this computer only:"
+      ]
+    },
+    {
+      "id": "R20",
+      "enabled": true,
+      "absent": [
+        "Start stays off until you add one"
+      ],
+      "present": [
+        "No key saved."
+      ]
+    },
+    {
+      "id": "R21",
+      "enabled": true,
+      "absent": [
+        "New ElevenLabs API key"
+      ],
+      "present": [
+        "New key"
+      ]
+    },
+    {
+      "id": "R22",
+      "enabled": true,
+      "absent": [
+        "Consent reminder: remind me"
+      ],
+      "present": [
+        "Remind me to tell participants they are being transcribed each time I press Start"
+      ]
+    },
+    {
+      "id": "R23",
+      "enabled": true,
+      "absent": [
+        "fallback label"
+      ],
+      "present": [
+        "Speaker not identified"
+      ]
+    },
+    {
+      "id": "R24",
+      "enabled": true,
+      "absent": [
+        "(confirmed label)",
+        "fallback label"
+      ],
+      "present": [
+        " (speaker not identified)",
+        " (confirmed)"
+      ]
+    },
+    {
+      "id": "R25",
+      "enabled": true,
+      "absent": [
+        "Clear override"
+      ],
+      "present": [
+        "Reset this line"
+      ]
+    },
+    {
+      "id": "R26",
+      "enabled": true,
+      "absent": [
+        "separately from the meeting audio, so your lines carry your name"
+      ],
+      "present": [
+        "live-assist transcribes your microphone together with the meeting audio. Chrome asks once; the microphone is used only while you are transcribing a meeting."
+      ]
+    },
+    {
+      "id": "R27",
+      "enabled": true,
+      "absent": [
+        "Checking your ElevenLabs plan"
+      ],
+      "present": [
+        "Checking plan…"
+      ]
+    },
+    {
+      "id": "R28",
+      "enabled": true,
+      "absent": [],
+      "present": [
+        "Check keys and save",
+        "Checking keys…"
+      ]
+    },
+    {
+      "id": "R29",
+      "enabled": true,
+      "absent": [],
+      "present": [
+        "Keys saved on this computer only: ElevenLabs"
+      ]
+    },
+    {
+      "id": "A1",
+      "enabled": true,
+      "$comment": "003 ask-ui Strings: notices beside the box",
+      "absent": [],
+      "present": [
+        "Add a Claude or OpenAI key in Settings to ask questions.",
+        "Add a Claude key in Settings to ask questions.",
+        "Add an OpenAI key in Settings to ask questions.",
+        "Nothing transcribed yet."
+      ]
+    },
+    {
+      "id": "A2",
+      "enabled": true,
+      "$comment": "003 ask-ui Strings: answer errors ({P}/{M} are substituted)",
+      "absent": [],
+      "present": [
+        " rejected the API key. Replace it in Settings.",
+        " API key isn't allowed to use ",
+        " refused the request because of the account's billing or credit. Check your ",
+        " isn't available to this ",
+        " account. Pick another model in Settings.",
+        " is rate-limiting requests. Try again in a moment.",
+        " is busy or unavailable. Try again in a moment.",
+        "Couldn't reach ",
+        "The meeting is too long to send to ",
+        " in full.",
+        " declined to answer this question.",
+        " returned an unexpected response."
+      ]
+    },
+    {
+      "id": "A3",
+      "enabled": true,
+      "$comment": "003 ask-ui Layout and Turn rendering",
+      "absent": [],
+      "present": [
+        "Questions and answers",
+        "Hide answers",
+        "Show answers",
+        "Question",
+        "Ask about this meeting",
+        "Ask",
+        "Stop",
+        "Go to ",
+        " in the transcript",
+        "Waiting…",
+        "Stopped",
+        "The answer was cut off.",
+        "Try again"
+      ]
+    },
+    {
+      "id": "A4",
+      "enabled": true,
+      "$comment": "003 ask-ui First-run setup additions",
+      "absent": [],
+      "present": [
+        "Answers from",
+        "Stored only in this browser on this computer (never synced).",
+        "Anthropic rejected this key. Check that you copied the whole key, or create a new one in the Claude Console.",
+        "OpenAI rejected this key. Check that you copied the whole key, or create a new one in your OpenAI account.",
+        "This key isn't allowed to use the ",
+        "Could not reach ",
+        ". Check your internet connection and try again.",
+        " returned an unexpected response. Try again in a moment.",
+        "Check key and save",
+        "Key saved on this computer only:",
+        "Done"
+      ]
+    },
+    {
+      "id": "A5",
+      "enabled": true,
+      "$comment": "003 ask-ui Settings screen additions 4a-4c",
+      "absent": [],
+      "present": [
+        "Questions",
+        "Model",
+        "No key saved.",
+        "Saved key:",
+        "New key",
+        "Check and replace key",
+        "Remove key",
+        "Key works.",
+        " rejected the API key."
+      ]
+    },
+    {
+      "id": "A6",
+      "enabled": true,
+      "$comment": "003 ask-ui disclosures (row 8a), re-read 2026-10-09",
+      "absent": [
+        "does not train its models on API data."
+      ],
+      "present": [
+        "What Anthropic keeps",
+        "Each question sends the transcript so far, any notes you added to the meeting and this meeting’s questions and answers to Anthropic. Anthropic deletes API requests and answers within 30 days, keeps content its safety systems flag for up to 2 years, and does not train its models on API data by default.",
+        "Anthropic privacy policy",
+        "What OpenAI keeps",
+        "Each question sends the transcript so far, any notes you added to the meeting and this meeting’s questions and answers to OpenAI, with storage turned off. OpenAI keeps API requests for abuse monitoring for up to 30 days and does not train its models on API data by default.",
+        "OpenAI data controls"
+      ]
+    },
+    {
+      "id": "A7",
+      "enabled": true,
+      "$comment": "003 ask-ui Delete / never add",
+      "absent": [
+        "Ask anything about the meeting",
+        "Answers are based only on the transcript",
+        "AI assistant",
+        "Powered by Claude",
+        "Click a timestamp to jump",
+        "The transcript may be incomplete while reconnecting",
+        "Your key is stored securely"
+      ],
+      "present": []
+    },
+    {
+      "id": "A8",
+      "enabled": true,
+      "$comment": "008 notes-ui strings (copy review K41)",
+      "absent": [],
+      "present": [
+        "Add notes",
+        "Add notes for the next meeting",
+        "Choose file…",
+        "Paste text",
+        "Remove notes",
+        "Remove notes for the next meeting",
+        "Save notes",
+        "Notes for the next meeting: ",
+        "Pasted notes",
+        " is empty.",
+        " characters. Shorten it and add it again.",
+        " characters. Shorten them and save again.",
+        " isn't UTF-8 text. Save it as UTF-8 and add it again.",
+        " files can be added.",
+        "Couldn't read ",
+        "Couldn't save the notes. Try again.",
+        "The meeting and your notes are too long to send to ",
+        " in full. Remove or shorten the notes."
+      ]
+    },
+    {
+      "id": "A9",
+      "enabled": true,
+      "$comment": "008: R30/R31 removed halves, and notes-ui Delete / never add",
+      "absent": [
+        "Each question sends the transcript so far and this meeting",
+        "Add context to improve answers",
+        "Notes added",
+        "Supported: .txt, .md",
+        "Drop a file here",
+        "only sent to",
+        "never sent to ElevenLabs"
+      ],
+      "present": []
+    },
+    {
+      "id": "W1",
+      "enabled": true,
+      "$comment": "013 C2, withdrawn by design decision 79 (2026-10-13): the reminder is K1 on every platform",
+      "absent": [
+        "captions of the meeting are kept on this computer too"
+      ],
+      "present": [
+        "Their voices are sent to ElevenLabs and the transcript is kept on this computer. You can turn this reminder off in Settings."
+      ]
+    },
+    {
+      "id": "A10",
+      "enabled": true,
+      "$comment": "003 FR-003a, FR-018a (design decision 80, copy review K45): the waiting mark's name, the no-answer text, and ask-ui Delete / never add of 2026-10-13",
+      "absent": [
+        "Thinking",
+        "Generating answer",
+        "taking longer than usual",
+        "timed out after",
+        "was put back in the box",
+        "Retrying"
+      ],
+      "present": [
+        "Waiting for the answer",
+        "No answer came back. Ask again."
+      ]
+    }
+  ]
+}

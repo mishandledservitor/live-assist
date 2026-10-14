@@ -1,0 +1,388 @@
+{
+  "format": "live-assist-alignment-trace/2",
+  "userName": "The user",
+  "meetingStartedAtMs": 1791531061395,
+  "captions": [
+    {
+      "turnKey": "958e40de:1",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        4173
+      ]
+    },
+    {
+      "turnKey": "958e40de:2",
+      "speakerName": "Participant A",
+      "self": null,
+      "observedAtMs": [
+        8919,
+        10129,
+        10447,
+        10781,
+        11413
+      ]
+    },
+    {
+      "turnKey": "958e40de:3",
+      "speakerName": "Participant B",
+      "self": null,
+      "observedAtMs": [
+        15617
+      ]
+    },
+    {
+      "turnKey": "958e40de:4",
+      "speakerName": "You",
+      "self": true,
+      "observedAtMs": [
+        16485
+      ]
+    },
+    {
+      "turnKey": "958e40de:5",
+      "speakerName": "Participant C",
+      "self": null,
+      "observedAtMs": [
+        28566,
+        29447,
+        29782,
+        31098
+      ]
+    },
+    {
+      "turnKey": "958e40de:6",
+      "speakerName": "Participant D",
+      "self": null,
+      "observedAtMs": [
+        31433,
+        31767,
+        32617
+      ]
+    },
+    {
+      "turnKey": "958e40de:7",
+      "speakerName": "Participant C",
+      "self": null,
+      "observedAtMs": [
+        32285,
+        32617,
+        32951,
+        33285
+      ]
+    },
+    {
+      "turnKey": "958e40de:8",
+      "speakerName": "Participant A",
+      "self": null,
+      "observedAtMs": [
+        35921
+      ]
+    },
+    {
+      "turnKey": "958e40de:9",
+      "speakerName": "Participant C",
+      "self": null,
+      "observedAtMs": [
+        39341,
+        39674,
+        40008
+      ]
+    },
+    {
+      "turnKey": "958e40de:10",
+      "speakerName": "Participant A",
+      "self": null,
+      "observedAtMs": [
+        46548,
+        50368
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "seg-0",
+      "startMs": 3148,
+      "endMs": 3768,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 3148,
+          "endMs": 3768
+        }
+      ],
+      "label": "$user",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "$user",
+        "coverage": 0.85,
+        "shares": {
+          "$user": 1
+        }
+      }
+    },
+    {
+      "id": "seg-1",
+      "startMs": 5848,
+      "endMs": 6388,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 5848,
+          "endMs": 6008
+        },
+        {
+          "text": "w1",
+          "startMs": 6068,
+          "endMs": 6388
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-captions",
+        "rulesLabel": "Others",
+        "coverage": 0,
+        "shares": {}
+      }
+    },
+    {
+      "id": "seg-2",
+      "startMs": 8240,
+      "endMs": 10100,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 8240,
+          "endMs": 8560
+        },
+        {
+          "text": "w1",
+          "startMs": 9340,
+          "endMs": 9540
+        },
+        {
+          "text": "w2",
+          "startMs": 9560,
+          "endMs": 9700
+        },
+        {
+          "text": "w3",
+          "startMs": 9740,
+          "endMs": 10100
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-3",
+      "startMs": 14200,
+      "endMs": 16220,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 14200,
+          "endMs": 14300
+        },
+        {
+          "text": "w1",
+          "startMs": 14360,
+          "endMs": 14760
+        },
+        {
+          "text": "w2",
+          "startMs": 15740,
+          "endMs": 16220
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-clear-speaker",
+        "rulesLabel": "Others",
+        "coverage": 0.76,
+        "shares": {
+          "Participant B": 0.49,
+          "$user": 0.51
+        }
+      }
+    },
+    {
+      "id": "seg-4",
+      "startMs": 27988,
+      "endMs": 32608,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 27988,
+          "endMs": 28108
+        },
+        {
+          "text": "w1",
+          "startMs": 28148,
+          "endMs": 28568
+        },
+        {
+          "text": "w2",
+          "startMs": 28888,
+          "endMs": 29288
+        },
+        {
+          "text": "w3",
+          "startMs": 30528,
+          "endMs": 31168
+        },
+        {
+          "text": "w4",
+          "startMs": 31588,
+          "endMs": 31688
+        },
+        {
+          "text": "w5",
+          "startMs": 31728,
+          "endMs": 31948
+        },
+        {
+          "text": "w6",
+          "startMs": 32028,
+          "endMs": 32148
+        },
+        {
+          "text": "w7",
+          "startMs": 32188,
+          "endMs": 32608
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-clear-speaker",
+        "rulesLabel": "Others",
+        "coverage": 1,
+        "shares": {
+          "Participant C": 0.79,
+          "Participant D": 0.21
+        }
+      }
+    },
+    {
+      "id": "seg-5",
+      "startMs": 34848,
+      "endMs": 35228,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 34848,
+          "endMs": 35228
+        }
+      ],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    },
+    {
+      "id": "seg-6",
+      "startMs": 38696,
+      "endMs": 46216,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 38696,
+          "endMs": 38756
+        },
+        {
+          "text": "w1",
+          "startMs": 38816,
+          "endMs": 38996
+        },
+        {
+          "text": "w2",
+          "startMs": 39016,
+          "endMs": 39156
+        },
+        {
+          "text": "w3",
+          "startMs": 39196,
+          "endMs": 39276
+        },
+        {
+          "text": "w4",
+          "startMs": 39316,
+          "endMs": 39656
+        },
+        {
+          "text": "w5",
+          "startMs": 40476,
+          "endMs": 40636
+        },
+        {
+          "text": "w6",
+          "startMs": 41276,
+          "endMs": 41356
+        },
+        {
+          "text": "w7",
+          "startMs": 41696,
+          "endMs": 42136
+        },
+        {
+          "text": "w8",
+          "startMs": 45716,
+          "endMs": 46216
+        }
+      ],
+      "label": "Others",
+      "labelSource": "fallback",
+      "why": {
+        "reason": "no-clear-speaker",
+        "rulesLabel": "Others",
+        "coverage": 0.58,
+        "shares": {
+          "Participant C": 0.57,
+          "Participant A": 0.43
+        }
+      }
+    },
+    {
+      "id": "seg-7",
+      "startMs": 49156,
+      "endMs": 49156,
+      "timing": "estimated",
+      "words": [],
+      "label": "Participant A",
+      "labelSource": "caption",
+      "why": {
+        "reason": "named",
+        "rulesLabel": "Participant A",
+        "coverage": 1,
+        "shares": {
+          "Participant A": 1
+        }
+      }
+    }
+  ]
+}

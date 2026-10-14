@@ -1,0 +1,125 @@
+/* Notes (008 contracts/notes-ui.md): a small control beside Start for the next meeting, and at the top of the Ask
+   dock for the meeting shown. The chip is as small as a header control; a long file name is cut with an ellipsis. */
+
+.notes-control {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.notes-add {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+.notes-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 14em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.notes-chip button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+.notes-chip-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notes-chip-remove {
+  color: var(--muted);
+  border-left: 1px solid var(--border) !important;
+}
+
+.notes-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 10em;
+  margin-top: 2px;
+  padding: 4px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.ask-dock .notes-menu {
+  top: auto;
+  bottom: 100%;
+  margin: 0 0 2px;
+}
+
+.notes-menu button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  padding: 4px 12px;
+}
+
+.notes-menu button:hover,
+.notes-menu button:focus-visible {
+  background: var(--line);
+}
+
+.notes-error {
+  flex-basis: 100%;
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--error);
+}
+
+.notes-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(0 0 0 / 40%);
+}
+
+.notes-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 32em;
+  max-height: 100%;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.notes-dialog-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.notes-dialog textarea {
+  width: 100%;
+  min-height: 10em;
+  box-sizing: border-box;
+  font: inherit;
+}

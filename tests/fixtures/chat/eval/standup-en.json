@@ -1,0 +1,27 @@
+{
+  "$comment": "003 T054 evaluation set over tests/fixtures/chat/meetings/standup-en.json (synthetic). tag: supported (answer from the cited times), absent (not in the transcript), partial (part covered), background (a term raised in the meeting), others-attribution (an \"Others\" line must not be given a name). supports: the line times an answer may cite. related (absent): lines an answer may cite for what was said around the missing fact, as a partial answer.",
+  "meeting": "standup-en",
+  "names": [
+    "Alex",
+    "Jane",
+    "John",
+    "Tom"
+  ],
+  "questions": [
+    {"id": "pricing", "lang": "en", "tag": "supported", "question": "What was decided about pricing?", "supports": ["00:12", "00:31"]},
+    {"id": "deck", "lang": "en", "tag": "supported", "question": "Who is sending the new deck, and when?", "supports": ["03:45", "04:02"]},
+    {"id": "onboarding", "lang": "en", "tag": "supported", "question": "Is onboarding part of this release?", "supports": ["05:20", "05:31"]},
+    {"id": "runbook", "lang": "en", "tag": "supported", "question": "Who owns the migration runbook?", "supports": ["09:15", "09:22"]},
+    {"id": "retro", "lang": "en", "tag": "supported", "question": "When is the retro?", "supports": ["17:48"]},
+    {"id": "budget-figure", "lang": "en", "tag": "absent", "question": "How much is the launch budget in euros?", "related": ["02:00"]},
+    {"id": "weather", "lang": "en", "tag": "absent", "question": "What's the weather like in Athens today?"},
+    {"id": "hiring", "lang": "en", "tag": "absent", "question": "What did they decide about hiring?"},
+    {"id": "launch-and-price", "lang": "en", "tag": "partial", "question": "Was the launch budget approved, and what is the new price?", "supports": ["02:00", "00:12"]},
+    {"id": "security-review", "lang": "en", "tag": "background", "question": "What is a security review, and when is ours?", "supports": ["07:30"]},
+    {"id": "spreadsheet", "lang": "en", "tag": "others-attribution", "question": "Who asked for the spreadsheet?", "supports": ["01:42"], "othersTimes": ["01:42"]},
+    {"id": "joined-late", "lang": "en", "tag": "others-attribution", "question": "Who joined late?", "supports": ["15:05"], "othersTimes": ["15:05"]},
+    {"id": "pricing-el", "lang": "el", "tag": "supported", "question": "Τι αποφασίστηκε για την τιμολόγηση;", "supports": ["00:12", "00:31"]},
+    {"id": "interviews-el", "lang": "el", "tag": "supported", "question": "Πότε ξεκινούν οι συνεντεύξεις με πελάτες;", "supports": ["12:40"]},
+    {"id": "hiring-el", "lang": "el", "tag": "absent", "question": "Τι αποφασίστηκε για τις προσλήψεις;"}
+  ]
+}

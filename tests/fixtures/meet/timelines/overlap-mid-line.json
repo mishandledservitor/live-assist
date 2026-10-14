@@ -1,0 +1,235 @@
+{
+  "userName": "Mary Smith",
+  "clearTurns": false,
+  "captions": [
+    {
+      "turnKey": "p9:1",
+      "speakerName": "Emma Jones",
+      "self": null,
+      "observedAtMs": [
+        1800,
+        2150,
+        2500,
+        2850,
+        3200,
+        3550,
+        3900,
+        4250,
+        4600,
+        4950,
+        5300,
+        5650,
+        6000,
+        6350,
+        6700,
+        7050,
+        7400,
+        7750,
+        8100,
+        8450,
+        8800,
+        9150,
+        9500,
+        9850,
+        10200,
+        10550,
+        10900,
+        11250,
+        11600,
+        11950,
+        12300,
+        12600
+      ]
+    },
+    {
+      "turnKey": "p9:2",
+      "speakerName": "Tom Brown",
+      "self": null,
+      "observedAtMs": [
+        5800,
+        6150,
+        6500,
+        6850,
+        7200,
+        7550,
+        7900,
+        8250,
+        8600
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "overlap-mid:mixed:0",
+      "startMs": 1000,
+      "endMs": 11980,
+      "timing": "words",
+      "words": [
+        {
+          "text": "w0",
+          "startMs": 1000,
+          "endMs": 1400
+        },
+        {
+          "text": "w1",
+          "startMs": 1460,
+          "endMs": 1860
+        },
+        {
+          "text": "w2",
+          "startMs": 1920,
+          "endMs": 2320
+        },
+        {
+          "text": "w3",
+          "startMs": 2380,
+          "endMs": 2780
+        },
+        {
+          "text": "w4",
+          "startMs": 2840,
+          "endMs": 3240
+        },
+        {
+          "text": "w5",
+          "startMs": 3300,
+          "endMs": 3700
+        },
+        {
+          "text": "w6",
+          "startMs": 3760,
+          "endMs": 4160
+        },
+        {
+          "text": "w7",
+          "startMs": 4220,
+          "endMs": 4620
+        },
+        {
+          "text": "w8",
+          "startMs": 4680,
+          "endMs": 5080
+        },
+        {
+          "text": "w9",
+          "startMs": 5140,
+          "endMs": 5540
+        },
+        {
+          "text": "w10",
+          "startMs": 5600,
+          "endMs": 6000
+        },
+        {
+          "text": "w11",
+          "startMs": 6060,
+          "endMs": 6460
+        },
+        {
+          "text": "w12",
+          "startMs": 6520,
+          "endMs": 6920
+        },
+        {
+          "text": "w13",
+          "startMs": 6980,
+          "endMs": 7380
+        },
+        {
+          "text": "w14",
+          "startMs": 7440,
+          "endMs": 7840
+        },
+        {
+          "text": "w15",
+          "startMs": 7900,
+          "endMs": 8300
+        },
+        {
+          "text": "w16",
+          "startMs": 8360,
+          "endMs": 8760
+        },
+        {
+          "text": "w17",
+          "startMs": 8820,
+          "endMs": 9220
+        },
+        {
+          "text": "w18",
+          "startMs": 9280,
+          "endMs": 9680
+        },
+        {
+          "text": "w19",
+          "startMs": 9740,
+          "endMs": 10140
+        },
+        {
+          "text": "w20",
+          "startMs": 10200,
+          "endMs": 10600
+        },
+        {
+          "text": "w21",
+          "startMs": 10660,
+          "endMs": 11060
+        },
+        {
+          "text": "w22",
+          "startMs": 11120,
+          "endMs": 11520
+        },
+        {
+          "text": "w23",
+          "startMs": 11580,
+          "endMs": 11980
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "overlap-mid:mixed:0": [
+      {
+        "label": "Emma Jones",
+        "words": 4
+      },
+      {
+        "label": "Others",
+        "words": 12
+      },
+      {
+        "label": "Emma Jones",
+        "words": 8
+      }
+    ]
+  },
+  "spokenBy": {
+    "overlap-mid:mixed:0": [
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "?",
+      "?",
+      "?",
+      "?",
+      "?",
+      "?",
+      "?",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones",
+      "Emma Jones"
+    ]
+  }
+}

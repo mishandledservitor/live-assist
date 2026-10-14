@@ -1,0 +1,60 @@
+{
+  "name": "live-assist",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Live meeting assistant: realtime transcript in a Chrome side panel.",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:spike": "wxt build --mode spike",
+    "build:e2e": "wxt build --mode e2e",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "wxt prepare && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "spike:echo": "tsx spikes/echo.ts",
+    "spike:language": "tsx spikes/language.ts",
+    "spike:meet-trace": "tsx spikes/meet-trace.ts",
+    "eval:ask": "tsx spikes/ask-eval.ts",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.132.1",
+    "idb": "^8.0.4",
+    "openai": "7.31.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/chrome": "^0.3.4",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^24",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@wxt-dev/module-react": "^1.2.2",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "fake-indexeddb": "^6.2.5",
+    "globals": "^17.13.0",
+    "jsdom": "^30.1.2",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3",
+    "wxt": "^0.21.4"
+  }
+}
