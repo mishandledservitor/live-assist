@@ -41,7 +41,7 @@ const seg = (seq: number, text: string): TranscriptSegment => ({
 
 function fakeApi(stored: { meeting: Meeting; segments: TranscriptSegment[] } | null = null) {
   const ports: { emit: (e: unknown) => void; disconnect: () => void; closed: boolean }[] = [];
-  const latestStored = vi.fn(() => Promise.resolve(stored));
+  const latestStored = vi.fn((_options?: { opening?: boolean }) => Promise.resolve(stored));
   const api: LiveApi = {
     connect: vi.fn((onEvent: (e: unknown) => void, onDisconnect: () => void) => {
       const port = { emit: onEvent, disconnect: onDisconnect, closed: false };
@@ -219,5 +219,50 @@ describe('useLive', () => {
     const { unmount } = renderHook(() => useLive(api));
     unmount();
     expect(ports[0]!.closed).toBe(true);
+  });
+
+  // 014 T012 (FR-004, FR-005; research R2; contracts/internal-api.md "useLive"): only the panel's first look, when no
+  // meeting runs, asks for the opening clear.
+  describe('the opening of the panel (014)', () => {
+    const ended = { ...meeting, endedAt: 9, endReason: 'user-stop' as const };
+
+    it('the first disconnect asks for the stored meeting as an opening', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      renderHook(() => useLive(api));
+      act(() => ports[0]!.disconnect());
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      expect(latestStored.mock.calls[0]).toEqual([{ opening: true }]);
+    });
+
+    it('later looks are not openings: refresh after the first answer passes no option', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      const { result } = renderHook(() => useLive(api));
+      act(() => ports[0]!.disconnect());
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      act(() => result.current.refresh());
+      act(() => ports[1]!.disconnect());
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(2));
+      expect(latestStored.mock.calls[1]?.[0]?.opening).not.toBe(true);
+    });
+
+    it('a meeting that was running when the panel opened and stops while it stays open is not cleared', async () => {
+      const { api, ports, latestStored } = fakeApi({ meeting: ended, segments: [seg(0, 'a')] });
+      const { result } = renderHook(() => useLive(api));
+      act(() => ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }));
+      act(() => ports[0]!.disconnect());
+      await waitFor(() => expect(result.current.meeting?.endedAt).toBe(9));
+      expect(latestStored).toHaveBeenCalledTimes(1);
+      expect(latestStored.mock.calls[0]?.[0]?.opening).not.toBe(true);
+    });
+
+    it('a generation closed before it answered does not use up the opening', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      const { result } = renderHook(() => useLive(api));
+      act(() => result.current.refresh());
+      act(() => ports[0]!.disconnect());
+      act(() => ports[1]!.disconnect());
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      expect(latestStored.mock.calls[0]).toEqual([{ opening: true }]);
+    });
   });
 });

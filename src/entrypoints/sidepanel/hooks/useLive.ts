@@ -9,7 +9,11 @@ import type { Meeting, StreamId, TranscriptSegment } from '../../../core/transcr
 export interface LiveApi {
   /** Opens the live port. onDisconnect fires when the other end goes away (or never existed). Returns a closer. */
   connect(onEvent: (raw: unknown) => void, onDisconnect: () => void): () => void;
-  latestStored(): Promise<{ meeting: Meeting; segments: TranscriptSegment[] } | null>;
+  /**
+   * The most recent stored meeting the main view may show, or null. `opening` (014): this is the panel's first look and
+   * no meeting runs, so a stopped meeting is not shown; the main view opens clean.
+   */
+  latestStored(options?: { opening?: boolean }): Promise<{ meeting: Meeting; segments: TranscriptSegment[] } | null>;
 }
 
 export interface LiveState {
@@ -32,6 +36,10 @@ export function useLive(api: LiveApi): LiveState & { refresh: () => void } {
   const [state, setState] = useState<LiveState>(EMPTY);
   const generation = useRef(0);
   const close = useRef<(() => void) | null>(null);
+  // 014 FR-004, FR-005 (research R2): true until the live port first answers in a current generation. A disconnect then
+  // means no meeting runs and this is the panel's first look, so a stopped meeting is not shown; a snapshot means one
+  // runs, and it stays on the main view after it stops while the panel stays open.
+  const opening = useRef(true);
 
   const open = useCallback(() => {
     close.current?.();
@@ -43,6 +51,7 @@ export function useLive(api: LiveApi): LiveState & { refresh: () => void } {
         if (!current()) return;
         const e = parseLive(raw);
         if (!e) return;
+        if (e.type === 'live/snapshot') opening.current = false;
         setState((s) => {
           switch (e.type) {
             case 'live/snapshot':
@@ -81,7 +90,9 @@ export function useLive(api: LiveApi): LiveState & { refresh: () => void } {
       () => {
         if (!current()) return;
         setState((s) => ({ ...s, connected: false, partials: [] }));
-        void api.latestStored().then((stored) => {
+        const first = opening.current;
+        opening.current = false;
+        void api.latestStored(first ? { opening: true } : undefined).then((stored) => {
           if (!current()) return;
           // The same meeting just ended: keep its last status so the reason it stopped stays visible (FR-022).
           setState((s) => ({

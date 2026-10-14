@@ -27,7 +27,9 @@ export function fakeMeetingApi(
       queueMicrotask(onDisconnect);
       return () => undefined;
     }),
-    latestStored: vi.fn(() =>
+    // 014: `opening` is recorded and ignored, so the fake is a panel that stayed open across Stop (meeting-api tests
+    // cover the opening clear).
+    latestStored: vi.fn((_options?: { opening?: boolean }) =>
       Promise.resolve(cleared || !stored ? null : { meeting: stored.meeting, segments: stored.segments }),
     ),
     clearMainView: vi.fn(() => {
