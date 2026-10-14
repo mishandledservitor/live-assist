@@ -4,6 +4,7 @@ Bug reports, fixes and new features are all welcome.
 
 ## Before you start
 
+- **For a security problem,** such as a way to expose an API key or a transcript, do not open a public issue. Report it privately from the repository's **Security** tab with **Report a vulnerability**.
 - **For a bug,** open an issue that says what you did, what you expected and what happened instead. Include your Chrome version and the meeting platform (Google Meet, Zoom or Teams). Never paste an API key, a transcript of a real meeting or real people's names.
 - **For a new feature or a change in behaviour,** open an issue first and describe the problem it solves. Agreeing on the idea before you write code saves you from building something that won't be merged.
 - **For a typo or a small fix,** go straight to a pull request.
