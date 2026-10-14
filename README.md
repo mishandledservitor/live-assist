@@ -93,7 +93,7 @@ pnpm test        # unit, DOM and integration tests (Vitest)
 pnpm build:e2e && pnpm test:e2e   # end-to-end tests (Playwright)
 ```
 
-No test needs a real API key or a live meeting; they all run on recorded fixtures. The project is built with [Spec Kit](https://github.com/github/spec-kit): each feature has a spec, plan and task list under `specs/`, and the design decisions are in `.specify/memory/design-decisions.md`. [`CLAUDE.md`](CLAUDE.md) holds the conventions and working rules for coding agents.
+No test needs a real API key or a live meeting; they all run on recorded fixtures. The project is built with [Spec Kit](https://github.com/github/spec-kit): each feature has a spec, plan and task list under `specs/`, and the design decisions are in `.specify/memory/design-decisions.md`. [`CLAUDE.md`](CLAUDE.md) holds the conventions and working rules for coding agents. To propose a change, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Licence
 
