@@ -3,7 +3,7 @@
 import { fileURLToPath } from 'node:url';
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
-import { LINE_TIMEOUT, line, openMeetingTab, openPanel, seedSettings } from './helpers';
+import { LINE_TIMEOUT, line, openMeetingTab, openPanel, seedSettings, showStoredOnMain } from './helpers';
 
 const agendaPath = fileURLToPath(new URL('../fixtures/notes/agenda.md', import.meta.url));
 const SENTINEL = 'NOTES-SENTINEL-7Q';
@@ -76,6 +76,8 @@ test('notes stay with the stopped meeting and are deleted with it', async ({ con
 
   await panel.close();
   panel = await openPanel(context, extensionId, meetingTab);
+  // 014: the reopened panel opens clean; the notes stayed with the meeting, which is put back on the main view.
+  await showStoredOnMain(panel);
   await expect(panel.getByRole('button', { name: 'Notes: agenda.md' })).toBeVisible();
   // Nothing is pending for the next meeting: the notes went to this one.
   await expect(panel.getByRole('button', { name: 'Add notes for the next meeting' })).toBeVisible();

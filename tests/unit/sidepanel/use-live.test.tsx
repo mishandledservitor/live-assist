@@ -248,7 +248,9 @@ describe('useLive', () => {
     it('a meeting that was running when the panel opened and stops while it stays open is not cleared', async () => {
       const { api, ports, latestStored } = fakeApi({ meeting: ended, segments: [seg(0, 'a')] });
       const { result } = renderHook(() => useLive(api));
-      act(() => ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }));
+      act(() =>
+        ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }),
+      );
       act(() => ports[0]!.disconnect());
       await waitFor(() => expect(result.current.meeting?.endedAt).toBe(9));
       expect(latestStored).toHaveBeenCalledTimes(1);

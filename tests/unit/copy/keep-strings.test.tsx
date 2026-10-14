@@ -205,7 +205,9 @@ describe('Keep strings: Close transcript (K46, 014)', () => {
     const close = await screen.findByRole('button', { name: 'Close transcript' });
     expect(close.textContent).toBe('Close transcript');
     fireEvent.click(close);
-    await waitFor(() => expect(screen.getByRole('log', { name: 'Transcript lines' }).textContent).toBe('No transcript yet.'));
+    await waitFor(() =>
+      expect(screen.getByRole('log', { name: 'Transcript lines' }).textContent).toBe('No transcript yet.'),
+    );
     expect(document.querySelector('.transcript-footer')).toBeNull();
     expect(screen.queryByRole('status', { name: /closed/i })).toBeNull();
   });

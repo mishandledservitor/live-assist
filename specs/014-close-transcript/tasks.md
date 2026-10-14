@@ -42,9 +42,9 @@ No foundational work: both stories reuse 012's `MainViewStore`, `clearMainView` 
 - [X] T012 [P] [US2] Write failing `useLive` tests: first disconnect calls `latestStored({ opening: true })`; `refresh()` afterwards calls it without the flag; after a snapshot, the disconnect at Stop calls it without the flag; a stale generation's disconnect does not consume the opening (the hook mounts with `Panel`, so finishing setup is an opening too), in tests/unit/sidepanel/use-live.test.tsx
 - [X] T013 [US2] Implement the `opening` ref in src/entrypoints/sidepanel/hooks/useLive.ts
 - [X] T014 [US2] Make the fake record the flag (and keep ignoring it for what it returns) in tests/unit/sidepanel/fake-meeting-api.ts; run `pnpm test`
-- [ ] T015 [P] [US2] Add `showSeededOnMain` (research R5) to tests/e2e/helpers.ts and call it from `seedAskMeeting` and from `seedStoredMeetings` in tests/e2e/transcripts-helpers.ts
-- [ ] T016 [US2] Write tests/e2e/close.spec.ts: fixture Start/Stop with the panel open keeps the transcript with Close; Close → clean, reload → still clean, the meeting listed on Transcripts; fixture Start/Stop then reload → clean; reload while running → live; Start after Close → the new meeting shows. See the opening cases fail on a build without T011/T013 (or before them), pass after
-- [ ] T017 [US2] Run `pnpm build:e2e && pnpm test:e2e`; update the specs whose reload after a real Stop expected the transcript (expect clean, or use the helper where the reload served setup only) in tests/e2e/*.spec.ts
+- [X] T015 [P] [US2] Add `showSeededOnMain` (research R5) to tests/e2e/helpers.ts and call it from `seedAskMeeting` and from `seedStoredMeetings` in tests/e2e/transcripts-helpers.ts
+- [X] T016 [US2] Write tests/e2e/close.spec.ts: fixture Start/Stop with the panel open keeps the transcript with Close; Close → clean, reload → still clean, the meeting listed on Transcripts; fixture Start/Stop then reload → clean; reload while running → live; Start after Close → the new meeting shows. See the opening cases fail on a build without T011/T013 (or before them), pass after
+- [X] T017 [US2] Run `pnpm build:e2e && pnpm test:e2e`; update the specs whose reload after a real Stop expected the transcript (expect clean, or use the helper where the reload served setup only) in tests/e2e/*.spec.ts
 
 **Checkpoint**: both stories work.
 

@@ -174,6 +174,13 @@ describe('createMeetingApi', () => {
       expect(mainView.clear.mock.calls).toEqual([[5_000]]);
     });
 
+    it('stays clean when the clock reads earlier than the meeting started (clock set back): the moment is its start', async () => {
+      const { api, repo, mainView } = setup();
+      repo.latestMeeting.mockResolvedValue({ ...meeting, startedAt: 9_000 });
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear.mock.calls).toEqual([[9_000]]);
+    });
+
     it('writes nothing when there is no stored meeting', async () => {
       const { api, repo, mainView } = setup();
       repo.latestMeeting.mockResolvedValue(undefined);

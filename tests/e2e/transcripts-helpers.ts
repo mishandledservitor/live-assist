@@ -1,6 +1,7 @@
 // 012: stored meetings for the Transcripts screen's e2e specs, written straight into the panel's own IndexedDB (same
 // extension origin), and a reader for the every-store scan after a deletion (SC-003).
 import type { Page } from '@playwright/test';
+import { reloadShowingStored } from './helpers';
 import type { StoredCaptionTurn } from '@/core/captions/model';
 import type { MeetingContextRecord } from '@/core/chat/notes';
 import type { ChatTurn } from '@/core/chat/turn';
@@ -31,7 +32,7 @@ export interface SeedOptions {
 
 /**
  * Writes settings that are ready to start and the given meetings into IndexedDB `live-assist` (version 4 since 013),
- * with the same upgrade as src/storage/db.ts, then reloads the panel.
+ * with the same upgrade as src/storage/db.ts, then reloads the panel with the most recent one on its main view (014).
  */
 export async function seedStoredMeetings(
   panel: Page,
@@ -111,7 +112,9 @@ export async function seedStoredMeetings(
       dbVersion: options.dbVersion ?? 4,
     },
   );
-  await panel.reload();
+  // 014: the most recent seeded meeting is on the main view, as in a panel that stayed open across its Stop.
+  if (meetings.length > 0) await reloadShowingStored(panel);
+  else await panel.reload();
 }
 
 /** Every record of every object store, by store name. It names no store, so one added later is read too. */
