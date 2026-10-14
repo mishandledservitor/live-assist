@@ -50,10 +50,10 @@ No foundational work: both stories reuse 012's `MainViewStore`, `clearMainView` 
 
 ## Phase 5: Polish & Cross-Cutting
 
-- [ ] T018 [P] Add the 014 line under `## [Unreleased]` in CHANGELOG.md
-- [ ] T019 [P] Add the 014 row to ROADMAP.md
-- [ ] T020 [P] Write specs/014-close-transcript/manual-check.md with the real-call steps
-- [ ] T021 Gates: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e && pnpm test:e2e`
+- [X] T018 [P] Add the 014 line under `## [Unreleased]` in CHANGELOG.md
+- [X] T019 [P] Add the 014 row to ROADMAP.md
+- [X] T020 [P] Write specs/014-close-transcript/manual-check.md with the real-call steps
+- [X] T021 Gates: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e && pnpm test:e2e`
 
 ## Dependencies
 

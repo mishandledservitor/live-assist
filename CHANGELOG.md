@@ -4,6 +4,10 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+### Added
+
+- `Close transcript`, beside `Download transcript` and `Delete transcript` under a stopped meeting, clears the main view for the next meeting without deleting anything; the meeting stays on the Transcripts screen to read, download or delete. The next time you open the panel after a meeting has stopped, the main view also opens clear by itself. A meeting that is running is never cleared, and once cleared a meeting can no longer be asked about.
+
 ## [1.0.0] - 2026-10-13
 
 First public release. live-assist is a Chrome extension (Manifest V3) that transcribes the meeting in a browser tab live in Chrome's side panel and answers questions about what has been said so far. It runs on your own ElevenLabs key for transcription and your own OpenAI or Anthropic key for questions. It is not in the Chrome Web Store: build it with `pnpm build` and load `.output/chrome-mv3` as an unpacked extension.

@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-14
 
-**Status**: Specified (2026-10-14; design decisions 91 and 92; edge cases decided without the owner, listed under Clarifications)
+**Status**: Implemented on the branch (2026-10-14; real-call check pending; design decisions 91 and 92; edge cases decided without the owner, listed under Clarifications)
 
 **Input**: Owner, 2026-10-14 (design decisions 91, 92): after Stop, the main view can be cleared without deleting the meeting, in two ways: a button `Close transcript` under the last line beside `Download transcript` and `Delete transcript` clears it at once; and the next time the side panel is opened after the meeting stopped, the main view opens clean by itself. Clean is the same state as after a delete on the main view (decision 64). The meeting stays on the Transcripts screen to read, download or delete. A running meeting is never cleared. Once cleared, the meeting cannot be asked about (past meetings are read-only, decision 62) until reopening a meeting (004) is built; notes attached to it stay with it.
 

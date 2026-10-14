@@ -195,6 +195,11 @@ export async function showStoredOnMain(panel: Page): Promise<void> {
     { polling: 50 },
   );
   await panel.evaluate(() => chrome.storage.local.set({ mainViewClearedAt: 0 }));
+  // Shown again once the main view offers to close it (any stopped meeting on the main view has the button).
+  await panel
+    .locator('.main-view')
+    .getByRole('button', { name: 'Close transcript', exact: true })
+    .waitFor({ state: 'attached' });
 }
 
 export const line = (panel: Page, text: string) =>
