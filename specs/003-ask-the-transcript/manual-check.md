@@ -91,3 +91,5 @@ Paste the first table below and the second into `specs/008-meeting-context/manua
 | | | | |
 
 Step 6b, real check by the user 2026-10-13: pass (the chat-only word is given with no citation link). Same call: two questions the transcript could not answer ("Who am I?", "What is this project about", notes README.md attached) showed no answer and no error until the user pressed stop; transcript questions before and after were answered. Cause not established; the OpenAI request has no time limit of ours and the panel shows nothing while waiting for the first word.
+
+Real check by the user 2026-10-14 (walkthrough `live-assist-test-run-2026-10-12.html`, production build of 2026-10-13, one Meet call; the scripted conversation of walkthrough step A3 was not done, so the questions ran over whatever the call covered): step 10a pass (three pulsing dots until the first word, which replaced them without the text jumping). The 45-second limit was not triggered, as expected; it stays unseen in a real call.

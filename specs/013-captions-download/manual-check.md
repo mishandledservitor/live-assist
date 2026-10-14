@@ -60,7 +60,7 @@ Reload the unpacked extension in `chrome://extensions`, reload the Meet tab, cli
 - O1 (step 9), does Meet remove old turns from its page in a long call:
 - O2 (step 10), what a reload does to Meet's caption history:
 - O3 (step 8), does Meet drop the beginning of a long turn, and does the file still have it:
-- O4 (step 7), any turn twice in an ordinary call:
+- O4 (step 7), any turn twice in an ordinary call: none, in a call past 30 minutes with three or more people (2026-10-14).
 - O5 (step 14), the zip's names in Windows Explorer:
 - O6 (step 15), Meet's Greek word for the user:
 - O7 (step 11), what Meet shows when captions come back on, and any line twice:
@@ -71,3 +71,5 @@ Real check by the user 2026-10-13 (walkthrough `live-assist-test-run-2026-10-12.
 Step 1, real check by the user 2026-10-13 (production build): pass. On the Meet call tab, with the toolbar icon clicked, the reminder includes `Meet's captions of the meeting are kept on this computer too.` and the panel's `chrome.tabs.query` returns the call's address. Earlier the same day the user saw the unchanged reminder on a panel whose tab was not identified; most likely a tab the extension had no access to (no toolbar click since a reload), in which case nothing is kept either. Not verified: that the panel and the background can never disagree; they decide separately.
 
 Amended 2026-10-13 (decision 79, superseding decision 71): steps 1 and 2 now expect one reminder text on every tab. The two records above are of the 2026-10-12 build, whose reminder on a Meet call had the sentence about Meet's captions; steps 1 and 2 have not been run on a build with this change. The question left open above, whether the panel and the background could disagree about the tab, no longer arises: the panel does not ask about the tab. The rule that captions must not be kept by a build whose reminder does not say so is withdrawn by the same decision.
+
+Real check by the user 2026-10-14 (walkthrough `live-assist-test-run-2026-10-12.html`, production build of 2026-10-13, one Meet call; the scripted conversation of walkthrough step A3 was not done, so the questions ran over whatever the call covered): step 1 pass under decision 79 (on the Meet tab the reminder is the plain text, the same as on any other tab, with no sentence about captions); zip with both files still downloaded with the reminder on (steps 3 and 12 behaviour unchanged); step 11 panel part pass (`Captions were turned off`, then recovered once captions were back, gap lines labelled "Others"), file part not done (walkthrough B1); step 7 pass in a call past 30 minutes with three or more people (nearly every caption Meet showed after Start in the file, each once, including the first ones; O4: no turn twice). Not done: steps 8, 9, 10, the file part of 11 (O1, O2, O3, O7), and the optional 14, 15 (O5, O6).

@@ -92,3 +92,5 @@ Options (option 2 taken 2026-10-12, design decision 78; the others not taken):
 4. Keep those rows out of the ratio but write their per-row precise count from `related`, so the raw file stops showing 0 of 1 for an accepted citation.
 
 Real call 2026-10-13: steps 3, 4 and 7 not done (walkthrough steps B7 to B9).
+
+Real check by the user 2026-10-14 (walkthrough `live-assist-test-run-2026-10-12.html`, production build of 2026-10-13, one Meet call; the scripted conversation of walkthrough step A3 was not done, so the questions ran over whatever the call covered): step 3 pass ("Which agenda items haven't we covered?": what was discussed cited, the hiring item given as from the notes, nothing from the notes timestamped); step 4 pass ("Did anyone say how much the launch budget is?": no amount said, any figure marked as from the notes with no timestamp); step 7 pass (Greek question answered in Greek with the Greek notes label). These were the fails of 2026-10-10, now fixed (decisions 77, 78).
