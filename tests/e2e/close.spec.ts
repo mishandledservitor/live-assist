@@ -4,7 +4,7 @@
 // reload; the next Start shows as always. Fixture transcription provider, no network.
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
-import { LINE_TIMEOUT, line, openMeetingTab, openPanel, seedSettings } from './helpers';
+import { LINE_TIMEOUT, line, openMeetingTab, openPanel, seedAskMeeting, seedSettings } from './helpers';
 import { readAllStores, rows, transcriptsButton, transcriptsScreen } from './transcripts-helpers';
 
 const mainView = (panel: Page) => panel.locator('.main-view');
@@ -100,4 +100,14 @@ test('the panel opens clean after a meeting stopped, and shows a running meeting
   await expectCleanMain(panel);
   await transcriptsButton(panel).click();
   await expect(rows(panel)).toHaveCount(1);
+});
+
+// The seeding helper (`reloadShowingStored`) waits for the reloaded panel's opening clear before undoing it. On a slow
+// machine (CI) that clear lands late; a 10x slower panel stands in for it.
+test('a seeded meeting shows on the main view of a slow panel', async ({ context, extensionId }) => {
+  const panel = await openPanel(context, extensionId);
+  const cdp = await context.newCDPSession(panel);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 10 });
+  await seedAskMeeting(panel, 0);
+  await expect(onMain(panel, 'Close transcript')).toBeAttached();
 });

@@ -1,5 +1,5 @@
 // Shared side-panel helpers for e2e specs (built in e2e mode: fake audio devices, fixture-replaying provider).
-import type { BrowserContext, Page } from '@playwright/test';
+import { expect, type BrowserContext, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -186,14 +186,18 @@ export async function reloadShowingStored(panel: Page): Promise<void> {
  * shows on the main view again (see `reloadShowingStored`). The opening writes the current time, never 0.
  */
 export async function showStoredOnMain(panel: Page): Promise<void> {
-  await panel.waitForFunction(
-    async () => {
-      const at = (await chrome.storage.local.get('mainViewClearedAt')).mainViewClearedAt;
-      return typeof at === 'number' && at > 0;
-    },
-    undefined,
-    { polling: 50 },
-  );
+  // Polled from here: `waitForFunction` does not await an async predicate (its promise counts as true at once), so it
+  // never waited, and on a slow machine the opening's clear landed after the undo below.
+  await expect
+    .poll(
+      () =>
+        panel.evaluate(async () => {
+          const at = (await chrome.storage.local.get('mainViewClearedAt')).mainViewClearedAt;
+          return typeof at === 'number' ? at : null;
+        }),
+      { intervals: [50], timeout: 15_000 },
+    )
+    .toBeGreaterThan(0);
   await panel.evaluate(() => chrome.storage.local.set({ mainViewClearedAt: 0 }));
   // Shown again once the main view offers to close it (any stopped meeting on the main view has the button).
   await panel
