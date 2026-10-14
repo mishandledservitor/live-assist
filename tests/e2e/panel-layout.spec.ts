@@ -13,6 +13,7 @@ import {
   openMeetingTab,
   openMeetPage,
   openPanel,
+  reloadShowingStored,
   seedAskMeeting,
   seedSettings,
   statusDot,
@@ -93,7 +94,7 @@ async function seedStoredMeeting(panel: Page, n: number): Promise<void> {
     });
     db.close();
   }, n);
-  await panel.reload();
+  await reloadShowingStored(panel);
 }
 
 test('transcript fills the panel', async ({ context, extensionId }) => {
@@ -166,7 +167,7 @@ async function appendStandupLines(panel: Page, n: number): Promise<void> {
     });
     db.close();
   }, n);
-  await panel.reload();
+  await reloadShowingStored(panel);
 }
 
 // FR-023, SC-007 (real call 2026-10-12): only the transcript and the answers strip scroll; the page never does.

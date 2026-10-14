@@ -445,7 +445,8 @@ test.describe('US3: deleting on the main view leaves it clean and leads to the r
     await back(panel).click();
     await expectCleanMain(panel);
 
-    // FR-026: the next meeting shows while it runs and after it stops, also after a reload.
+    // FR-026: the next meeting shows while it runs and after it stops; 014 (decision 91): the next opening of the
+    // panel after it stopped is clean, and it is on the Transcripts screen.
     await panel.getByRole('button', { name: 'Start' }).click();
     await expect(panel.getByRole('button', { name: 'Stop' })).toBeVisible();
     await expect(line(panel, 'Hello everyone.')).toBeVisible({ timeout: LINE_TIMEOUT });
@@ -456,9 +457,10 @@ test.describe('US3: deleting on the main view leaves it clean and leads to the r
     await expect(mainDownload(panel)).toBeVisible();
     await expect(mainDelete(panel)).toBeVisible();
     await panel.reload();
-    await expect(line(panel, 'Hello everyone.')).toBeVisible();
-    await expect(mainDownload(panel)).toBeVisible();
-    await expect(mainDelete(panel)).toBeVisible();
+    await expect(transcriptsButton(panel)).toBeVisible();
+    await expectCleanMain(panel);
+    await transcriptsButton(panel).click();
+    await expect(rows(panel)).toHaveCount(1);
   });
 });
 

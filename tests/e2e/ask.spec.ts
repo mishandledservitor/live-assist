@@ -4,7 +4,7 @@
 // is waiting until its first word, and a question that gets no answer says so and comes back into the box.
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
-import { line, openPanel, seedAskMeeting } from './helpers';
+import { line, openPanel, seedAskMeeting, showStoredOnMain } from './helpers';
 
 const question = (panel: Page) => panel.getByRole('textbox', { name: 'Question' });
 const answer = (panel: Page, q: string) =>
@@ -55,6 +55,8 @@ test('ask: closing the panel mid-answer leaves it Stopped on the next open', asy
   await panel.close();
 
   const again = await openPanel(context, extensionId);
+  // 014: the reopened panel opens clean; the stored meeting is put back on the main view to read its answer.
+  await showStoredOnMain(again);
   const reply = answer(again, 'What happens next?');
   await expect(reply).toContainText('Stopped');
   await expect(reply).not.toContainText('Jane will send the new deck');
@@ -145,5 +147,6 @@ test('ask: a question that gets no answer says so and is back in the box to rese
   // The failed turn was stored as failed: it reads the same after the panel is reopened.
   await panel.close();
   const again = await openPanel(context, extensionId);
+  await showStoredOnMain(again); // 014, as above
   await expect(answer(again, 'Who am I?').first()).toContainText('No answer came back. Ask again.');
 });

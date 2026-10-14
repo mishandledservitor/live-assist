@@ -140,6 +140,21 @@ export function useChat(api: ChatApi, meetingId: string | null, options: UseChat
 
   const streaming = view.turns.find((t) => t.status === 'streaming') ?? null;
 
+  // 014 FR-008 (research R3): the meeting shown went away (Close, a delete, another meeting) while its answer was still
+  // arriving. Nothing keeps running for a meeting no longer on screen: the answer is stopped as its own Stop would.
+  const streamingId = useRef<string | null>(null);
+  useEffect(() => {
+    streamingId.current = streaming?.id ?? null;
+  });
+  useEffect(
+    () => () => {
+      const id = streamingId.current;
+      streamingId.current = null;
+      if (id !== null) api.stop(id);
+    },
+    [api, meetingId],
+  );
+
   const ask = (question: string) => {
     if (streaming) {
       latest.current.waiting = question;

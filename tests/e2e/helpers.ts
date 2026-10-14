@@ -169,6 +169,39 @@ export async function seedSettings(
   await panel.reload();
 }
 
+/**
+ * 014 (research R5): reloads the panel and shows the stored meeting on its main view again. The reload is an opening of
+ * the panel, which clears the main view of a stopped meeting (design decision 91); once that clear is written, the
+ * moment is set back to 0 and the panel's own change listener shows the most recent stored meeting, as in a panel that
+ * stayed open across Stop. For specs that seed a meeting to use it on the main view.
+ */
+export async function reloadShowingStored(panel: Page): Promise<void> {
+  await panel.evaluate(() => chrome.storage.local.remove('mainViewClearedAt'));
+  await panel.reload();
+  await showStoredOnMain(panel);
+}
+
+/**
+ * 014: in a panel just opened over a stopped meeting, waits for the opening's clear and undoes it, so the stored meeting
+ * shows on the main view again (see `reloadShowingStored`). The opening writes the current time, never 0.
+ */
+export async function showStoredOnMain(panel: Page): Promise<void> {
+  await panel.waitForFunction(
+    async () => {
+      const at = (await chrome.storage.local.get('mainViewClearedAt')).mainViewClearedAt;
+      return typeof at === 'number' && at > 0;
+    },
+    undefined,
+    { polling: 50 },
+  );
+  await panel.evaluate(() => chrome.storage.local.set({ mainViewClearedAt: 0 }));
+  // Shown again once the main view offers to close it (any stopped meeting on the main view has the button).
+  await panel
+    .locator('.main-view')
+    .getByRole('button', { name: 'Close transcript', exact: true })
+    .waitFor({ state: 'attached' });
+}
+
 export const line = (panel: Page, text: string) =>
   panel.getByRole('region', { name: 'Transcript', exact: true }).getByRole('listitem').filter({ hasText: text });
 
@@ -248,5 +281,5 @@ export async function seedAskMeeting(
     },
     { delayMs, fixture: standup, provider },
   );
-  await panel.reload();
+  await reloadShowingStored(panel);
 }

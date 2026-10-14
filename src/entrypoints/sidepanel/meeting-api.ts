@@ -177,12 +177,22 @@ export function createMeetingApi(deps: MeetingApiDeps): MeetingApi & LiveApi {
     },
     // 012 FR-020, FR-026: after the meeting shown on the main view was deleted, no stored meeting shows there until
     // one is started later. A marker that cannot be read counts as absent: an error never hides a transcript.
-    async latestStored() {
+    async latestStored(options) {
       const repo = await deps.repo();
       const meeting = await repo.latestMeeting();
       if (!meeting) return null;
       const clearedAt = await deps.mainView.clearedAt().catch(() => null);
       if (!showsOnMain(meeting, clearedAt)) return null;
+      // 014 FR-004 (design decision 91): the panel's first look with no meeting running opens the main view clean, the
+      // way a close does. If that cannot be remembered the meeting shows: a storage failure never hides a transcript.
+      // The moment is never before the meeting's start, so a clock set back cannot bring it straight back.
+      if (options?.opening === true) {
+        const cleared = await deps.mainView.clear(Math.max(deps.now(), meeting.startedAt)).then(
+          () => true,
+          () => false,
+        );
+        if (cleared) return null;
+      }
       return { meeting, segments: await repo.listSegments(meeting.id) };
     },
     async clearMainView() {

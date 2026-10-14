@@ -1,4 +1,4 @@
-// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K44) still reads exactly as before. Strings the panel
+// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K46) still reads exactly as before. Strings the panel
 // shows are checked on the rendered screen in the state that shows them; reasons produced deeper down (Meet, runtime,
 // provider) and the manifest are checked as the literals that produce them.
 import { join } from 'node:path';
@@ -185,11 +185,39 @@ describe('Keep strings: main view (K1–K7, K27, K32)', () => {
     expect(within(confirm).getByRole('button', { name: 'Cancel' })).toBeTruthy();
   });
 
-  it('the transcript footer of a stopped meeting: Download, then Delete, nothing else (K40, 007)', async () => {
+  it('the transcript footer of a stopped meeting: Download, Close, then Delete, nothing else (K40, 007; K46, 014)', async () => {
     render(<App api={ready()} meetings={fakeMeetingApi({ meeting: meeting(5), segments: [seg(1)] }).api} />);
     const download = await screen.findByRole('button', { name: 'Download transcript' });
     expect(download.textContent).toBe('Download transcript');
-    expect(document.querySelector('.transcript-footer')!.textContent).toBe('Download transcriptDelete transcript');
+    expect(document.querySelector('.transcript-footer')!.textContent).toBe(
+      'Download transcriptClose transcriptDelete transcript',
+    );
+  });
+});
+
+// 014 T008 (FR-010; copy-review K46, spec "Proposed copy" X1, X2): `Close transcript` and its failure, and nothing
+// else: the clean main view it leaves shows only K27.
+describe('Keep strings: Close transcript (K46, 014)', () => {
+  const ready = () => fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2').api;
+
+  it('X1 under a stopped meeting; afterwards the main view shows only K27', async () => {
+    render(<App api={ready()} meetings={fakeMeetingApi({ meeting: meeting(5), segments: [seg(1)] }).api} />);
+    const close = await screen.findByRole('button', { name: 'Close transcript' });
+    expect(close.textContent).toBe('Close transcript');
+    fireEvent.click(close);
+    await waitFor(() =>
+      expect(screen.getByRole('log', { name: 'Transcript lines' }).textContent).toBe('No transcript yet.'),
+    );
+    expect(document.querySelector('.transcript-footer')).toBeNull();
+    expect(screen.queryByRole('status', { name: /closed/i })).toBeNull();
+  });
+
+  it('X2 after a close that cannot be remembered', async () => {
+    const meetings = fakeMeetingApi({ meeting: meeting(5), segments: [seg(1)] });
+    meetings.api.clearMainView.mockImplementationOnce(() => Promise.reject(new Error('quota')));
+    render(<App api={ready()} meetings={meetings.api} />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Close transcript' }));
+    expect((await screen.findByRole('alert')).textContent).toBe("Couldn't close this transcript. Try again.");
   });
 });
 
@@ -749,8 +777,10 @@ describe('Keep strings: Transcripts screen (K43, 012)', () => {
     await screen.findByText('No transcripts stored.');
     fireEvent.click(screen.getByRole('button', { name: 'Back' }));
     await waitFor(() => expect(transcript().textContent).toBe('No transcript yet.')); // K27
-    // The main view reads as before the meeting, minus its line and its two actions; no new sentence is on it.
-    const lineAndActions = '00:01 Others (speaker not identified) line 1Download transcriptDelete transcript';
+    // The main view reads as before the meeting, minus its line and its three actions (014 added Close); no new
+    // sentence is on it.
+    const lineAndActions =
+      '00:01 Others (speaker not identified) line 1Download transcriptClose transcriptDelete transcript';
     expect(before).toContain(lineAndActions);
     expect(document.querySelector('.main-view')!.textContent).toBe(
       before.replace(lineAndActions, 'No transcript yet.'),
@@ -878,7 +908,10 @@ describe('Keep strings: captions download (K44, 013)', () => {
     expect((await screen.findByRole('button', { name: 'Download transcript' })).textContent).toBe(
       'Download transcript',
     );
-    expect(document.querySelector('.transcript-footer')!.textContent).toBe('Download transcriptDelete transcript');
+    // 014 put Close between the two on the main view (K46).
+    expect(document.querySelector('.transcript-footer')!.textContent).toBe(
+      'Download transcriptClose transcriptDelete transcript',
+    );
     cleanup();
 
     const fake = fakeTranscriptsApi([summarised(stored, line)]);

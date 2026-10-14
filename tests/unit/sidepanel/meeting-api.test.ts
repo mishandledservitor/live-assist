@@ -157,6 +157,58 @@ describe('createMeetingApi', () => {
     });
   });
 
+  // 014 T010 (FR-004, FR-007, FR-009; research R2; contracts/internal-api.md): the panel's first look, with no meeting
+  // running, opens the main view clean instead of showing a stopped meeting.
+  describe('the opening of the panel (014)', () => {
+    it('clears the main view instead of showing a stopped meeting, without reading its lines', async () => {
+      const { api, repo, mainView } = setup();
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear.mock.calls).toEqual([[5_000]]);
+      expect(repo.listSegments).not.toHaveBeenCalled();
+    });
+
+    it('clears an interrupted meeting (no end time) the same way', async () => {
+      const { api, repo, mainView } = setup();
+      repo.latestMeeting.mockResolvedValue({ ...meeting, endedAt: null, endReason: null });
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear.mock.calls).toEqual([[5_000]]);
+    });
+
+    it('stays clean when the clock reads earlier than the meeting started (clock set back): the moment is its start', async () => {
+      const { api, repo, mainView } = setup();
+      repo.latestMeeting.mockResolvedValue({ ...meeting, startedAt: 9_000 });
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear.mock.calls).toEqual([[9_000]]);
+    });
+
+    it('writes nothing when there is no stored meeting', async () => {
+      const { api, repo, mainView } = setup();
+      repo.latestMeeting.mockResolvedValue(undefined);
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear).not.toHaveBeenCalled();
+    });
+
+    it('writes nothing when the main view is already clean', async () => {
+      const { api, mainView } = setup();
+      mainView.clearedAt.mockResolvedValue(2_000);
+      expect(await api.latestStored({ opening: true })).toBeNull();
+      expect(mainView.clear).not.toHaveBeenCalled();
+    });
+
+    it('shows the meeting when the clear cannot be written: a storage failure never hides a transcript', async () => {
+      const { api, mainView } = setup();
+      mainView.clear.mockRejectedValueOnce(new Error('quota'));
+      expect(await api.latestStored({ opening: true })).toEqual({ meeting, segments: [] });
+    });
+
+    it('without the option, or with it false, shows the meeting and writes nothing, as in 012', async () => {
+      const { api, mainView } = setup();
+      expect(await api.latestStored()).toEqual({ meeting, segments: [] });
+      expect(await api.latestStored({ opening: false })).toEqual({ meeting, segments: [] });
+      expect(mainView.clear).not.toHaveBeenCalled();
+    });
+  });
+
   // T059: label edits (002 US4, contracts/live-port-and-labels.md).
   describe('label edits', () => {
     const emma = { key: 'caption:emma jones' as const, original: 'Emma Jones', captionName: 'Emma Jones' };
