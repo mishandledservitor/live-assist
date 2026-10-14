@@ -267,4 +267,96 @@ describe('useLive', () => {
       expect(latestStored.mock.calls[0]).toEqual([{ opening: true }]);
     });
   });
+  // 014 fix T040: after a meeting ends by itself the offscreen document lingers (OFFSCREEN_LINGER_MS) and answers a new
+  // live port with a snapshot of the stopped meeting. A connection whose first answer is not a running meeting is
+  // treated as no meeting running, so Close and the opening clear hold within the linger.
+  describe('a meeting that ended by itself, while the offscreen document lingers (014 fix)', () => {
+    const ended = { ...meeting, endedAt: 9, endReason: 'call-ended' as const };
+    const callEnded = reduceStatus(running, { type: 'capture', state: 'stopped', reason: 'the call ended' });
+    const stoppedSnapshot = {
+      type: 'live/snapshot',
+      meeting: ended,
+      segments: [seg(0, 'a')],
+      partials: [],
+      status: callEnded,
+    };
+
+    it('a panel open across the end keeps the meeting and the reason it ended (FR-022)', () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      const { result } = renderHook(() => useLive(api));
+      act(() =>
+        ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }),
+      );
+      act(() => ports[0]!.emit(stoppedSnapshot));
+      expect(result.current.meeting?.endedAt).toBe(9);
+      expect(result.current.status.capture).toEqual({ state: 'stopped', reason: 'the call ended' });
+      expect(result.current.segments.map((s) => s.text)).toEqual(['a']);
+      expect(latestStored).not.toHaveBeenCalled();
+    });
+
+    it('refresh (after Close) answered with the stopped meeting reads the stored view instead', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      const { result } = renderHook(() => useLive(api));
+      act(() =>
+        ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }),
+      );
+      act(() => ports[0]!.emit(stoppedSnapshot));
+      act(() => result.current.refresh());
+      act(() => ports[1]!.emit(stoppedSnapshot));
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      expect(latestStored.mock.calls[0]?.[0]?.opening).not.toBe(true);
+      await waitFor(() => expect(result.current.meeting).toBeNull());
+      expect(result.current.segments).toEqual([]);
+      expect(result.current.connected).toBe(false);
+      expect(ports[1]!.closed).toBe(true);
+    });
+
+    it('refresh of the same stored meeting (after a rename) keeps the reason it ended', async () => {
+      const { api, ports } = fakeApi({ meeting: ended, segments: [seg(0, 'renamed')] });
+      const { result } = renderHook(() => useLive(api));
+      act(() =>
+        ports[0]!.emit({ type: 'live/snapshot', meeting, segments: [seg(0, 'a')], partials: [], status: running }),
+      );
+      act(() => ports[0]!.emit(stoppedSnapshot));
+      act(() => result.current.refresh());
+      act(() => ports[1]!.emit(stoppedSnapshot));
+      await waitFor(() => expect(result.current.segments.map((s) => s.text)).toEqual(['renamed']));
+      expect(result.current.status.capture).toEqual({ state: 'stopped', reason: 'the call ended' });
+    });
+
+    it('the panel opening to the stopped meeting asks for the opening clear', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      const { result } = renderHook(() => useLive(api));
+      act(() => ports[0]!.emit(stoppedSnapshot));
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      expect(latestStored.mock.calls[0]).toEqual([{ opening: true }]);
+      await waitFor(() => expect(result.current.meeting).toBeNull());
+      expect(result.current.connected).toBe(false);
+    });
+
+    it('an empty snapshot (no meeting in the document) also reads the stored view', async () => {
+      const { api, ports, latestStored } = fakeApi(null);
+      renderHook(() => useLive(api));
+      act(() =>
+        ports[0]!.emit({ type: 'live/snapshot', meeting: null, segments: [], partials: [], status: initialStatus() }),
+      );
+      await waitFor(() => expect(latestStored).toHaveBeenCalledTimes(1));
+      expect(latestStored.mock.calls[0]).toEqual([{ opening: true }]);
+    });
+
+    it('refresh after Start answered with the new meeting already failed keeps why it failed (FR-022)', async () => {
+      const failedMeeting = { ...meeting, id: 'm2', endedAt: 9, endReason: 'failed' as const };
+      const failed = reduceStatus(running, { type: 'capture', state: 'failed', reason: 'Key rejected.' });
+      const { api, ports } = fakeApi({ meeting: failedMeeting, segments: [] });
+      const { result } = renderHook(() => useLive(api));
+      act(() => ports[0]!.disconnect());
+      await waitFor(() => expect(result.current.meeting?.id).toBe('m2'));
+      act(() => result.current.refresh());
+      act(() =>
+        ports[1]!.emit({ type: 'live/snapshot', meeting: failedMeeting, segments: [], partials: [], status: failed }),
+      );
+      await waitFor(() => expect(result.current.status.capture).toEqual({ state: 'failed', reason: 'Key rejected.' }));
+      expect(result.current.meeting?.id).toBe('m2');
+    });
+  });
 });

@@ -55,6 +55,15 @@ No foundational work: both stories reuse 012's `MainViewStore`, `clearMainView` 
 - [X] T020 [P] Write specs/014-close-transcript/manual-check.md with the real-call steps
 - [X] T021 Gates: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e && pnpm test:e2e`
 
+## Phase 6: Fix — Close after a meeting that ended by itself (owner's report, 2026-10-14)
+
+Finding: in a real call the owner left the Meet call (the meeting stopped by itself), pressed `Close transcript`, and the transcript stayed. After a self-inflicted end the service worker keeps the offscreen document open for `OFFSCREEN_LINGER_MS` (30 s), and in that time it answers a new `live` port with a snapshot of the stopped meeting. `useLive` took the port's first answer as "a meeting runs", so the reconnect after Close showed the meeting again, and a panel opened within 30 s skipped the opening clear (FR-004). The 014 tests only ended meetings with Stop, which closes the document at once. See research R7.
+
+- [X] T022 [P] Failing tests: `tests/unit/sidepanel/use-live.test.tsx` (a first answer with a stopped or empty snapshot reads the stored view, as an opening on the first look; a panel connected across the end still shows it, FR-022) and `tests/unit/sidepanel/app-close.test.tsx` (Close while the port answers with the stopped meeting)
+- [X] T023 [P] Failing e2e tests in `tests/e2e/close.spec.ts`: leave the fixture Meet call, then Close within the linger; leave it, then open the panel again within the linger
+- [X] T024 Fix in `src/entrypoints/sidepanel/hooks/useLive.ts`: a connection whose first `live/snapshot` holds no meeting or an ended one is treated as no meeting running (port closed, `latestStored`), keeping that snapshot's status when the stored meeting is the same one (a Start that fails at once still says why; failing test first in `use-live.test.tsx`)
+- [X] T025 manual-check.md step 9; gates as T021
+
 ## Dependencies
 
 - US1 (T002–T009) and US2 (T010–T017) are independent; both edit nothing in common except tests/unit/sidepanel/fake-meeting-api.ts (US2 only).

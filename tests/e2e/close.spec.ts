@@ -2,9 +2,17 @@
 // the main view with `Close transcript`; closing clears the main view without deleting, and it stays clean across a
 // reload; the next opening of the panel after a meeting stopped is clean by itself; a running meeting survives a
 // reload; the next Start shows as always. Fixture transcription provider, no network.
-import type { Page } from '@playwright/test';
+import type { BrowserContext, Page } from '@playwright/test';
 import { expect, test } from './fixtures';
-import { LINE_TIMEOUT, line, openMeetingTab, openPanel, seedSettings } from './helpers';
+import {
+  emulateMeetCaptionsButton,
+  LINE_TIMEOUT,
+  line,
+  openMeetingTab,
+  openMeetPage,
+  openPanel,
+  seedSettings,
+} from './helpers';
 import { readAllStores, rows, transcriptsButton, transcriptsScreen } from './transcripts-helpers';
 
 const mainView = (panel: Page) => panel.locator('.main-view');
@@ -100,4 +108,43 @@ test('the panel opens clean after a meeting stopped, and shows a running meeting
   await expectCleanMain(panel);
   await transcriptsButton(panel).click();
   await expect(rows(panel)).toHaveCount(1);
+});
+
+// 014 fix T040: leaving the Meet call ends the meeting by itself, and the offscreen document lingers for 30 s
+// (OFFSCREEN_LINGER_MS) answering new panels with the stopped meeting. Close and the opening clear hold within it.
+test.describe('after the meeting ended by itself (Meet call left)', () => {
+  test.setTimeout(90_000);
+
+  /** Starts on a fixture Meet page, waits for a line, then plays Meet after "Leave call". */
+  async function recordAndLeave(context: BrowserContext, extensionId: string) {
+    await emulateMeetCaptionsButton(context);
+    const meet = await openMeetPage(context, extensionId, 'real-dom-captions-off');
+    const panel = await openPanel(context, extensionId, meet.tabId);
+    await seedSettings(panel, { scenario: 'names' });
+    await panel.getByRole('button', { name: 'Start' }).click();
+    await expect(line(panel, 'Emma speaks first.')).toBeVisible({ timeout: 30_000 });
+    await meet.page.evaluate(() => {
+      document.body.innerHTML = '<div role="main"><h1>You left the meeting</h1><button>Rejoin</button></div>';
+    });
+    await expect(panel.getByRole('button', { name: 'Start' })).toBeVisible({ timeout: 15_000 });
+    await expect(panel.getByText('Stopped — the call ended', { exact: true })).toBeVisible();
+    return { meet, panel };
+  }
+
+  test('Close within the linger clears the main view and it stays clean', async ({ context, extensionId }) => {
+    const { panel } = await recordAndLeave(context, extensionId);
+    await expect(line(panel, 'Emma speaks first.')).toBeVisible();
+    await onMain(panel, 'Close transcript').click();
+    await expectCleanMain(panel);
+    await panel.waitForTimeout(2_000);
+    await expectCleanMain(panel);
+  });
+
+  test('the panel opened within the linger is clean', async ({ context, extensionId }) => {
+    const { meet, panel } = await recordAndLeave(context, extensionId);
+    await panel.close();
+    const again = await openPanel(context, extensionId, meet.tabId);
+    await expect(transcriptsButton(again)).toBeVisible();
+    await expectCleanMain(again);
+  });
 });
