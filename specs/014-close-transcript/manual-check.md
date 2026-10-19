@@ -31,4 +31,4 @@ Reload the unpacked extension in `chrome://extensions`, reload the Meet tab, cli
 
 ## Result
 
-Not yet run.
+Real check by the user 2026-10-19 (walkthrough `live-assist-test-run-2026-10-19.html`, production build of 2026-10-14, Google Meet): steps 1 to 5 pass (Stop with the panel open, Close, still clean after reopening the panel, clean at the next opening without Close, also after restarting Chrome, and a running meeting never cleared). Not yet run: step 6 (switching tabs), 7 (Close during an answer), 8 (notes), 9 (Close after leaving the call with Meet's hang-up button).
