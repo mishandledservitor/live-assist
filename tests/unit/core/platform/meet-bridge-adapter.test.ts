@@ -105,6 +105,11 @@ describe('BridgedMeetAdapter', () => {
     expect(a.id).toBe('meet');
     expect(a.matches(new URL('https://meet.google.com/abc-defg-hij'))).toBe(true);
     expect(a.matches(new URL('https://meet.google.com/abc-defg-hij?authuser=1'))).toBe(true);
+    // Meet's newer call address puts /meet/ in front of the code (seen in a real call on 2026-10-21).
+    expect(a.matches(new URL('https://meet.google.com/meet/abc-defg-hij'))).toBe(true);
+    expect(a.matches(new URL('https://meet.google.com/meet/abc-defg-hij?authuser=0'))).toBe(true);
+    expect(a.matches(new URL('https://meet.google.com/meet/'))).toBe(false);
+    expect(a.matches(new URL('https://meet.google.com/meet/landing'))).toBe(false);
     expect(a.matches(new URL('https://meet.google.com/'))).toBe(false);
     expect(a.matches(new URL('https://meet.google.com/landing'))).toBe(false);
     expect(a.matches(new URL('https://example.com/abc-defg-hij'))).toBe(false);
