@@ -10,6 +10,10 @@
 
 ## Clarifications
 
+### Session 2026-10-22 (owner)
+
+- Q52: How does setup let a user finish without a chat key? → A: The chat key may be left empty. Finishing setup with it empty turns Ask off; entering one leaves Ask on, as today. The setup screen gets no new text (decision 102).
+
 ### Session 2026-10-22 (decided without the owner; each can be overruled)
 
 - Q: What goes when Ask is off? → A: Everything that exists only for asking: the question box, `Ask` and `Stop`, the missing-key line, the model label, the conversation strip (questions, answers, citations), and meeting notes (008) in both places they are offered (beside Start for the next meeting, and in the ask dock for the meeting shown), because notes are only ever sent with questions and never written into a download. In Settings, the provider choice, the key field and what the provider keeps are not shown while Ask is off.
@@ -45,11 +49,11 @@ A new user installs live-assist and only wants the live transcript. Setup lets t
 
 **Why this priority**: Without it, a user who never wants questions must still obtain a Claude or OpenAI key to get past setup.
 
-**Independent Test**: Start from no settings; finish setup without a chat key in the way Q52 decides; check the main view opens with Ask off (or as Q52 decides) and transcription starts.
+**Independent Test**: Start from no settings; finish setup with the chat key empty; check the main view opens with Ask off and transcription starts.
 
 **Acceptance Scenarios**:
 
-1. **Given** a first run, **When** the user finishes setup without a chat key [NEEDS CLARIFICATION: Q52, how setup lets the user skip the chat key], **Then** setup completes, Ask is off and the main view has no Ask elements.
+1. **Given** a first run, **When** the user leaves the chat key empty and finishes setup, **Then** setup completes, Ask is off and the main view has no Ask elements.
 2. **Given** a first run, **When** the user enters a chat key at setup, **Then** setup behaves as today and Ask is on.
 
 ### Edge Cases
@@ -71,7 +75,7 @@ A new user installs live-assist and only wants the live transcript. Setup lets t
 - **FR-005**: Turning Ask off MUST NOT delete the stored chat key, provider, model, questions and answers, or notes; turning it on again MUST restore the Ask and notes elements with that data, without re-entering the key.
 - **FR-006**: The setting MUST apply to the open panel as soon as it changes and MUST be remembered across panel openings and browser restarts.
 - **FR-007**: Turning Ask off while an answer is arriving MUST stop that answer as its own `Stop` does (keeping what arrived) and MUST drop any question waiting to be sent.
-- **FR-008**: Setup MUST be completable without a chat key (Q52), and a setup completed without one MUST leave Ask off.
+- **FR-008**: Setup MUST be completable with the chat key left empty, and a setup completed that way MUST leave Ask off; setup gains no new text (decision 102). A setup completed with a chat key leaves Ask on.
 - **FR-009**: Transcription, speaker names, downloads (including 016's merged file), `Close transcript`, `Delete transcript` and the Transcripts screen MUST behave the same with Ask on or off.
 - **FR-010**: Every new user-visible string MUST pass the copy rule and be recorded in `specs/006-panel-redesign/copy-review.md` and its fixture; no explanatory line is added about what turning Ask off does.
 
