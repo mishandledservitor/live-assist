@@ -583,7 +583,7 @@ test.describe('Cross-cutting: off the network, quick, accessible, and nothing ne
     expect(watch.problems()).toEqual([]);
   });
 
-  test('a 3-hour meeting (5,000 lines, 1,200 caption turns) is in Downloads within two seconds of the press (SC-008)', async ({
+  test('a 3-hour meeting (5,000 lines, 1,200 caption turns): the merged file and the zip from Download originals are each in Downloads within two seconds of the press (SC-008, 016 SC-005)', async ({
     context,
     extensionId,
   }) => {
@@ -608,10 +608,11 @@ test.describe('Cross-cutting: off the network, quick, accessible, and nothing ne
     await expect(panel.locator('.main-view .transcript-scroll li')).toHaveCount(5_000, { timeout: 30_000 });
 
     // Timed in the panel, from the press to the moment the file is handed to Chrome's downloads: reading the stored
-    // lines and captions, building both files and the zip. (Timing it from the test also counted the test's own
-    // round trips and its reading back of the saved file, which is not what SC-008 is about.)
+    // lines and captions and building the file (the merged file, or both files and the zip). (Timing it from the test
+    // also counted the test's own round trips and its reading back of the saved file, which is not what SC-008 is
+    // about.)
     await panel.evaluate(() => {
-      const w = window as unknown as { pressedAt: number; handedOverAt: number };
+      const w = window as unknown as { pressedAt?: number; handedOverAt: number };
       const click = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'click')!.value as (
         this: HTMLElement,
       ) => void;
@@ -621,16 +622,43 @@ test.describe('Cross-cutting: off the network, quick, accessible, and nothing ne
       };
       document.addEventListener('click', () => (w.pressedAt ??= performance.now()), true);
     });
-    const saved = await saveFrom(panel, mainDownload(panel));
-    const took = await panel.evaluate(() => {
-      const w = window as unknown as { pressedAt: number; handedOverAt: number };
-      return w.handedOverAt - w.pressedAt;
-    });
-    expect(took).toBeGreaterThan(0);
-    expect(took).toBeLessThan(2_000);
-    expect(saved.download.suggestedFilename()).toBe('Meeting — 07-10-2026 at 14h30.zip');
-    expect(saved.bytes.length).toBeLessThan(2_000_000);
-    const { names, files } = await unzipDownload(saved.download);
+    const tookSincePress = () =>
+      panel.evaluate(() => {
+        const w = window as unknown as { pressedAt: number; handedOverAt: number };
+        return w.handedOverAt - w.pressedAt;
+      });
+    const forgetPress = () =>
+      panel.evaluate(() => {
+        delete (window as unknown as { pressedAt?: number }).pressedAt;
+      });
+    const wordCount = (text: string) => text.split(/\s+/).filter(Boolean).length;
+
+    // The main view after Stop: the merged file (decision 93).
+    await forgetPress();
+    const merged = await saveFrom(panel, mainDownload(panel));
+    const mergedTook = await tookSincePress();
+    expect(mergedTook).toBeGreaterThan(0);
+    expect(mergedTook).toBeLessThan(2_000);
+    expect(merged.download.suggestedFilename()).toBe('Meeting — 07-10-2026 at 14h30 — Transcript.txt');
+    const mergedText = merged.bytes.toString('utf8');
+    const expected = mergedTranscriptFile(long.meeting, long.segments ?? [], long.captionTurns ?? []).body;
+    expect(wordCount(mergedText)).toBe(wordCount(expected));
+    expect(wordCount(mergedText)).toBeGreaterThan(0);
+    expect(merged.bytes.length).toBeLessThan(2_000_000);
+
+    // Download originals on the single-meeting view: the 013 zip of the two originals.
+    await transcriptsButton(panel).click();
+    await openControl(panel, startedAt).click();
+    const originals = panel.locator('.past-actions').getByRole('button', { name: 'Download originals', exact: true });
+    await expect(originals).toBeVisible();
+    await forgetPress();
+    const zip = await saveFrom(panel, originals);
+    const zipTook = await tookSincePress();
+    expect(zipTook).toBeGreaterThan(0);
+    expect(zipTook).toBeLessThan(2_000);
+    expect(zip.download.suggestedFilename()).toBe('Meeting — 07-10-2026 at 14h30.zip');
+    expect(zip.bytes.length).toBeLessThan(2_000_000);
+    const { names, files } = await unzipDownload(zip.download);
     expect(files.get(names[0]!)!.toString('utf8').split('\n\n')).toHaveLength(5_000);
     expect(files.get(names[1]!)!.toString('utf8').split('\n\n')).toHaveLength(1_200);
   });
