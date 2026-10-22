@@ -209,6 +209,11 @@ describe('D6 title and meeting code are readable', () => {
   it('meeting code from the URL', () => {
     expect(meetingCode(loadMeetSnapshot('in-call-captions-on').location)).toEqual({ value: 'abc-defg-hij', tier: 1 });
     expect(meetingCode(new URL('https://meet.google.com/landing'))).toEqual(NOTHING);
+    expect(meetingCode(new URL('https://meet.google.com/meet/abc-defg-hij'))).toEqual({
+      value: 'abc-defg-hij',
+      tier: 1,
+    });
+    expect(meetingCode(new URL('https://meet.google.com/meet/landing'))).toEqual(NOTHING);
   });
 });
 

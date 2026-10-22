@@ -33,7 +33,7 @@ Where a fact could not be confirmed from two independent sources it is marked **
 | Mic button | `button[data-is-muted]` with `data-mute-button` (absent on the real page), or a `button[data-is-muted]` whose icon is `mic`/`mic_off` or whose label contains "microphone"; never a camera button, which also carries `data-is-muted` (R13) | icon `mic` / `mic_off` (**unverified**) | `aria-label` contains "microphone" (seen: "Turn off microphone") | — |
 | Muted? | `data-is-muted="true"/"false"` | icon `mic_off` vs `mic` | "Turn on microphone" = muted | — |
 | Title | `[data-meeting-title]` attribute | — | `document.title` minus `Meet - ` / `Meet – ` | — |
-| Meeting code | URL path `/^\/([a-z]{3}-[a-z]{4}-[a-z]{3})/` | — | — | — |
+| Meeting code | URL path `/^\/(?:meet\/)?([a-z]{3}-[a-z]{4}-[a-z]{3})/` (the `/meet/` prefix since October 2026, decision 101) | — | — | — |
 
 A locator that only matches at tier 3 or 4 still works, but the content script logs the tier (names only, no text) so a drift is visible before it breaks. Participants are **not** read: no requirement needs a participant list (spec edge case: names are picked up as captions appear; Principle VI).
 

@@ -1,4 +1,7 @@
-/** A Google Meet call URL (`/abc-defg-hij`); the Meet landing page is not a call (contracts/platform-adapter.md). */
+/**
+ * A Google Meet call URL (`/abc-defg-hij`, or `/meet/abc-defg-hij` as Meet addresses calls since October 2026); the Meet
+ * landing page is not a call (contracts/platform-adapter.md).
+ */
 export function isMeetCallUrl(url: URL | string): boolean {
   let u: URL;
   try {
@@ -9,6 +12,6 @@ export function isMeetCallUrl(url: URL | string): boolean {
   return (
     u.protocol === 'https:' &&
     u.hostname === 'meet.google.com' &&
-    /^\/[a-z]{3}-[a-z]{4}-[a-z]{3}(\/|$)/.test(u.pathname)
+    /^\/(meet\/)?[a-z]{3}-[a-z]{4}-[a-z]{3}(\/|$)/.test(u.pathname)
   );
 }

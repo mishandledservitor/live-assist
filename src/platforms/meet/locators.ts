@@ -199,6 +199,6 @@ export function meetingTitle(doc: Document): Located<string> {
 }
 
 export function meetingCode(location: Pick<Location, 'pathname'>): Located<string> {
-  const code = /^\/([a-z]{3}-[a-z]{4}-[a-z]{3})(\/|$)/.exec(location.pathname)?.[1];
+  const code = /^\/(?:meet\/)?([a-z]{3}-[a-z]{4}-[a-z]{3})(\/|$)/.exec(location.pathname)?.[1];
   return code ? found(code, 1) : NOTHING;
 }
