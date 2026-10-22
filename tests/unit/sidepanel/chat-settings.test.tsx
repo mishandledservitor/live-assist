@@ -41,6 +41,8 @@ const optionLabels = () =>
     .getAllByRole('option')
     .map((o) => o.textContent);
 const section = (name: string) => screen.getByRole('region', { name });
+/** 018 decision 109: what a provider keeps is a closed disclosure in Settings, its heading text the summary. */
+const summary = (text: string) => screen.queryByText(text, { selector: 'summary' });
 
 describe('Settings → Questions (4a)', () => {
   it('has the heading Questions, OpenAI selected by default, and OpenAI’s models with GPT-6 Luna chosen', () => {
@@ -75,45 +77,72 @@ describe('Settings → Questions (4a)', () => {
   });
 });
 
-describe('Settings → Claude API key / OpenAI API key (4b, 4c)', () => {
-  it('each provider has its own section with the saved hint or No key saved.', () => {
+// 018 (decisions 106, 107): only the selected provider's key, as one line; switching shows the other's, both kept.
+describe('Settings → the selected provider’s key (4b, 4c)', () => {
+  const replaceIn = (s: HTMLElement) => fireEvent.click(within(s).getByRole('button', { name: 'Replace' }));
+
+  it('shows only the selected provider’s key block, then What it keeps', () => {
     renderChat();
-    expect(within(section('Claude API key')).getByText('No key saved.')).toBeTruthy();
-    expect(within(section('OpenAI API key')).getByText('••••o1o2')).toBeTruthy();
-    expect(within(section('OpenAI API key')).getByRole('button', { name: 'Remove key' })).toBeTruthy();
-    expect(within(section('Claude API key')).queryByRole('button', { name: 'Remove key' })).toBeNull();
+    expect(screen.queryByRole('region', { name: 'Claude key' })).toBeNull();
+    const openai = section('OpenAI key');
+    expect(within(openai).getByText('••••o1o2')).toBeTruthy();
+    expect(within(openai).getByRole('button', { name: 'Remove' })).toBeTruthy();
+    const keeps = summary('What OpenAI keeps')!.closest('details')!;
+    expect(keeps.open).toBe(false);
+    expect(openai.compareDocumentPosition(keeps) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(summary('What Anthropic keeps')).toBeNull();
   });
 
-  it('checks and replaces a key, shows Key works. and the hint, and clears the box', async () => {
-    const { api, onHints } = renderChat();
-    const claude = section('Claude API key');
-    const box = within(claude).getByLabelText<HTMLInputElement>('New key');
+  it('switching provider shows the other provider’s key and what it keeps; the first key is kept', async () => {
+    const { api } = renderChat({}, { anthropic: 'c1c2', openai: 'o1o2' });
+    fireEvent.click(radio('Claude'));
+    const claude = await screen.findByRole('region', { name: 'Claude key' });
+    expect(within(claude).getByText('••••c1c2')).toBeTruthy();
+    expect(screen.queryByRole('region', { name: 'OpenAI key' })).toBeNull();
+    expect(summary('What Anthropic keeps')).toBeTruthy();
+    fireEvent.click(radio('OpenAI'));
+    expect(within(await screen.findByRole('region', { name: 'OpenAI key' })).getByText('••••o1o2')).toBeTruthy();
+    expect(api.removeChatKey).not.toHaveBeenCalled();
+  });
+
+  it('with no key saved for the provider, the field shows at once beside No key saved.', () => {
+    renderChat({ provider: 'anthropic' });
+    const claude = section('Claude key');
+    expect(within(claude).getByText('No key saved.')).toBeTruthy();
+    expect(within(claude).getByLabelText('Claude key')).toBeTruthy();
+    expect(within(claude).queryByRole('button', { name: 'Remove' })).toBeNull();
+  });
+
+  it('checks and saves a key, shows Key works. and the hint, and clears the box', async () => {
+    const { api, onHints } = renderChat({ provider: 'anthropic' });
+    const claude = section('Claude key');
+    const box = within(claude).getByLabelText<HTMLInputElement>('Claude key');
     expect(box.type).toBe('password');
     fireEvent.change(box, { target: { value: KEY } });
-    fireEvent.click(within(claude).getByRole('button', { name: 'Check and replace key' }));
+    fireEvent.click(within(claude).getByRole('button', { name: 'Check and save' }));
     expect(await within(claude).findByText('Key works.')).toBeTruthy();
     expect(api.replaceChatKey).toHaveBeenCalledWith('anthropic', KEY);
     expect(within(claude).getByText('••••c3d4')).toBeTruthy();
-    expect(box.value).toBe('');
     expect(onHints).toHaveBeenLastCalledWith({ anthropic: 'c3d4', openai: 'o1o2' });
     expect(document.body.textContent).not.toContain(KEY);
   });
 
   it.each([
-    ['anthropic', 'Claude API key', 'invalid-key', 'Anthropic rejected the API key.'],
-    ['anthropic', 'Claude API key', 'forbidden', "This key isn't allowed to use the Claude API."],
-    ['anthropic', 'Claude API key', 'network', "Couldn't reach Anthropic."],
-    ['openai', 'OpenAI API key', 'invalid-key', 'OpenAI rejected the API key.'],
-    ['openai', 'OpenAI API key', 'forbidden', "This key isn't allowed to use the OpenAI API."],
-    ['openai', 'OpenAI API key', 'network', "Couldn't reach OpenAI."],
-    ['openai', 'OpenAI API key', 'unknown', 'OpenAI returned an unexpected response. Try again in a moment.'],
+    ['anthropic', 'Claude key', 'invalid-key', 'Anthropic rejected the API key.'],
+    ['anthropic', 'Claude key', 'forbidden', "This key isn't allowed to use the Claude API."],
+    ['anthropic', 'Claude key', 'network', "Couldn't reach Anthropic."],
+    ['openai', 'OpenAI key', 'invalid-key', 'OpenAI rejected the API key.'],
+    ['openai', 'OpenAI key', 'forbidden', "This key isn't allowed to use the OpenAI API."],
+    ['openai', 'OpenAI key', 'network', "Couldn't reach OpenAI."],
+    ['openai', 'OpenAI key', 'unknown', 'OpenAI returned an unexpected response. Try again in a moment.'],
   ] as const)('%s check failing with %s says %s', async (provider, heading, kind, text) => {
-    const f = renderChat();
+    const f = renderChat({ provider });
     f.setChatValidation(provider, { ok: false, kind });
     const s = section(heading);
-    const box = within(s).getByLabelText<HTMLInputElement>('New key');
+    if (provider === 'openai') replaceIn(s);
+    const box = within(s).getByLabelText<HTMLInputElement>(heading);
     fireEvent.change(box, { target: { value: KEY } });
-    fireEvent.click(within(s).getByRole('button', { name: 'Check and replace key' }));
+    fireEvent.click(within(s).getByRole('button', { name: 'Check and save' }));
     expect((await within(s).findByRole('alert')).textContent).toBe(text);
     expect(box.value).toBe('');
     expect(f.onHints).not.toHaveBeenCalled();
@@ -121,18 +150,18 @@ describe('Settings → Claude API key / OpenAI API key (4b, 4c)', () => {
 
   it('an empty key asks for one and checks nothing', async () => {
     const { api } = renderChat();
-    const s = section('OpenAI API key');
-    fireEvent.click(within(s).getByRole('button', { name: 'Check and replace key' }));
+    const s = section('OpenAI key');
+    replaceIn(s);
+    fireEvent.click(within(s).getByRole('button', { name: 'Check and save' }));
     expect((await within(s).findByRole('alert')).textContent).toBe('Enter your OpenAI API key.');
     expect(api.replaceChatKey).not.toHaveBeenCalled();
   });
 
-  it('Remove key removes that provider’s key', async () => {
+  it('Remove removes that provider’s key and keeps the other', async () => {
     const { api, onHints } = renderChat({}, { anthropic: 'c1c2', openai: 'o1o2' });
-    fireEvent.click(within(section('OpenAI API key')).getByRole('button', { name: 'Remove key' }));
+    fireEvent.click(within(section('OpenAI key')).getByRole('button', { name: 'Remove' }));
     await waitFor(() => expect(api.removeChatKey).toHaveBeenCalledWith('openai'));
-    expect(await within(section('OpenAI API key')).findByText('No key saved.')).toBeTruthy();
-    expect(within(section('Claude API key')).getByText('••••c1c2')).toBeTruthy();
+    expect(await within(section('OpenAI key')).findByText('No key saved.')).toBeTruthy();
     expect(onHints).toHaveBeenLastCalledWith({ anthropic: 'c1c2', openai: null });
   });
 });

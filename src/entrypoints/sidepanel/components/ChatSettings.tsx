@@ -1,13 +1,14 @@
 // Settings → Questions (003 FR-011–FR-013, contracts/ask-ui.md rows 4a–4c): which provider answers, its model, and
-// a key per provider. A key is written once as a candidate and checked by the service worker; the panel only ever
-// sees its last four characters (FR-014a).
-import { useId, useState, type FormEvent } from 'react';
-import { CHAT_KEY_WORKS, chatKeyResultText, KEY_PRODUCT_NAMES, type ChatKeyFailure } from '../../../core/chat/messages';
-import { CHAT_PROVIDERS, modelsFor, type ChatProviderId } from '../../../core/chat/models';
+// the selected provider's key with what it keeps (018, decisions 105-107). A key is written once as a candidate and
+// checked by the service worker; the panel only ever sees its last four characters (FR-014a).
+import { useId, useState } from 'react';
+import { CHAT_KEY_WORKS, chatKeyResultText, KEY_PRODUCT_NAMES } from '../../../core/chat/messages';
+import { modelsFor, type ChatProviderId } from '../../../core/chat/models';
 import type { ChatKeyHintsReply } from '../../../core/messaging/protocol';
 import type { ChatSettings as ChatSettingsData, Settings } from '../../../core/settings/schema';
-import { maskedKey } from '../key-messages';
 import type { SettingsApi } from '../settings-api';
+import { ChatRetention } from './ChatRetention';
+import { KeyBlock } from './KeyBlock';
 
 export interface ChatSettingsProps {
   api: SettingsApi;
@@ -18,6 +19,8 @@ export interface ChatSettingsProps {
   /** 017 (design decision 103): Ask on; off leaves only the heading and the tick box. */
   askEnabled: boolean;
   onAskEnabled: (askEnabled: boolean) => void;
+  /** 018: the id of the `Questions` heading, which names its Settings group. */
+  headingId?: string;
 }
 
 /** `Answers from`: the provider radios, shared with first-run setup. */
@@ -44,85 +47,6 @@ export function ProviderRadios({
   );
 }
 
-function ChatKeySection({
-  provider,
-  hint,
-  api,
-  onHint,
-}: {
-  provider: ChatProviderId;
-  hint: string | null;
-  api: SettingsApi;
-  onHint: (hint: string | null) => void;
-}) {
-  const id = useId();
-  const [value, setValue] = useState('');
-  const [checking, setChecking] = useState(false);
-  const [message, setMessage] = useState<{ error: boolean; text: string } | null>(null);
-  const heading = `${KEY_PRODUCT_NAMES[provider]} API key`;
-
-  const fail = (kind: ChatKeyFailure) => setMessage({ error: true, text: chatKeyResultText(provider, kind) });
-
-  async function replace(e: FormEvent) {
-    e.preventDefault();
-    const candidate = value.trim();
-    if (candidate === '') return fail('missing-key');
-    setChecking(true);
-    setMessage(null);
-    try {
-      const result = await api.replaceChatKey(provider, candidate);
-      if (!result.ok) return fail(result.kind);
-      onHint(result.hint);
-      setMessage({ error: false, text: CHAT_KEY_WORKS });
-    } finally {
-      // The key never stays on screen, whatever the result.
-      setValue('');
-      setChecking(false);
-    }
-  }
-
-  async function remove() {
-    await api.removeChatKey(provider);
-    onHint(null);
-    setMessage({ error: false, text: 'Key removed.' });
-  }
-
-  return (
-    <section aria-labelledby={`${id}-heading`}>
-      <h3 id={`${id}-heading`}>{heading}</h3>
-      <p>
-        {hint === null ? (
-          'No key saved.'
-        ) : (
-          <>
-            Saved key: <code>{maskedKey(hint)}</code>
-          </>
-        )}
-      </p>
-      <form onSubmit={(e) => void replace(e)} noValidate>
-        <label htmlFor={`${id}-key`}>New key</label>{' '}
-        <input
-          id={`${id}-key`}
-          type="password"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          autoComplete="off"
-          spellCheck={false}
-        />{' '}
-        <button type="submit" disabled={checking}>
-          {checking ? 'Checking key…' : 'Check and replace key'}
-        </button>
-      </form>
-      {hint !== null && (
-        <button type="button" onClick={() => void remove()}>
-          Remove key
-        </button>
-      )}
-      {message && <p role={message.error ? 'alert' : 'status'}>{message.text}</p>}
-    </section>
-  );
-}
-
 export function ChatSettings({
   api,
   chat: initial,
@@ -131,6 +55,7 @@ export function ChatSettings({
   onHints,
   askEnabled,
   onAskEnabled,
+  headingId,
 }: ChatSettingsProps) {
   const [chat, setChat] = useState(initial);
   const [hints, setHints] = useState(initialHints);
@@ -152,9 +77,9 @@ export function ChatSettings({
 
   return (
     <>
-      <h3>Questions</h3>
+      <h3 id={headingId}>Questions</h3>
       {/* 017 (design decision 103, copy-review K48): first under the heading; nothing says what turning it off hides. */}
-      <label className="setting-alone">
+      <label className="setting-row">
         <input type="checkbox" checked={askEnabled} onChange={(e) => onAskEnabled(e.target.checked)} /> Ask questions
         about the meeting
       </label>
@@ -175,9 +100,23 @@ export function ChatSettings({
               ))}
             </select>
           </p>
-          {CHAT_PROVIDERS.map((p) => (
-            <ChatKeySection key={p} provider={p} hint={hints[p]} api={api} onHint={(h) => setHint(p, h)} />
-          ))}
+          {/* 018 (decision 107): the selected provider's key only; the other provider's stays stored. */}
+          <KeyBlock
+            key={chat.provider}
+            heading={`${KEY_PRODUCT_NAMES[chat.provider]} key`}
+            hint={hints[chat.provider]}
+            check={async (candidate) => {
+              const result = await api.replaceChatKey(chat.provider, candidate);
+              return result.ok
+                ? { ok: true, hint: result.hint }
+                : { ok: false, text: chatKeyResultText(chat.provider, result.kind) };
+            }}
+            emptyText={chatKeyResultText(chat.provider, 'missing-key')}
+            savedText={CHAT_KEY_WORKS}
+            remove={() => api.removeChatKey(chat.provider)}
+            onHint={(h) => setHint(chat.provider, h)}
+          />
+          <ChatRetention provider={chat.provider} collapsible />
         </>
       )}
     </>

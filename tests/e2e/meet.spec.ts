@@ -421,7 +421,7 @@ test.describe('Fix a wrong or missing name (US4)', () => {
     // Forgotten: the meeting after that shows Meet's name again.
     await panel.getByRole('button', { name: 'Settings' }).click();
     await remembered.getByRole('button', { name: 'Forget Emma Jones' }).click();
-    await expect(panel.getByText(/No remembered names yet/)).toBeVisible();
+    await expect(remembered).toHaveCount(0); // 018 decision 108: none left, no section
     await panel.getByRole('button', { name: 'Back' }).click();
     await meetingWithEmma(panel, meet.page);
     await expect(label(panel, 'Emma speaks first.')).toContainText('Emma Jones');

@@ -71,22 +71,17 @@ export function RememberedNames({ api }: { api: Api }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api]);
 
+  // 018 (decision 108): nothing of the section shows while there are none; a rename made meanwhile brings it in.
+  if (mappings === null || mappings.length === 0) return null;
   return (
     <>
-      <h3 id="remembered-names-heading">Remembered names</h3>
-      <p>
-        When you rename someone Meet&apos;s captions named, the new name is used for them in later meetings too. Changes
-        here apply from the next meeting.
-      </p>
-      {mappings === null ? null : mappings.length === 0 ? (
-        <p>No remembered names yet. Rename a speaker in a Meet transcript to add one.</p>
-      ) : (
-        <ul aria-label="Remembered names">
-          {mappings.map((m) => (
-            <Row key={`${m.captionName}:${m.updatedAt}`} mapping={m} api={api} onChanged={reload} />
-          ))}
-        </ul>
-      )}
+      <h4 id="remembered-names-heading">Remembered names</h4>
+      <p>Changes here apply from the next meeting.</p>
+      <ul aria-label="Remembered names">
+        {mappings.map((m) => (
+          <Row key={`${m.captionName}:${m.updatedAt}`} mapping={m} api={api} onChanged={reload} />
+        ))}
+      </ul>
     </>
   );
 }

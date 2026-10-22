@@ -10,13 +10,11 @@ import type { AccountApi } from './account-api';
 import type { ChatApi } from './chat-api';
 import { AccountDetails } from './components/AccountDetails';
 import { AskArea } from './components/AskArea';
-import { ChatRetention } from './components/ChatRetention';
 import { CloseTranscript } from './components/CloseTranscript';
 import { CreditsBadge } from './components/CreditsBadge';
 import { CAPTIONS_PROMPT, DeleteTranscript } from './components/DeleteTranscript';
 import { DownloadTranscript } from './components/DownloadTranscript';
 import { NotesControl } from './components/NotesControl';
-import { RetentionNotice } from './components/RetentionNotice';
 import { Settings } from './components/Settings';
 import { SettingsScreen } from './components/SettingsScreen';
 import { Setup } from './components/Setup';
@@ -230,9 +228,9 @@ function Panel({
   // The badge opens Settings at the account section (FR-015).
   const openAccount = () => {
     focusNext.current = () => {
-      const heading = document.getElementById('account-heading');
-      heading?.scrollIntoView?.({ block: 'start' });
-      return heading;
+      const account = document.getElementById('account-section');
+      account?.scrollIntoView?.({ block: 'start' });
+      return account;
     };
     setScreen('settings');
   };
@@ -319,8 +317,6 @@ function Panel({
           onChange={onLoaded}
           account={accountState && <AccountDetails account={accountState} />}
         />
-        <RetentionNotice headingLevel={3} />
-        {loaded.settings.askEnabled && <ChatRetention provider={loaded.settings.chat.provider} />}
       </SettingsScreen>
       {/* Mounted only while it shows, so every opening reads storage afresh (012 FR-009, research R1). */}
       {transcripts && screen === 'transcripts' && (

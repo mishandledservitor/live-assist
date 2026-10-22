@@ -18,19 +18,40 @@ const DISCLOSURES: Readonly<Record<ChatProviderId, { heading: string; text: stri
   },
 };
 
-export function ChatRetention({ provider, headingLevel = 3 }: { provider: ChatProviderId; headingLevel?: 2 | 3 }) {
+/** `collapsible` (Settings, 018 decision 109): a disclosure, closed by default, its summary the heading text. */
+export function ChatRetention({
+  provider,
+  headingLevel = 3,
+  collapsible = false,
+}: {
+  provider: ChatProviderId;
+  headingLevel?: 2 | 3;
+  collapsible?: boolean;
+}) {
   const id = useId();
   const Heading = headingLevel === 2 ? 'h2' : 'h3';
   const d = DISCLOSURES[provider];
-  return (
-    <section aria-labelledby={id}>
-      <Heading id={id}>{d.heading}</Heading>
+  const body = (
+    <>
       <p>{d.text}</p>
       <p>
         <a href={d.href} target="_blank" rel="noreferrer">
           {d.link}
         </a>
       </p>
+    </>
+  );
+  if (collapsible)
+    return (
+      <details className="retention">
+        <summary>{d.heading}</summary>
+        {body}
+      </details>
+    );
+  return (
+    <section aria-labelledby={id} className="retention">
+      <Heading id={id}>{d.heading}</Heading>
+      {body}
     </section>
   );
 }

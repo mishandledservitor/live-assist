@@ -1,6 +1,6 @@
 // 003 T064 (FR-016, constitution I, contracts/ask-ui.md row 8a): what the selected chat provider receives and keeps,
 // in its own words (research R11, re-read 2026-10-09).
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { App } from '@/entrypoints/sidepanel/App';
 import { ChatRetention } from '@/entrypoints/sidepanel/components/ChatRetention';
@@ -35,34 +35,49 @@ describe('ChatRetention', () => {
   });
 });
 
-describe('Settings screen: the selected provider’s disclosure after What ElevenLabs keeps', () => {
+describe('ChatRetention in Settings (018 decision 109)', () => {
+  it('is a closed disclosure whose summary is the heading text; opened, the text and link unchanged', () => {
+    render(<ChatRetention provider="openai" collapsible />);
+    const summary = screen.getByText('What OpenAI keeps', { selector: 'summary' });
+    const details = summary.closest('details')!;
+    expect(details.open).toBe(false);
+    expect(screen.queryByRole('heading')).toBeNull();
+    details.open = true;
+    expect(details.textContent).toContain(OPENAI);
+    expect(within(details).getByRole('link', { name: 'OpenAI data controls' })).toBeTruthy();
+  });
+});
+
+describe('Settings screen: the selected provider’s disclosure beside its key (018 FR-003)', () => {
+  const summary = (settings: HTMLElement, text: string) => within(settings).queryByText(text, { selector: 'summary' });
   it('follows the provider chosen in Settings → Questions', async () => {
     const { api } = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2');
     render(<App api={api} meetings={fakeMeetingApi().api} />);
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
     const settings = screen.getByRole('region', { name: 'Settings' });
-    const eleven = within(settings).getByRole('heading', { name: 'What ElevenLabs keeps' });
-    const openai = within(settings).getByRole('heading', { name: 'What OpenAI keeps' });
+    const eleven = summary(settings, 'What ElevenLabs keeps')!;
+    const openai = summary(settings, 'What OpenAI keeps')!;
     expect(eleven.compareDocumentPosition(openai) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(within(settings).queryByRole('heading', { name: 'What Anthropic keeps' })).toBeNull();
+    expect(summary(settings, 'What Anthropic keeps')).toBeNull();
 
     fireEvent.click(within(settings).getByRole('radio', { name: 'Claude' }));
-    expect(await within(settings).findByRole('heading', { name: 'What Anthropic keeps' })).toBeTruthy();
-    expect(within(settings).queryByRole('heading', { name: 'What OpenAI keeps' })).toBeNull();
+    await waitFor(() => expect(summary(settings, 'What Anthropic keeps')).not.toBeNull());
+    expect(summary(settings, 'What OpenAI keeps')).toBeNull();
   });
 
-  it('places Questions, Claude API key and OpenAI API key after Key terms', async () => {
+  it('puts What OpenAI keeps right after the OpenAI key, inside Questions, after the Transcription group', async () => {
     const { api } = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2');
     render(<App api={api} meetings={fakeMeetingApi().api} />);
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
     const settings = screen.getByRole('region', { name: 'Settings' });
-    const names = within(settings)
-      .getAllByRole('heading', { level: 3 })
+    const questions = within(settings).getByRole('region', { name: 'Questions' });
+    const names = within(questions)
+      .getAllByRole('heading', { level: 4 })
       .map((h) => h.textContent);
-    const at = (n: string) => names.indexOf(n);
-    expect(at('Key terms')).toBeGreaterThan(-1);
-    expect(at('Questions')).toBe(at('Key terms') + 1);
-    expect(at('Claude API key')).toBe(at('Questions') + 1);
-    expect(at('OpenAI API key')).toBe(at('Claude API key') + 1);
+    expect(names).toEqual(['OpenAI key']);
+    const key = within(questions).getByRole('region', { name: 'OpenAI key' });
+    expect(key.nextElementSibling).toBe(summary(questions, 'What OpenAI keeps')!.closest('details'));
+    const eleven = within(settings).getByRole('region', { name: 'Transcription' });
+    expect(summary(eleven, 'What ElevenLabs keeps')).not.toBeNull();
   });
 });

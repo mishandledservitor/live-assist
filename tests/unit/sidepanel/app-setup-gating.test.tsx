@@ -90,8 +90,8 @@ describe('App setup gating (T070)', () => {
       <App api={f.api} meetings={fakeMeetingApi(standup).api} chat={fakeChatApi({ [standup.meeting.id]: [] }).api} />,
     );
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
-    const openaiKey = screen.getByRole('region', { name: 'OpenAI API key' });
-    fireEvent.click(within(openaiKey).getByRole('button', { name: 'Remove key' }));
+    const openaiKey = screen.getByRole('region', { name: 'OpenAI key' });
+    fireEvent.click(within(openaiKey).getByRole('button', { name: 'Remove' }));
     await within(openaiKey).findByText('No key saved.');
     fireEvent.click(screen.getByRole('button', { name: 'Back' }));
     expect(await screen.findByText('Add a Claude or OpenAI key in Settings to ask questions.')).toBeTruthy();

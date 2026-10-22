@@ -67,7 +67,7 @@ test('the panel is accessible idle, with the consent reminder and while transcri
   const panel = await openPanel(context, extensionId, meetingTab);
   await seedSettings(panel, { consentReminder: true });
   // The account request is blocked in e2e, so the badge settles on its failure.
-  await expect(panel.getByRole('button', { name: 'Could not reach ElevenLabs to check your plan.' })).toBeVisible();
+  await expect(panel.getByRole('button', { name: "Couldn't reach ElevenLabs to check your plan." })).toBeVisible();
   await expectNoAxeViolationsInBothModes(panel, 'idle panel');
 
   // Focus order follows the header (006, 008, 012): Start, language, the next meeting's notes, credits badge,
@@ -76,7 +76,7 @@ test('the panel is accessible idle, with the consent reminder and while transcri
   expect(order[0]).toBe('Start');
   expect(order[1]).toMatch(/^Language/);
   expect(order[2]).toBe('Add notes for the next meeting');
-  expect(order[3]).toBe('Could not reach ElevenLabs to check your plan.');
+  expect(order[3]).toBe("Couldn't reach ElevenLabs to check your plan.");
   expect(order[4]).toBe('Transcripts');
   expect(order[5]).toBe('Settings');
 
@@ -177,7 +177,8 @@ test('Ask: the conversation strip and the Questions settings have no axe violati
 
   await panel.getByRole('button', { name: 'Settings' }).click();
   await expect(panel.getByRole('heading', { name: 'Questions' })).toBeVisible();
-  await expect(panel.getByRole('region', { name: 'What Anthropic keeps' })).toBeVisible();
+  await expect(panel.getByText('What Anthropic keeps', { exact: true })).toBeVisible();
+  await panel.getByText('What Anthropic keeps', { exact: true }).click(); // 018 decision 109: open the disclosure too
   await expectNoAxeViolationsInBothModes(panel, 'settings with Questions');
 });
 

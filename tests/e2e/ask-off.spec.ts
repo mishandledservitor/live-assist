@@ -22,8 +22,8 @@ test('turning Ask off hides it on the main view, across a reload, until it is tu
   await expect(box).toBeChecked();
   await box.uncheck();
   await expect(settings.getByRole('radiogroup', { name: 'Answers from' })).toHaveCount(0);
-  await expect(settings.getByRole('region', { name: 'OpenAI API key' })).toHaveCount(0);
-  await expect(settings.getByRole('region', { name: 'What OpenAI keeps' })).toHaveCount(0);
+  await expect(settings.getByRole('region', { name: 'OpenAI key' })).toHaveCount(0);
+  await expect(settings.getByText('What OpenAI keeps')).toHaveCount(0);
   await settings.getByRole('button', { name: 'Back' }).click();
 
   const expectNoAsk = async () => {
@@ -40,7 +40,7 @@ test('turning Ask off hides it on the main view, across a reload, until it is tu
   await panel.getByRole('button', { name: 'Settings' }).click();
   await expect(settings.getByRole('checkbox', { name: ASK })).not.toBeChecked();
   await settings.getByRole('checkbox', { name: ASK }).check();
-  await expect(settings.getByRole('region', { name: 'OpenAI API key' })).toContainText('••••0001');
+  await expect(settings.getByRole('region', { name: 'OpenAI key' })).toContainText('••••0001');
   await settings.getByRole('button', { name: 'Back' }).click();
   await expect(main.getByRole('textbox', { name: 'Question' })).toBeVisible();
   await expect(main.getByText('GPT-6 Luna')).toBeVisible();

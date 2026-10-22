@@ -27,7 +27,7 @@ test('a pasted column of 50 names becomes 50 key terms', async ({ context, exten
   await seedSettings(panel); // one saved term: Northwind
   await panel.getByRole('button', { name: 'Settings' }).click();
   const settings = panel.getByRole('region', { name: 'Settings' });
-  const field = settings.getByLabel('New key terms, separated by commas or one per line');
+  const field = settings.getByLabel('Add terms, separated by commas');
   const add = settings.getByRole('button', { name: 'Add terms' });
   const listed = settings.getByRole('list', { name: 'Key terms', exact: true }).getByRole('listitem');
   const notUsed = settings.getByRole('list', { name: 'Key terms not used' }).getByRole('listitem');

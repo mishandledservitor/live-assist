@@ -1,11 +1,19 @@
 // FR-005 / design decision 19: truthful retention text, no zero-retention claim, and how to opt out of training.
 import { RETENTION } from '../../../core/status/status';
 
-export function RetentionNotice({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
+const HEADING = 'What ElevenLabs keeps';
+
+/** `collapsible` (Settings, 018 decision 109): a disclosure, closed by default, its summary the heading text. */
+export function RetentionNotice({
+  headingLevel = 2,
+  collapsible = false,
+}: {
+  headingLevel?: 2 | 3;
+  collapsible?: boolean;
+}) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3';
-  return (
-    <section aria-labelledby="retention-heading">
-      <Heading id="retention-heading">What ElevenLabs keeps</Heading>
+  const body = (
+    <>
       <p>{RETENTION.summary}</p>
       <p>ElevenLabs bills about the length of each meeting.</p>
       <p>
@@ -16,6 +24,19 @@ export function RetentionNotice({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) 
         </a>
         .
       </p>
+    </>
+  );
+  if (collapsible)
+    return (
+      <details className="retention">
+        <summary>{HEADING}</summary>
+        {body}
+      </details>
+    );
+  return (
+    <section aria-labelledby="retention-heading" className="retention">
+      <Heading id="retention-heading">{HEADING}</Heading>
+      {body}
     </section>
   );
 }
