@@ -213,7 +213,7 @@ Taken without the user, who was not available to answer; each can be overruled.
 - **A12**: The merged file keeps decision 70's name. The zip from `Download originals` also holds a `… — Transcript.txt` (the live one); the two never meet in one folder when the zip is unpacked by macOS Archive Utility, which unpacks into a folder of the zip's name. No reason was found to name the merged file differently.
 - **A13**: The 013 rule that a press whose captions cannot be read saves nothing applies to the merged file too: the live transcript is never saved in its place.
 - **A14**: Whether the knowledge-base inbox export (004) writes the merged file is left to 004.
-- **A15**: The merged file is built in the panel when the button is pressed, so the panel pauses while it is built: under 0.2 s up to about 15,000 words, about 1 s for a 3-hour meeting. No progress mark is shown (the copy rule, and the file arrives within SC-005's bounds); a worker that removes the pause is left open.
+- **A15**: The merged file is built in the panel when the button is pressed, so the panel pauses while it is built: under 0.2 s up to about 15,000 words, about 1 s for a 3-hour meeting. No progress mark is shown (the copy rule, and the file arrives within SC-005's bounds); the pause is accepted and no worker is added (decision 100).
 - **A16**: For text unlike speech, where nearly every word recurs thousands of times (a test meeting of one repeated sentence), the alignment uses difflib's own shortcut (autojunk) instead of taking minutes; names there may differ slightly from the exact alignment's. Recorded speech never comes near the point where this happens (research R5).
 
 ## Dependencies
