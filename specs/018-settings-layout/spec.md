@@ -70,7 +70,7 @@ The reviewed strings are deleted or rewritten as listed; nothing new is added in
 
 ### Edge Cases
 
-- No ElevenLabs key saved (after `Remove key`): the block shows `No key saved.` and the field to add one, as today.
+- No ElevenLabs key saved (after `Remove`): the block shows `No key saved.` and the field to add one, as today.
 - Account status is still loading or the key has no User: Read access: the account line shows today's text in its new place.
 - No remembered names: today's empty line, in its new place.
 - Flagged key terms: the not-used list stays directly under the terms.
@@ -81,7 +81,7 @@ The reviewed strings are deleted or rewritten as listed; nothing new is added in
 ### Functional Requirements
 
 - **FR-001**: Settings MUST present its controls in three groups, in this order (decision 105): **Transcription** (the ElevenLabs key block with the account line and what ElevenLabs keeps; key terms; `Leave out fillers and false starts`; `Allow microphone`; the consent reminder), **Speaker names** (`Your name`; `Show Meet captions`; remembered names), **Questions** (`Ask questions about the meeting`; provider and model; the provider's key block with what it keeps). The group names are the only new headings.
-- **FR-002**: Each key MUST be one block with the masked key (or `No key saved.`), a replace action that checks the key before saving it, and a remove action (with the ElevenLabs confirmation kept), laid out on one line with `Replace` and `Remove`, `Replace` opening the field with `Check and save` and `Cancel` (decision 106). The new strings `Replace` and `Check and save` replace `New key` and `Check and replace key` on the Settings screen.
+- **FR-002**: Each key MUST be one block with the masked key (or `No key saved.`), a replace action that checks the key before saving it, and a remove action (with the ElevenLabs confirmation kept), laid out on one line with `Replace` and `Remove`, `Replace` opening the field with `Check and save` and `Cancel` (decision 106). The new strings `Replace` and `Check and save` replace `New key` and `Check and replace key` on the Settings screen, and `Remove` replaces `Remove key`.
 - **FR-003**: Each provider's retention text MUST be shown beside that provider's key block, word for word.
 - **FR-004**: Questions MUST show the key block of the selected provider only (decision 107); a key stored for the other provider MUST be kept.
 - **FR-005**: The headings `Consent reminder`, `Clean transcript` and `Microphone` MUST be removed; each control keeps its own label.
