@@ -4,7 +4,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { loadCopyFixture } from '../support/copy-scan';
 import { expect, extensionPath, test } from './fixtures';
 import {
@@ -281,4 +281,69 @@ test('built output has no deleted copy', () => {
 
   const manifest = JSON.parse(readFileSync(join(extensionPath, 'manifest.json'), 'utf8')) as { description: string };
   expect(manifest.description).toBe('Transcribes your meeting live and names speakers from Google Meet captions.');
+});
+
+// 018 (FR-009, SC-002, SC-004): the Settings screen at panel width. Same settings as before 018: a name, two key terms,
+// the ElevenLabs key, OpenAI selected with its key saved, no remembered names.
+/** Settings screen scroll height at 380 px with these settings on the build before 018 (research R7). */
+const SETTINGS_HEIGHT_BEFORE_018 = 1762;
+
+async function seedLayoutSettings(panel: Page): Promise<void> {
+  await panel.evaluate(() =>
+    chrome.storage.local.set({
+      settings: {
+        schemaVersion: 1,
+        userName: 'Alex',
+        keyterms: ['Northwind', 'Scribe'],
+        consentReminder: true,
+        firstRunComplete: true,
+        headphonesNoticeDismissed: false,
+        chat: {
+          provider: 'openai',
+          models: { anthropic: 'claude-sonnet-5-5', openai: 'gpt-6-luna' },
+          setupComplete: true,
+        },
+      },
+      credentials: { elevenLabsApiKey: 'sk_test_fixture_e2e_tx_0001' },
+      openaiCredential: 'test-openai-e2e-0001',
+    }),
+  );
+  await panel.reload();
+}
+
+/** The vertical centres of two elements differ by at most a few pixels: they sit on one line. */
+async function onOneLine(a: Locator, b: Locator): Promise<void> {
+  const [ba, bb] = [await a.boundingBox(), await b.boundingBox()];
+  expect(Math.abs(ba!.y + ba!.height / 2 - (bb!.y + bb!.height / 2))).toBeLessThanOrEqual(4);
+}
+
+test('Settings fits the panel: no sideways scroll at 320 px, one line per field at 380 px, a third shorter', async ({
+  context,
+  extensionId,
+}) => {
+  const panel = await openPanel(context, extensionId);
+  await panel.setViewportSize({ width: 380, height: 700 });
+  await seedLayoutSettings(panel);
+  await panel.getByRole('button', { name: 'Settings' }).click();
+  const settings = panel.getByRole('region', { name: 'Settings' });
+  await expect(settings.getByLabel('Your name')).toHaveValue('Alex');
+  await expect(settings.getByRole('list', { name: 'Key terms' }).getByRole('textbox')).toHaveCount(2);
+
+  const height = await settings.evaluate((el) => el.scrollHeight);
+  console.log(`Settings scroll height at 380 px: ${height}`);
+  expect(height).toBeLessThanOrEqual((SETTINGS_HEIGHT_BEFORE_018 * 2) / 3);
+
+  await onOneLine(settings.getByLabel('Your name'), settings.getByRole('button', { name: 'Save name' }));
+  const eleven = settings.getByRole('region', { name: 'ElevenLabs API key' });
+  await onOneLine(eleven.getByText('Saved key:'), eleven.getByRole('button', { name: 'Replace' }));
+  await onOneLine(eleven.getByRole('button', { name: 'Replace' }), eleven.getByRole('button', { name: 'Remove' }));
+  await onOneLine(settings.getByLabel('Key term 1'), settings.getByRole('button', { name: 'Remove Northwind' }));
+  const newTerms = settings.getByLabel('New key terms, separated by commas or one per line');
+  await onOneLine(newTerms, settings.getByRole('button', { name: 'Add terms' }));
+  await eleven.getByRole('button', { name: 'Replace' }).click();
+  await onOneLine(eleven.getByLabel('ElevenLabs API key'), eleven.getByRole('button', { name: 'Check and save' }));
+
+  await panel.setViewportSize({ width: 320, height: 700 });
+  for (const el of ['html', '.settings-screen'])
+    expect(await panel.locator(el).evaluate((e) => e.scrollWidth - e.clientWidth)).toBeLessThanOrEqual(0);
 });
