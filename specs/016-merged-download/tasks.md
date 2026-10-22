@@ -64,7 +64,7 @@
 
 Covered by T007 (fallbacks), T009 (running meeting) and the unchanged 013 tests.
 
-- [ ] T020 [US4] Update tests/e2e/captions-download.spec.ts: after Stop the main view, a row and the single-meeting view save the same merged `.txt`; `Download originals` saves the 013 zip, unzipped and compared byte for byte; the 3-hour timing of the zip goes through `Download originals`; a running meeting still saves the zip; meetings without both records unchanged; plus a merged-file timing on a generated 3-hour meeting (SC-005). Run `pnpm build:e2e && pnpm exec playwright test` for it and tests/e2e/transcripts.spec.ts, tests/e2e/download.spec.ts
+- [X] T020 [US4] Update tests/e2e/captions-download.spec.ts: after Stop the main view, a row and the single-meeting view save the same merged `.txt`; `Download originals` saves the 013 zip, unzipped and compared byte for byte; the 3-hour timing of the zip goes through `Download originals`; a running meeting still saves the zip; meetings without both records unchanged; plus a merged-file timing on a generated 3-hour meeting (SC-005). Run `pnpm build:e2e && pnpm exec playwright test` for it and tests/e2e/transcripts.spec.ts, tests/e2e/download.spec.ts
 
 ## Phase 7: Measurements
 
@@ -73,10 +73,10 @@ Covered by T007 (fallbacks), T009 (running meeting) and the unchanged 013 tests.
 
 ## Phase 8: Polish & Cross-Cutting
 
-- [ ] T023 [P] Dated amendment notes for decision 93 in specs/013-captions-download/spec.md (FR-012, FR-019), specs/013-captions-download/contracts/download-ui.md (the table and "Never add"), specs/007-download-transcript/spec.md (FR-003) and specs/012-past-transcripts/spec.md (FR-014); update the captions-file.ts comment that says the captions are never merged
-- [ ] T024 [P] Add the 016 line under `## [Unreleased]` in CHANGELOG.md and set the ROADMAP.md row to `in-progress`
-- [ ] T025 Check that nothing under src/core/session, src/core/speakers, src/core/transcript, src/entrypoints/offscreen or src/platforms, nor any of their tests, differs from `origin/main`
-- [ ] T026 Gates: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e && pnpm test:e2e`
+- [X] T023 [P] Dated amendment notes for decision 93 in specs/013-captions-download/spec.md (FR-012, FR-019), specs/013-captions-download/contracts/download-ui.md (the table and "Never add"), specs/007-download-transcript/spec.md (FR-003) and specs/012-past-transcripts/spec.md (FR-014); update the captions-file.ts comment that says the captions are never merged
+- [X] T024 [P] Add the 016 line under `## [Unreleased]` in CHANGELOG.md and set the ROADMAP.md row to `in-progress`
+- [X] T025 Check that nothing under src/core/session, src/core/speakers, src/core/transcript, src/entrypoints/offscreen or src/platforms, nor any of their tests, differs from `origin/main`
+- [X] T026 Gates: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e && pnpm test:e2e`
 
 ## Dependencies
 

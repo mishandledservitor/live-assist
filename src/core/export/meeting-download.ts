@@ -1,5 +1,6 @@
 // What one press of `Download transcript` saves (013 FR-012, FR-017, FR-018; decisions 67, 68, 75): nothing, the one
-// file the meeting has, or a zip of both. One file per press, so the browser never asks about multiple downloads.
+// file the meeting has, a zip of both, or after Stop the merged transcript (016, decision 93). One file per press,
+// so the browser never asks about multiple downloads.
 // Platform-free and pure; saving is the panel's (src/entrypoints/sidepanel/save-file.ts).
 import { downloadZipName } from './download-names';
 import { meetingFiles, type MeetingFileSource } from './meeting-files';
