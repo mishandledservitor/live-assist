@@ -43,8 +43,8 @@
 
 **Independent Test**: tests/unit/core/export/merged-repeats.test.ts.
 
-- [ ] T013 [P] [US2] Write failing tests: a replayed 20-word line the captions carry once is removed, its first copy keeps its time and the captions' speaker; the later copy carried and the first not: still the later removed, the first named by pass 2; both carried (said twice) kept; neither carried kept; under 8 words kept; a partly repeated line kept; a corrected line kept; a repeat starting more than 400 words after its source kept; a run of two lines (one short) removed together; a run broken by a non-repeated line judged per part; a passage written three times; `removedSegmentIds`; in tests/unit/core/export/merged-repeats.test.ts
-- [ ] T014 [US2] Implement the repeat rule and the second pass (research R3) in src/core/export/merged-transcript.ts
+- [X] T013 [P] [US2] Write failing tests: a replayed 20-word line the captions carry once is removed, its first copy keeps its time and the captions' speaker; the later copy carried and the first not: still the later removed, the first named by pass 2; both carried (said twice) kept; neither carried kept; under 8 words kept; a partly repeated line kept; a corrected line kept; a repeat starting more than 400 words after its source kept; a run of two lines (one short) removed together; a run broken by a non-repeated line judged per part; a passage written three times; `removedSegmentIds`; in tests/unit/core/export/merged-repeats.test.ts
+- [X] T014 [US2] Implement the repeat rule and the second pass (research R3) in src/core/export/merged-transcript.ts
 
 **Checkpoint**: US1 and US2 give the merged file of the spec.
 

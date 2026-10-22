@@ -256,9 +256,65 @@ function speakerLines(lines: readonly Line[], placed: readonly Placed[]): Merged
   return out.map(({ startMs, speaker, text }) => ({ startMs, speaker, text }));
 }
 
+/** A repeat is at least this many words, compared with what the transcript wrote at most WINDOW words before. */
+const REPEAT_WORDS = 8;
+const REPEAT_WINDOW = 400;
+/** A copy is carried by the captions when at least this share of its words is matched to caption words. */
+const CARRIED = 0.5;
+
+/**
+ * Lines the realtime transcript wrote again (FR-012, research R3): runs of consecutive uncorrected lines whose every
+ * word repeats an 8-word run written shortly before, of at least eight words, of which the captions carry exactly one
+ * copy. `anchored` marks the words the first alignment matched. Returns the indexes of the lines to leave out.
+ */
+function repeatedLines(lines: readonly Line[], rec: Aligned, anchored: Uint8Array): Set<number> {
+  const n = rec.ids.length;
+  // For each word inside a repeated 8-word run, the word it repeats. A run is compared with the most recent earlier
+  // occurrence of it that was not itself a repeat, so every later copy is compared with the first.
+  const source = new Int32Array(n).fill(-1);
+  const seen = new Map<string, number>();
+  for (let i = 0; i + REPEAT_WORDS <= n; i += 1) {
+    const key = rec.ids.subarray(i, i + REPEAT_WORDS).join(',');
+    const before = seen.get(key);
+    if (before !== undefined && i - before <= REPEAT_WINDOW && before + REPEAT_WORDS <= i) {
+      for (let k = 0; k < REPEAT_WORDS; k += 1) if (source[i + k]! < 0) source[i + k] = before + k;
+    } else seen.set(key, i);
+  }
+
+  const removed = new Set<number>();
+  const judge = (run: number[], words: number[]) => {
+    if (words.length < REPEAT_WORDS) return;
+    const share = (of: (w: number) => number) => words.reduce((sum, w) => sum + anchored[of(w)]!, 0) / words.length;
+    const later = share((w) => w) >= CARRIED;
+    const first = share((w) => source[w]!) >= CARRIED;
+    // Both carried: said twice. Neither: no caption evidence either way. Exactly one: written twice, said once.
+    if (later !== first) for (const index of run) removed.add(index);
+  };
+  let run: number[] = [];
+  let runWords: number[] = [];
+  let r = 0;
+  lines.forEach((line, index) => {
+    const from = r;
+    r += line.norms.filter((w) => w !== '').length;
+    const words = Array.from({ length: r - from }, (_, k) => from + k);
+    const repeated = line.correction === null && words.length > 0 && words.every((w) => source[w]! >= 0);
+    if (repeated) {
+      run.push(index);
+      runWords.push(...words);
+    } else {
+      judge(run, runWords);
+      run = [];
+      runWords = [];
+    }
+  });
+  judge(run, runWords);
+  return removed;
+}
+
 /**
  * The merged transcript of a meeting: its written lines (007's), their words unchanged and in order, regrouped into
- * lines named from the kept caption turns, with the meeting's names as the transcript shows them now.
+ * lines named from the kept caption turns, with the meeting's names as the transcript shows them now. Lines the
+ * realtime transcript wrote twice are left out, and the rest aligned again as if they had never been written (FR-014).
  */
 export function mergedTranscript(
   meeting: Pick<Meeting, 'userName' | 'speakerRenames'>,
@@ -269,9 +325,20 @@ export function mergedTranscript(
   const captions = captionWords(meeting, captionTurns);
   const capIds = Int32Array.from(captions.norms, (n) => words.id(n));
   const lines = transcriptLines(meeting, segments, new Set(captions.names));
-  const rec = alignable(lines, words);
-  const placed = place(rec, captions, anchorsOf(rec, capIds));
-  return { lines: speakerLines(lines, placed), removedSegmentIds: [] };
+  let rec = alignable(lines, words);
+  let anchors = anchorsOf(rec, capIds);
+  const anchored = new Uint8Array(rec.ids.length);
+  for (const [r] of anchors) anchored[r] = 1;
+  const removed = repeatedLines(lines, rec, anchored);
+  const kept = removed.size === 0 ? lines : lines.filter((_, index) => !removed.has(index));
+  if (removed.size > 0) {
+    rec = alignable(kept, words);
+    anchors = anchorsOf(rec, capIds);
+  }
+  return {
+    lines: speakerLines(kept, place(rec, captions, anchors)),
+    removedSegmentIds: lines.filter((_, index) => removed.has(index)).map((line) => line.segment.id),
+  };
 }
 
 /** The merged file: decision 70's transcript name; `[mm:ss] Speaker: text` lines one blank line apart; '' if none. */
