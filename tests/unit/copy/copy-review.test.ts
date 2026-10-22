@@ -68,8 +68,8 @@ describe('copy review (copy-review.md)', () => {
 
   it('has one entry per Delete and Rewrite ID', () => {
     // 006 D1-D12, R1-R29; 003 A1-A7; 008 A8-A9 (K41, R30-R31); 013 W1 (C2 withdrawn, decision 79); 003 A10 (K45,
-    // decision 80); 014 A11 (K46, decisions 91, 92)
-    expect(fixture.entries).toHaveLength(53);
+    // decision 80); 014 A11 (K46, decisions 91, 92); 016 A12 (K47, decisions 93-99)
+    expect(fixture.entries).toHaveLength(54);
   });
 
   for (const entry of fixture.entries.filter((e) => e.enabled && !e.dom)) {

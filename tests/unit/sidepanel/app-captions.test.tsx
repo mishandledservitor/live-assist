@@ -110,20 +110,57 @@ describe('main view: the delete confirmation names kept captions (US2, decision 
   });
 });
 
-describe('main view: Download saves one file (US1, US4; decisions 67, 68, 75)', () => {
+describe('main view: Download saves one file (US1, US4; decisions 67, 68, 75; 016 decisions 93, 94, 99)', () => {
   const TRANSCRIPT = '[00:00] Jane: First line.\n\n[00:02] Jane: Second line.\n';
   const CAPTIONS = `[00:04] Jane: ${CAPTION_MARKER}\n\n[00:08] Alex: ${CAPTION_MARKER_GREEK}\n`;
+  /** Captions that carry the transcript's words under another name than the live labels give. */
+  const sarahSaid = (id = 'm1') => [
+    storedCaptionTurn(id, 1, { speakerName: 'Sarah Brown', text: 'first line second line' }),
+  ];
+  const MERGED = '[00:00] Sarah Brown: First line.\n\n[00:02] Sarah Brown: Second line.\n';
 
-  it('lines and kept captions: reads the caption turns once, at the press and not before, and saves a zip of both', async () => {
-    const meetings = show(meetingWithCaptions());
+  it('016: a stopped meeting with lines and kept captions reads the caption turns once, at the press, and saves the merged transcript as text', async () => {
+    const meetings = show(meetingWithCaptions(), lines(), sarahSaid());
     const button = await download();
     expect(meetings.api.captionTurns).not.toHaveBeenCalled();
+    fireEvent.click(button);
+    await waitFor(() => expect(saved).toHaveBeenCalledTimes(1));
+    expect(meetings.api.captionTurns.mock.calls).toEqual([['m1']]);
+    expect(saved.mock.calls[0]).toEqual([`${BASE} — Transcript.txt`, MERGED, 'text/plain;charset=utf-8']);
+  });
+
+  it('016: the merged transcript holds no caption text', async () => {
+    show(meetingWithCaptions());
+    fireEvent.click(await download());
+    await waitFor(() => expect(saved).toHaveBeenCalledTimes(1));
+    const [name, data, type] = saved.mock.calls[0]!;
+    expect([name, type]).toEqual([`${BASE} — Transcript.txt`, 'text/plain;charset=utf-8']);
+    expectNoMarker(data);
+    expect(typeof data).toBe('string');
+    expect((data as string).replace(/^\[\d\d:\d\d\] [^:]+: /gm, '')).toBe('First line.\n\nSecond line.\n');
+  });
+
+  it('a running meeting with lines and kept captions still saves the zip of both, stamped with the moment of the press', async () => {
+    let emit: (e: unknown) => void = () => undefined;
+    const fake = fakeMeetingApi({ meeting: meetingWithCaptions(), segments: lines(), captionTurns: turns() });
+    const meetings = {
+      ...fake.api,
+      connect: vi.fn((onEvent: (e: unknown) => void) => {
+        emit = onEvent;
+        return () => undefined;
+      }),
+    };
+    render(<App api={ready()} meetings={meetings} />);
+    await waitFor(() => expect(meetings.connect).toHaveBeenCalled());
+    const status = reduceStatus(initialStatus(), { type: 'capture', state: 'starting' });
+    const running = storedMeeting({ endedAt: null, endReason: null, hasCaptions: true });
+    act(() => emit({ type: 'live/snapshot', meeting: running, segments: lines(), partials: [], status }));
+    const button = await download();
     vi.useFakeTimers({ toFake: ['Date'] });
     const now = new Date(2026, 9, 12, 9, 41, 30);
     vi.setSystemTime(now);
     fireEvent.click(button);
     await waitFor(() => expect(saved).toHaveBeenCalledTimes(1));
-    expect(meetings.api.captionTurns.mock.calls).toEqual([['m1']]);
     const [name, data, type] = saved.mock.calls[0]!;
     expect(name).toBe(`${BASE}.zip`);
     expect(type).toBe('application/zip');
@@ -166,7 +203,7 @@ describe('main view: Download saves one file (US1, US4; decisions 67, 68, 75)', 
   });
 
   it('caption turns that cannot be read: nothing is saved, nothing is shown, and the next press tries again', async () => {
-    const meetings = show(meetingWithCaptions());
+    const meetings = show(meetingWithCaptions(), lines(), sarahSaid());
     meetings.api.captionTurns.mockRejectedValueOnce(new Error('storage'));
     const button = await download();
     const before = document.body.innerHTML;
@@ -175,12 +212,12 @@ describe('main view: Download saves one file (US1, US4; decisions 67, 68, 75)', 
     await act(async () => {
       await Promise.resolve();
     });
-    // Never the transcript alone in place of the zip.
+    // Never the live transcript in place of the merged one (016 spec A13).
     expect(saved).not.toHaveBeenCalled();
     expect(document.body.innerHTML).toBe(before);
     fireEvent.click(button);
     await waitFor(() => expect(saved).toHaveBeenCalledTimes(1));
-    expect(saved.mock.calls[0]?.[0]).toBe(`${BASE}.zip`);
+    expect(saved.mock.calls[0]?.slice(0, 2)).toEqual([`${BASE} — Transcript.txt`, MERGED]);
   });
 
   it('a running meeting whose captions are kept before its first settled line offers Download', async () => {

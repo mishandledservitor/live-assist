@@ -4,6 +4,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testi
 import { createRef } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { captionsFile } from '@/core/export/captions-file';
+import { mergedTranscriptFile } from '@/core/export/merged-transcript';
 import { transcriptFile } from '@/core/export/transcript-file';
 import { zipStored } from '@/core/export/zip';
 import { TranscriptsScreen, type TranscriptsScreenProps } from '@/entrypoints/sidepanel/components/TranscriptsScreen';
@@ -671,42 +672,55 @@ describe('TranscriptsScreen: a meeting with kept captions (013)', () => {
     );
   }
 
-  it('a row\u2019s Download saves one zip of the transcript and the captions, and the screen shows none of their text', async () => {
+  /** 016: what Download saves for a meeting with both records once it no longer runs (decision 93). */
+  const mergedOf = (entry: FakeStoredMeeting) => [
+    'Meeting — 06-10-2026 at 14h30 — Transcript.txt',
+    mergedTranscriptFile(entry.meeting, entry.segments ?? [], entry.captionTurns ?? []).body,
+    'text/plain;charset=utf-8',
+  ];
+
+  it('016: a row\u2019s Download saves the merged transcript as text, and nothing shows any caption text', async () => {
     const stored = withCaptions();
     const { fake, save } = setup(stored);
     await loaded();
     const before = section().innerHTML;
-    vi.useFakeTimers({ toFake: ['Date'] });
-    try {
-      const now = new Date(2026, 9, 12, 9, 41, 30);
-      vi.setSystemTime(now);
-      fireEvent.click(downloadOf('b'));
-      await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
-      expect(save.mock.calls[0]).toEqual([
-        'Meeting — 06-10-2026 at 14h30.zip',
-        zipOf(stored[1]!, now),
-        'application/zip',
-      ]);
-    } finally {
-      vi.useRealTimers();
-    }
+    fireEvent.click(downloadOf('b'));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    expect(save.mock.calls[0]).toEqual(mergedOf(stored[1]!));
+    expectNoMarker(save.mock.calls[0]?.[1]);
     expect(fake.api.open.mock.calls).toEqual([['b']]);
     expect(section().innerHTML).toBe(before);
     expectNoMarker(section().innerHTML);
   });
 
-  it('the meeting being read saves the same zip, and renders no caption sentence', async () => {
+  it('016: the meeting being read saves the same merged transcript, and renders no caption sentence', async () => {
     const stored = withCaptions();
     const { save } = setup(stored);
     await loaded();
     fireEvent.click(opener('b'));
     await screen.findByText('First line of b.');
     expectNoMarker(section().innerHTML);
+    fireEvent.click(screen.getByRole('button', { name: 'Download transcript' }));
+    await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
+    expect(save.mock.calls[0]).toEqual(mergedOf(stored[1]!));
+    expectNoMarker(section().innerHTML);
+  });
+
+  it('016: the meeting being read has Download originals, which saves 013\u2019s zip of both; its row has none', async () => {
+    const stored = withCaptions();
+    const { fake, save } = setup(stored);
+    await loaded();
+    expect(within(rowOf('b')).queryByRole('button', { name: /originals/ })).toBeNull();
+    fireEvent.click(opener('b'));
+    await screen.findByText('First line of b.');
+    expect(document.querySelector('.past-actions')!.textContent).toBe(
+      'Download transcriptDownload originalsDelete transcript',
+    );
     vi.useFakeTimers({ toFake: ['Date'] });
     try {
       const now = new Date(2026, 9, 12, 9, 41, 30);
       vi.setSystemTime(now);
-      fireEvent.click(screen.getByRole('button', { name: 'Download transcript' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Download originals' }));
       await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
       expect(save.mock.calls[0]).toEqual([
         'Meeting — 06-10-2026 at 14h30.zip',
@@ -716,7 +730,16 @@ describe('TranscriptsScreen: a meeting with kept captions (013)', () => {
     } finally {
       vi.useRealTimers();
     }
+    expect(fake.api.open.mock.calls).toEqual([['b'], ['b']]);
     expectNoMarker(section().innerHTML);
+  });
+
+  it('016: a meeting without kept captions has no Download originals beside its transcript', async () => {
+    setup(withCaptions());
+    await loaded();
+    fireEvent.click(opener('a'));
+    await waitFor(() => expect(document.querySelector('.past-actions')).not.toBeNull());
+    expect(document.querySelector('.past-actions')!.textContent).toBe('Download transcriptDelete transcript');
   });
 
   it('a meeting with captions and no transcript line has Download in its row and beside "Nothing was transcribed."', async () => {
@@ -754,7 +777,7 @@ describe('TranscriptsScreen: a meeting with kept captions (013)', () => {
     // The next press tries again.
     fireEvent.click(downloadOf('b'));
     await waitFor(() => expect(save).toHaveBeenCalledTimes(1));
-    expect(save.mock.calls[0]?.[0]).toBe('Meeting — 06-10-2026 at 14h30.zip');
+    expect(save.mock.calls[0]).toEqual(mergedOf(withCaptions()[1]!));
   });
 
   it('the confirmation names Meet\u2019s captions in the row and beside the transcript; other meetings keep P13', async () => {

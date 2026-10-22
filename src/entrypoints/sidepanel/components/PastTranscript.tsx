@@ -2,13 +2,15 @@
 // meeting"): its actions in a row that stays under the title, then every line, read from the top. Read-only: the
 // Transcript gets no edit handlers, no in-progress lines and no footer, so labels are text and nothing of the meeting
 // can change here except that it can be deleted. Download saves what the meeting's row saves (013 FR-019): the screen
-// reads the meeting again at the press, so the kept captions are in hand for that one file and nowhere else.
+// reads the meeting again at the press, so the kept captions are in hand for that one file and nowhere else. From 016
+// (decision 97) a meeting with both a line and kept captions also offers `Download originals`, 013's zip of the two.
 import { useMemo } from 'react';
 import type { MeetingDownload } from '../../../core/export/meeting-download';
 import { hasTranscriptFileLines } from '../../../core/export/transcript-file';
 import type { MeetingState } from '../../../core/history/meeting-summary';
 import type { Meeting, TranscriptSegment } from '../../../core/transcript/model';
 import { DeleteTranscript } from './DeleteTranscript';
+import { DownloadOriginals } from './DownloadOriginals';
 import { DownloadTranscript } from './DownloadTranscript';
 import { deletePrompt } from './MeetingRow';
 import { Transcript } from './Transcript';
@@ -21,6 +23,8 @@ export interface PastTranscriptProps {
   state: MeetingState;
   /** What a press saves for this meeting, read from storage on press; null when it is gone. */
   load: () => Promise<MeetingDownload | null>;
+  /** 016: the originals (013's download), read on press; without it there is no `Download originals`. */
+  loadOriginals?: (() => Promise<MeetingDownload | null>) | undefined;
   /** Injected in tests; the panel saves through a browser download. */
   save?: SaveBlob | undefined;
   /** Real deletion of this meeting. */
@@ -39,6 +43,7 @@ export function PastTranscript({
   segments,
   state,
   load,
+  loadOriginals,
   save,
   remove,
   onDeleted,
@@ -56,6 +61,14 @@ export function PastTranscript({
           load={load}
           {...(save ? { save } : {})}
         />
+        {/* 016 FR-015, A3: only when there are two originals; otherwise Download transcript already saves the one. */}
+        {loadOriginals && (
+          <DownloadOriginals
+            available={hasFileLines && meeting.hasCaptions === true}
+            load={loadOriginals}
+            save={save}
+          />
+        )}
         <DeleteTranscript
           remove={remove}
           onDeleted={onDeleted}

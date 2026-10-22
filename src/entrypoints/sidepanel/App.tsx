@@ -3,7 +3,7 @@
 // The main view stays mounted while another screen shows, so the live port, scroll position and lines that arrive
 // meanwhile survive (006 FR-012, 012 FR-003).
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type Ref } from 'react';
-import { meetingDownload } from '../../core/export/meeting-download';
+import { meetingDownload, mergedMeetingDownload } from '../../core/export/meeting-download';
 import { hasTranscriptFileLines } from '../../core/export/transcript-file';
 import { isReadyToStart, validateUserName } from '../../core/settings/schema';
 import type { AccountApi } from './account-api';
@@ -90,14 +90,16 @@ function MainView({
   // then Close (014, decisions 91 and 92) and Delete once it has stopped. Download is absent until a settled line or a kept caption exists, and saves what
   // `meetingDownload` gives for the meeting, as every Download does (012 FR-014, 013 FR-019). The caption turns are
   // read at the press, used for that one file and dropped: their text never enters the panel's state (FR-009). If
-  // they cannot be read the press saves nothing, never the transcript alone in place of the zip.
+  // they cannot be read the press saves nothing, never the transcript alone in place of the zip. 016 (decisions 93, 94):
+  // once the meeting no longer runs, a meeting with both records saves the merged transcript instead of the zip.
+  const download = running ? meetingDownload : mergedMeetingDownload;
   const footer =
     meeting !== null && meetingId !== null && (!running || downloadable) ? (
       <div className="transcript-actions">
         <DownloadTranscript
           available={downloadable}
           load={async () =>
-            meetingDownload(
+            download(
               { meeting, segments, captionTurns: hasCaptions ? await meetings.captionTurns(meetingId) : [] },
               new Date(),
             )

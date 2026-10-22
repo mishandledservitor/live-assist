@@ -4,9 +4,16 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-22
+
 ### Added
 
 - `Close transcript`, beside `Download transcript` and `Delete transcript` under a stopped meeting, clears the main view for the next meeting without deleting anything; the meeting stays on the Transcripts screen to read, download or delete. The next time you open the panel after a meeting has stopped, the main view also opens clear by itself. A meeting that is running is never cleared, and once cleared a meeting can no longer be asked about.
+- `Download originals` on the Transcripts screen's view of a Google Meet meeting saves the two original files, live-assist's transcript and Meet's captions, as the zip `Download transcript` used to save.
+
+### Changed
+
+- After a Google Meet call, `Download transcript` saves one merged transcript instead of a zip: live-assist's words, with each speaker named from Meet's captions and passages written twice removed. Nothing changes during the meeting, and meetings on Zoom, Teams or without captions download as before.
 
 ## [1.0.0] - 2026-10-13
 

@@ -932,7 +932,10 @@ describe('Keep strings: captions download (K44, 013)', () => {
     expect(document.querySelector('section.transcripts-screen')!.textContent).not.toMatch(/caption|zip/i);
     fireEvent.click(screen.getByRole('button', { name: 'Open transcript of 7 Oct 2026, 14:30' }));
     await waitFor(() => expect(document.querySelector('.past-actions')).not.toBeNull());
-    expect(document.querySelector('.past-actions')!.textContent).toBe('Download transcriptDelete transcript');
+    // 016 (decision 97): the single-meeting view of a meeting with both records also has K47's `Download originals`.
+    expect(document.querySelector('.past-actions')!.textContent).toBe(
+      'Download transcriptDownload originalsDelete transcript',
+    );
     expect(document.querySelector('section.transcripts-screen')!.textContent).not.toMatch(/caption|zip/i);
   });
 
@@ -1017,5 +1020,85 @@ describe('Keep strings: captions download (K44, 013)', () => {
     }
     expect(scanned).toBeGreaterThan(30);
     expect(hits).toEqual([]);
+  });
+});
+
+// 016 T019 (FR-016, FR-022; copy-review K47, spec "Proposed copy" M1, M2): `Download originals` on the single-meeting
+// view of a meeting with both records, and nowhere else; `Download transcript` keeps its label; nothing says the file
+// is merged.
+describe('Keep strings: merged download (K47, 016)', () => {
+  const ready = () => fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2').api;
+  const line = [storedSegment('m1', 0, { text: 'First line.' })];
+  const screenFor = (meetings: ReturnType<typeof summarised>[]) =>
+    render(
+      <TranscriptsScreen
+        api={fakeTranscriptsApi(meetings).api}
+        runningId={null}
+        onBack={vi.fn()}
+        onGoToRunning={vi.fn()}
+        onDeleted={vi.fn()}
+        headingRef={createRef()}
+      />,
+    );
+
+  it('M1 beside the transcript of a meeting with lines and kept captions, between Download and Delete', async () => {
+    screenFor([summarised(meetingWithCaptions(), line)]);
+    fireEvent.click(await screen.findByRole('button', { name: 'Open transcript of 7 Oct 2026, 14:30' }));
+    const originals = await screen.findByRole('button', { name: 'Download originals' });
+    expect(originals.textContent).toBe('Download originals');
+    expect(document.querySelector('.past-actions')!.textContent).toBe(
+      'Download transcriptDownload originalsDelete transcript',
+    );
+  });
+
+  it('M1 nowhere else: not in a row, not on the main view, not for a meeting with one record', async () => {
+    screenFor([summarised(meetingWithCaptions(), line)]);
+    await screen.findByRole('button', { name: 'Download transcript of 7 Oct 2026, 14:30' });
+    expect(document.querySelector('.meeting-actions')!.textContent).toBe('Download transcriptDelete transcript');
+    cleanup();
+    for (const [stored, segments] of [
+      [storedMeeting(), line],
+      [meetingWithCaptions(), []],
+    ] as const) {
+      screenFor([summarised(stored, [...segments])]);
+      fireEvent.click(await screen.findByRole('button', { name: 'Open transcript of 7 Oct 2026, 14:30' }));
+      await waitFor(() => expect(document.querySelector('.past-actions')).not.toBeNull());
+      expect(screen.queryByRole('button', { name: 'Download originals' })).toBeNull();
+      cleanup();
+    }
+    render(<App api={ready()} meetings={fakeMeetingApi({ meeting: meetingWithCaptions(), segments: line }).api} />);
+    await screen.findByRole('button', { name: 'Download transcript' });
+    expect(document.querySelector('.transcript-footer')!.textContent).toBe(
+      'Download transcriptClose transcriptDelete transcript',
+    );
+  });
+
+  it('the sources 016 writes copy in hold M1 and nothing else', () => {
+    const allowed: Record<string, string[]> = {
+      'src/entrypoints/sidepanel/components/DownloadOriginals.tsx': ['Download originals'],
+      'src/entrypoints/sidepanel/components/DownloadButton.tsx': [],
+      'src/entrypoints/sidepanel/components/DownloadTranscript.tsx': ['Download transcript'],
+      'src/core/export/merged-transcript.ts': [],
+      'src/core/export/matching-blocks.ts': [],
+    };
+    // Not copy: module paths, identifiers, class names, media types, separators and the comparison patterns the merge
+    // uses internally (short replies, word lists), none of which is shown.
+    const technical = (text: string) =>
+      /^(\.{1,2}\/|react$)/.test(text) ||
+      /^[a-z0-9]+(-[a-z0-9]+)*( [a-z0-9]+(-[a-z0-9]+)*)*$/.test(text) ||
+      /^[a-z][A-Za-z0-9]*$/.test(text) ||
+      /^[\s[\]:.,\-0'h]*$/.test(text) ||
+      text === 'NFKD' ||
+      text === '\n\n';
+    const byFile = collectProjectStrings(ROOT);
+    for (const [file, strings] of Object.entries(allowed)) {
+      const found = byFile.get(join(ROOT, file));
+      expect(found, file).toBeDefined();
+      const copy = [...new Set(found!.filter((text) => !technical(text)))];
+      expect(
+        copy.filter((text) => !strings.includes(text)),
+        file,
+      ).toEqual([]);
+    }
   });
 });

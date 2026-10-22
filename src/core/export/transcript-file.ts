@@ -35,12 +35,17 @@ const oneLine = (text: string) => text.replace(/\s+/g, ' ').trim();
  */
 const writable = (segment: TranscriptSegment) => segment.labelPending !== true && oneLine(segment.text) !== '';
 
+/** The lines a transcript file holds, in time order (016's merged file is built from the same lines). */
+export function writtenSegments(segments: readonly TranscriptSegment[]): TranscriptSegment[] {
+  return sortSegments(segments.filter(writable));
+}
+
 /** `[mm:ss] Speaker: text` for each settled line, in time order, with the label the panel shows now. */
 export function transcriptFileLines(
   meeting: Pick<Meeting, 'speakerRenames'>,
   segments: readonly TranscriptSegment[],
 ): string[] {
-  return sortSegments(segments.filter(writable)).map(
+  return writtenSegments(segments).map(
     (s) => `[${exportTimestamp(s.startMs)}] ${oneLine(displayLabel(s, meeting).text)}: ${oneLine(s.text)}`,
   );
 }
