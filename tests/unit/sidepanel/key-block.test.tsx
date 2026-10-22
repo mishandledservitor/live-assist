@@ -10,7 +10,9 @@ afterEach(cleanup);
 const KEY = 'test-key-block-fixture-e5f6';
 
 function show(hint: string | null, over: { check?: KeyCheck; removeConfirm?: string } = {}) {
-  const check = vi.fn<KeyCheck>(over.check ?? ((candidate) => Promise.resolve({ ok: true, hint: candidate.slice(-4) })));
+  const check = vi.fn<KeyCheck>(
+    over.check ?? ((candidate) => Promise.resolve({ ok: true, hint: candidate.slice(-4) })),
+  );
   const remove = vi.fn(() => Promise.resolve());
   const onHint = vi.fn();
   render(

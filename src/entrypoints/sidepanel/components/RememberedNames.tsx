@@ -73,11 +73,8 @@ export function RememberedNames({ api }: { api: Api }) {
 
   return (
     <>
-      <h3 id="remembered-names-heading">Remembered names</h3>
-      <p>
-        When you rename someone Meet&apos;s captions named, the new name is used for them in later meetings too. Changes
-        here apply from the next meeting.
-      </p>
+      <h4 id="remembered-names-heading">Remembered names</h4>
+      <p>Changes here apply from the next meeting.</p>
       {mappings === null ? null : mappings.length === 0 ? (
         <p>No remembered names yet. Rename a speaker in a Meet transcript to add one.</p>
       ) : (

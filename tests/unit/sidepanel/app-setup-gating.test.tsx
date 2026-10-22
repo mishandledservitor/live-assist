@@ -91,7 +91,7 @@ describe('App setup gating (T070)', () => {
     );
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
     const openaiKey = screen.getByRole('region', { name: 'OpenAI API key' });
-    fireEvent.click(within(openaiKey).getByRole('button', { name: 'Remove key' }));
+    fireEvent.click(within(openaiKey).getByRole('button', { name: 'Remove' }));
     await within(openaiKey).findByText('No key saved.');
     fireEvent.click(screen.getByRole('button', { name: 'Back' }));
     expect(await screen.findByText('Add a Claude or OpenAI key in Settings to ask questions.')).toBeTruthy();

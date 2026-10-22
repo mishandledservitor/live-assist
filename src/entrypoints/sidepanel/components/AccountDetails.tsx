@@ -1,5 +1,5 @@
 // 005's ElevenLabs account status on the Settings screen (006 FR-011): the one line, the exact credits and the caveat
-// on what the percentage covers, shown directly, and the refresh button. Failures are plain sentences.
+// on what the percentage covers, shown directly, and `Check again`. Failures are plain sentences.
 import { ACCOUNT_ERROR_MESSAGES, describeAccount } from '../../../core/account/usage';
 import type { AccountState } from '../hooks/useAccount';
 
@@ -24,18 +24,12 @@ export function AccountDetails({ account, now = Date.now, timeZone }: AccountDet
   return (
     <section aria-labelledby="account-heading" aria-busy={busy} className="account">
       <div className="account-head">
-        <h3 id="account-heading" tabIndex={-1}>
+        <h4 id="account-heading" tabIndex={-1}>
           ElevenLabs account
-        </h3>
-        <button
-          type="button"
-          className="icon-button"
-          aria-label="Refresh account status"
-          title="Refresh account status"
-          aria-disabled={busy}
-          onClick={refresh}
-        >
-          ↻
+        </h4>
+        {/* 018 (copy review R32): an error says what to do, so the control carries its words. */}
+        <button type="button" className="secondary" aria-disabled={busy} onClick={refresh}>
+          Check again
         </button>
       </div>
       {line}

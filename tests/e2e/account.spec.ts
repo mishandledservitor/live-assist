@@ -59,7 +59,7 @@ test('credits badge and account details: share left, then a permission failure o
   await expect(account).toContainText('19,360 of 121,000 credits used · 101,640 left');
 
   stub.use('user-read-error');
-  await panel.getByRole('button', { name: 'Refresh account status' }).click();
+  await panel.getByRole('button', { name: 'Check again' }).click();
   const PERMISSION = "API key lacks the 'User: Read' permission — enable it on the key at elevenlabs.io";
   await expect(account).toContainText(PERMISSION);
   await panel.getByRole('button', { name: 'Back' }).click();

@@ -418,15 +418,67 @@ input:not([type='checkbox']) {
   border-bottom: 1px solid var(--line);
 }
 
-.settings-screen form,
-.settings-screen label {
-  margin: 4px 0;
+/* 018 (design decision 105, research R6): three groups; inside them a field and its button share one line, which wraps
+   only when the width forces it, and a control with no heading is a row set apart by spacing. */
+.settings-group {
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.35;
 }
 
-/* A switch with no heading (copy-review K42): set apart like a section, so it is not read as part of the one above. */
-.settings-screen label.setting-alone {
+.settings-group:last-child {
+  border-bottom: none;
+}
+
+.settings-group h3 {
+  font-size: 14px;
+  margin: 10px 0 2px;
+}
+
+.settings-group h4 {
+  font-size: 13px;
+  margin: 8px 0 2px;
+}
+
+/* What each provider keeps, beside its key: the disclosures in full, a step smaller than the controls. */
+.settings-group .retention p {
+  font-size: 13px;
+}
+
+.settings-group p,
+.settings-group form,
+.settings-group ul {
+  margin: 3px 0;
+}
+
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+}
+
+.field-row > input {
+  flex: 1 1 8em;
+  min-width: 0;
+}
+
+.field-row > button {
+  flex: none;
+}
+
+.keyterm-list {
+  list-style: none;
+  padding: 0;
+}
+
+.keyterm-list > li + li {
+  margin-top: 4px;
+}
+
+.settings-group .setting-row {
   display: block;
-  margin-top: 18px;
+  margin: 6px 0;
 }
 
 /* ElevenLabs account section (005, on the Settings screen since 006). */
@@ -437,7 +489,7 @@ input:not([type='checkbox']) {
   gap: 8px;
 }
 
-.account-head h3 {
+.account-head h4 {
   flex: 1;
 }
 

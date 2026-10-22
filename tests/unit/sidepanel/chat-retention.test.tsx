@@ -35,7 +35,7 @@ describe('ChatRetention', () => {
   });
 });
 
-describe('Settings screen: the selected provider’s disclosure after What ElevenLabs keeps', () => {
+describe('Settings screen: the selected provider’s disclosure beside its key (018 FR-003)', () => {
   it('follows the provider chosen in Settings → Questions', async () => {
     const { api } = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2');
     render(<App api={api} meetings={fakeMeetingApi().api} />);
@@ -51,18 +51,17 @@ describe('Settings screen: the selected provider’s disclosure after What Eleve
     expect(within(settings).queryByRole('heading', { name: 'What OpenAI keeps' })).toBeNull();
   });
 
-  it('places Questions, Claude API key and OpenAI API key after Key terms', async () => {
+  it('puts What OpenAI keeps right after the OpenAI key, inside Questions, after the Transcription group', async () => {
     const { api } = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2');
     render(<App api={api} meetings={fakeMeetingApi().api} />);
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
     const settings = screen.getByRole('region', { name: 'Settings' });
-    const names = within(settings)
-      .getAllByRole('heading', { level: 3 })
+    const questions = within(settings).getByRole('region', { name: 'Questions' });
+    const names = within(questions)
+      .getAllByRole('heading', { level: 4 })
       .map((h) => h.textContent);
-    const at = (n: string) => names.indexOf(n);
-    expect(at('Key terms')).toBeGreaterThan(-1);
-    expect(at('Questions')).toBe(at('Key terms') + 1);
-    expect(at('Claude API key')).toBe(at('Questions') + 1);
-    expect(at('OpenAI API key')).toBe(at('Claude API key') + 1);
+    expect(names).toEqual(['OpenAI API key', 'What OpenAI keeps']);
+    const eleven = within(settings).getByRole('region', { name: 'Transcription' });
+    expect(within(eleven).getByRole('region', { name: 'What ElevenLabs keeps' })).toBeTruthy();
   });
 });

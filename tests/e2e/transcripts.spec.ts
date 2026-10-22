@@ -667,7 +667,7 @@ test.describe('Cross-cutting: accessible, fast, in one page height, off the netw
     await seedStoredMeetings(panel, longHistory());
     await expect(line(panel, 'Meeting 0 begins.')).toBeVisible();
     // The account check made when the panel opens has settled (it is blocked in e2e); nothing else may follow.
-    await expect(panel.getByRole('button', { name: 'Could not reach ElevenLabs to check your plan.' })).toBeVisible();
+    await expect(panel.getByRole('button', { name: "Couldn't reach ElevenLabs to check your plan." })).toBeVisible();
     const requests: string[] = [];
     context.on('request', (request) => requests.push(request.url()));
 
@@ -777,14 +777,14 @@ test.describe('Cross-cutting: accessible, fast, in one page height, off the netw
         segments: [storedSegment('m-wide', 0, spokenBy('A participant with quite a long display name'))],
       },
     ]);
-    await expect(panel.getByRole('button', { name: 'Could not reach ElevenLabs to check your plan.' })).toBeVisible();
+    await expect(panel.getByRole('button', { name: "Couldn't reach ElevenLabs to check your plan." })).toBeVisible();
 
     const header = panel.locator('header.panel-header');
     const controls = [
       header.getByRole('button', { name: 'Start' }),
       header.getByRole('combobox', { name: 'Language' }),
       header.getByRole('button', { name: 'Add notes for the next meeting' }),
-      header.getByRole('button', { name: 'Could not reach ElevenLabs to check your plan.' }),
+      header.getByRole('button', { name: "Couldn't reach ElevenLabs to check your plan." }),
       header.getByRole('button', { name: 'Transcripts' }),
       header.getByRole('button', { name: 'Settings' }),
     ];

@@ -474,16 +474,16 @@
     {
       "id": "A5",
       "enabled": true,
-      "$comment": "003 ask-ui Settings screen additions 4a-4c",
+      "$comment": "003 ask-ui Settings screen additions 4a-4c (the key controls as 018 R33, R34 left them)",
       "absent": [],
       "present": [
         "Questions",
         "Model",
         "No key saved.",
         "Saved key:",
-        "New key",
-        "Check and replace key",
-        "Remove key",
+        "Replace",
+        "Check and save",
+        "Remove",
         "Key works.",
         " rejected the API key."
       ]
@@ -638,6 +638,105 @@
       ],
       "present": [
         "Ask questions about the meeting"
+      ]
+    },
+    {
+      "id": "D13",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the heading Consent reminder over its tick box (the consent dialog keeps the name)",
+      "absent": [
+        "Consent reminder"
+      ],
+      "present": []
+    },
+    {
+      "id": "D14",
+      "enabled": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the heading Clean transcript",
+      "absent": [
+        "Clean transcript"
+      ],
+      "present": []
+    },
+    {
+      "id": "D15",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the heading Microphone over Allow microphone (the status dot keeps the label)",
+      "absent": [
+        "Microphone"
+      ],
+      "present": []
+    },
+    {
+      "id": "D16",
+      "enabled": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the remembered-names sentence; Changes here apply from the next meeting. stays",
+      "absent": [
+        "the new name is used for them in later meetings too"
+      ],
+      "present": [
+        "Changes here apply from the next meeting."
+      ]
+    },
+    {
+      "id": "R32",
+      "enabled": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the account error, and the refresh control's visible label",
+      "absent": [
+        "Could not reach ElevenLabs to check your plan",
+        "Refresh account status"
+      ],
+      "present": [
+        "Couldn't reach ElevenLabs to check your plan.",
+        "Check again"
+      ]
+    },
+    {
+      "id": "R33",
+      "enabled": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the key block: Replace and Check and save in place of the New key field label and Check and replace key",
+      "absent": [
+        "Check and replace key"
+      ],
+      "present": [
+        "Replace",
+        "Check and save"
+      ]
+    },
+    {
+      "id": "R34",
+      "enabled": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): Remove in place of Remove key (decision 106)",
+      "absent": [
+        "Remove key"
+      ],
+      "present": []
+    },
+    {
+      "id": "R35",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 FR-005 to FR-007, FR-011 (design decisions 105, 106, copy review of 2026-10-22): the field label New key (the field takes its block's heading as its name)",
+      "absent": [
+        "New key"
+      ],
+      "present": []
+    },
+    {
+      "id": "A14",
+      "enabled": true,
+      "$comment": "018 FR-001, FR-011 (design decision 105, copy review K49): the group headings, and the review's do-not-add list",
+      "absent": [
+        "Below you",
+        "In this section",
+        "Changes save automatically"
+      ],
+      "present": [
+        "Transcription",
+        "Speaker names",
+        "Questions"
       ]
     }
   ]

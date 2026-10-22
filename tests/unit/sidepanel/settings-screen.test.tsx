@@ -22,27 +22,85 @@ async function openSettings(reply: Promise<AccountUsageReply> = Promise.resolve(
   return { account, screenEl: screen.getByRole('region', { name: 'Settings' }) };
 }
 
-const SECTIONS = [
-  'ElevenLabs API key',
-  'ElevenLabs account',
-  'Key terms',
-  'Consent reminder',
-  'Remembered names',
-  'Microphone',
-  'What ElevenLabs keeps',
-];
+const before = (a: Element, b: Element) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+const inOrder = (els: Element[]) => els.every((el, i) => i === 0 || before(els[i - 1]!, el));
+const h4s = (group: HTMLElement) =>
+  within(group)
+    .getAllByRole('heading', { level: 4 })
+    .map((h) => h.textContent);
 
-describe('Settings screen contents (006 US3)', () => {
-  it('has the name field first, then the sections in the contract order', async () => {
+describe('Settings screen contents (006 US3; 018 groups, decision 105)', () => {
+  it('has three groups, Transcription, Speaker names and Questions, and nothing outside them', async () => {
     const { screenEl } = await openSettings();
-    const headings = within(screenEl)
-      .getAllByRole('heading', { level: 3 })
-      .map((h) => h.textContent)
-      .filter((t) => SECTIONS.includes(t ?? ''));
-    expect(headings).toEqual(SECTIONS);
-    const name = within(screenEl).getByLabelText('Your name');
-    const keyHeading = within(screenEl).getByRole('heading', { name: 'ElevenLabs API key' });
-    expect(name.compareDocumentPosition(keyHeading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const groups = within(screenEl).getAllByRole('heading', { level: 3 });
+    expect(groups.map((h) => h.textContent)).toEqual(['Transcription', 'Speaker names', 'Questions']);
+    const sections = groups.map((h) => h.closest('section')!);
+    expect(sections.map((g) => g.getAttribute('aria-labelledby'))).toEqual(groups.map((h) => h.id));
+    expect(Array.from(screenEl.children).slice(1)).toEqual(sections);
+  });
+
+  it('Transcription: the ElevenLabs key, account and what it keeps, key terms, fillers, microphone, consent reminder', async () => {
+    const { screenEl } = await openSettings();
+    const group = within(screenEl).getByRole('region', { name: 'Transcription' });
+    expect(h4s(group)).toEqual(['ElevenLabs API key', 'ElevenLabs account', 'What ElevenLabs keeps', 'Key terms']);
+    const g = within(group);
+    expect(
+      inOrder([
+        g.getByRole('region', { name: 'What ElevenLabs keeps' }),
+        g.getByRole('heading', { name: 'Key terms' }),
+        g.getByRole('checkbox', { name: 'Leave out fillers and false starts' }),
+        g.getByRole('button', { name: 'Allow microphone' }),
+        g.getByRole('checkbox', {
+          name: 'Remind me to tell participants they are being transcribed each time I press Start',
+        }),
+      ]),
+    ).toBe(true);
+  });
+
+  it('Speaker names: your name, Show Meet captions, remembered names', async () => {
+    const { screenEl } = await openSettings();
+    const group = within(screenEl).getByRole('region', { name: 'Speaker names' });
+    const g = within(group);
+    expect(h4s(group)).toEqual(['Remembered names']);
+    expect(
+      inOrder([
+        g.getByLabelText('Your name'),
+        g.getByRole('button', { name: 'Save name' }),
+        g.getByRole('checkbox', { name: 'Show Meet captions' }),
+        g.getByRole('heading', { name: 'Remembered names' }),
+      ]),
+    ).toBe(true);
+    expect(await g.findByText(/No remembered names yet/)).toBeTruthy();
+  });
+
+  it('Questions: the Ask tick box, provider and model, the selected provider’s key and what it keeps', async () => {
+    const { screenEl } = await openSettings();
+    const group = within(screenEl).getByRole('region', { name: 'Questions' });
+    const g = within(group);
+    expect(h4s(group)).toEqual(['OpenAI API key', 'What OpenAI keeps']);
+    expect(
+      inOrder([
+        g.getByRole('checkbox', { name: 'Ask questions about the meeting' }),
+        g.getByRole('radiogroup', { name: 'Answers from' }),
+        g.getByRole('combobox', { name: 'Model' }),
+        g.getByRole('region', { name: 'OpenAI API key' }),
+        g.getByRole('region', { name: 'What OpenAI keeps' }),
+      ]),
+    ).toBe(true);
+  });
+
+  it('Questions with Ask off holds only its heading and the tick box (017)', async () => {
+    const { screenEl } = await openSettings();
+    const group = within(screenEl).getByRole('region', { name: 'Questions' });
+    fireEvent.click(within(group).getByRole('checkbox', { name: 'Ask questions about the meeting' }));
+    await waitFor(() => expect(within(group).queryByRole('radiogroup')).toBeNull());
+    expect(
+      within(group)
+        .getAllByRole('heading')
+        .map((h) => h.textContent),
+    ).toEqual(['Questions']);
+    expect(group.querySelectorAll('input, select, button, a')).toHaveLength(1);
+    expect(screenEl.textContent).not.toContain('What OpenAI keeps');
   });
 
   it('shows the account line, exact credits and caveat directly, with no Details disclosure (D9)', async () => {
@@ -57,11 +115,11 @@ describe('Settings screen contents (006 US3)', () => {
     expect(within(account).queryByText('Details')).toBeNull();
   });
 
-  it('the refresh button fetches again', async () => {
+  it('Check again fetches again', async () => {
     const { account, screenEl } = await openSettings();
     const region = within(screenEl).getByRole('region', { name: 'ElevenLabs account' });
     await within(region).findByText(/^Creator plan/);
-    fireEvent.click(within(region).getByRole('button', { name: 'Refresh account status' }));
+    fireEvent.click(within(region).getByRole('button', { name: 'Check again' }));
     await waitFor(() => expect(account.usage).toHaveBeenCalledTimes(2));
   });
 
@@ -96,7 +154,7 @@ describe('AccountDetails (005 rendering, on the Settings screen since 006)', () 
     render(
       <AccountDetails account={{ reply: { ok: true, usage }, busy: true, refresh }} now={() => NOW} timeZone="UTC" />,
     );
-    const button = screen.getByRole('button', { name: 'Refresh account status' });
+    const button = screen.getByRole('button', { name: 'Check again' });
     button.focus();
     expect(button.getAttribute('aria-disabled')).toBe('true');
     fireEvent.click(button);

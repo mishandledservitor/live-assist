@@ -221,7 +221,7 @@ describe('Keep strings: Close transcript (K46, 014)', () => {
   });
 });
 
-describe('Keep strings: Settings screen (K13, K14–K20, K24–K26)', () => {
+describe('Keep strings: Settings screen (K13, K14–K20, K24–K26; 018 D13–D16, R32–R34, K49)', () => {
   it('shows every Keep string of the screen', async () => {
     const usage = { tier: 'creator', creditsUsed: 19_360, creditsLimit: 121_000, resetAt: null };
     const { api } = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2');
@@ -236,12 +236,18 @@ describe('Keep strings: Settings screen (K13, K14–K20, K24–K26)', () => {
     await screen.findByText(describeAccount(usage, Date.now()).line);
     for (const text of [
       'Settings',
+      // K49 (018, design decision 105): the three group headings.
+      'Transcription',
+      'Speaker names',
+      'Questions',
       'ElevenLabs API key',
       'Saved key: ••••a1b2',
-      'Check and replace key',
-      'Remove key',
+      // R33 (018, design decision 106).
+      'Replace',
       'Save name',
       'ElevenLabs account',
+      // R32 (018): the refresh control's visible label.
+      'Check again',
       '19,360 of 121,000 credits used · 101,640 left',
       'The percentage is of your plan’s credits, shared by everything you use ElevenLabs for, not only live-assist.',
       'Key terms',
@@ -249,38 +255,50 @@ describe('Keep strings: Settings screen (K13, K14–K20, K24–K26)', () => {
       // K17a (001 FR-004a): the field takes a list.
       'New key terms, separated by commas or one per line',
       'Add terms',
-      'Consent reminder',
+      'Remind me to tell participants they are being transcribed each time I press Start',
       // K39 (design decision 41).
-      'Clean transcript',
       'Leave out fillers and false starts',
       // K42 (design decision 61, 002 FR-028).
       'Show Meet captions',
       // K48 (017 FR-001, design decision 103).
       'Ask questions about the meeting',
       'Remembered names',
-      "When you rename someone Meet's captions named, the new name is used for them in later meetings too. Changes here apply from the next meeting.",
-      'Microphone',
+      'Changes here apply from the next meeting.',
       'Allow microphone',
       'What ElevenLabs keeps',
       RETENTION_SUMMARY,
+      'ElevenLabs bills about the length of each meeting.',
       K15,
     ])
       shown(text);
     await waitFor(() => shown('No remembered names yet. Rename a speaker in a Meet transcript to add one.'));
-    expect(screen.getByRole('button', { name: 'Refresh account status' }).textContent).toBe('↻');
-    fireEvent.click(
-      within(screen.getByRole('region', { name: 'ElevenLabs API key' })).getByRole('button', { name: 'Remove key' }),
-    );
+    const settings = screen.getByRole('region', { name: 'Settings' });
+    // 018 D13–D15: no heading over a single control; D16: the sentence about renaming; R32–R34: the old labels.
+    const headings = within(settings)
+      .getAllByRole('heading')
+      .map((h) => h.textContent);
+    for (const gone of ['Consent reminder', 'Clean transcript', 'Microphone']) expect(headings).not.toContain(gone);
+    for (const gone of ['later meetings too', 'Check and replace key', 'Remove key', '\u21bb'])
+      expect(settings.textContent).not.toContain(gone);
+    expect(within(settings).queryByLabelText('New key')).toBeNull();
+    expect(within(settings).queryByRole('button', { name: 'Refresh account status' })).toBeNull();
+    expect(within(settings).getByRole('button', { name: 'Check again' })).toBeTruthy();
+    const eleven = within(screen.getByRole('region', { name: 'ElevenLabs API key' }));
+    fireEvent.click(eleven.getByRole('button', { name: 'Replace' }));
+    expect(eleven.getByRole('button', { name: 'Check and save' })).toBeTruthy();
+    expect(eleven.getByRole('button', { name: 'Cancel' })).toBeTruthy();
+    fireEvent.click(eleven.getByRole('button', { name: 'Cancel' }));
+    fireEvent.click(eleven.getByRole('button', { name: 'Remove' }));
     shown('Remove the saved key? Transcription cannot start without one.');
     expect(screen.getByRole('button', { name: 'Yes, remove' })).toBeTruthy();
   });
 
-  it('account errors (K26)', () => {
+  it('account errors (K26, R32)', () => {
     expect(Object.values(ACCOUNT_ERROR_MESSAGES)).toEqual([
       'No ElevenLabs API key is saved, so your plan cannot be checked.',
       "API key lacks the 'User: Read' permission — enable it on the key at elevenlabs.io",
       'ElevenLabs rejected the API key, so your plan cannot be checked.',
-      'Could not reach ElevenLabs to check your plan.',
+      "Couldn't reach ElevenLabs to check your plan.",
       'ElevenLabs is rate-limiting requests; refresh again in a minute.',
       'ElevenLabs gave an unexpected answer about your plan.',
     ]);
@@ -458,10 +476,13 @@ describe('Keep strings: Ask the transcript (003, K36–K38)', () => {
     });
     render(<App api={api} meetings={fakeMeetingApi().api} />);
     fireEvent.click(await screen.findByRole('button', { name: 'Settings' }));
-    for (const text of ['Questions', 'Answers from', 'Model', 'Claude API key', 'OpenAI API key', 'No key saved.'])
-      shown(text);
+    for (const text of ['Questions', 'Answers from', 'Model', 'OpenAI API key', 'Saved key: ••••abcd']) shown(text);
     shown('What OpenAI keeps');
     shown(OPENAI_KEEPS);
+    // 018 (decision 107): the other provider's key shows once it is selected.
+    fireEvent.click(screen.getByRole('radio', { name: 'Claude' }));
+    await waitFor(() => shown('Claude API key'));
+    for (const text of ['No key saved.', 'Check and save', 'What Anthropic keeps', ANTHROPIC_KEEPS]) shown(text);
   });
 
   it('the Ask area (K38)', async () => {

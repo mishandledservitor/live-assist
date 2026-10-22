@@ -18,12 +18,12 @@ const DISCLOSURES: Readonly<Record<ChatProviderId, { heading: string; text: stri
   },
 };
 
-export function ChatRetention({ provider, headingLevel = 3 }: { provider: ChatProviderId; headingLevel?: 2 | 3 }) {
+export function ChatRetention({ provider, headingLevel = 3 }: { provider: ChatProviderId; headingLevel?: 2 | 3 | 4 }) {
   const id = useId();
-  const Heading = headingLevel === 2 ? 'h2' : 'h3';
+  const Heading = `h${headingLevel}` as const;
   const d = DISCLOSURES[provider];
   return (
-    <section aria-labelledby={id}>
+    <section aria-labelledby={id} className="retention">
       <Heading id={id}>{d.heading}</Heading>
       <p>{d.text}</p>
       <p>

@@ -42,7 +42,7 @@ export const ACCOUNT_ERROR_MESSAGES: Record<AccountErrorKind, string> = {
   missing: 'No ElevenLabs API key is saved, so your plan cannot be checked.',
   'missing-permission': "API key lacks the 'User: Read' permission — enable it on the key at elevenlabs.io",
   invalid: 'ElevenLabs rejected the API key, so your plan cannot be checked.',
-  network: 'Could not reach ElevenLabs to check your plan.',
+  network: "Couldn't reach ElevenLabs to check your plan.",
   'rate-limited': 'ElevenLabs is rate-limiting requests; refresh again in a minute.',
   unknown: 'ElevenLabs gave an unexpected answer about your plan.',
 };
