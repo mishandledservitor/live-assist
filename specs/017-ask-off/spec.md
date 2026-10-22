@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-22
 
-**Status**: Draft (clarifications pending)
+**Status**: Clarified (decisions 102, 103)
 
 **Input**: Owner, 2026-10-22: "Add a setting to just turn off the ask session entirely." Today, with no Claude or OpenAI key, the main view still shows the question box, a greyed `Ask` button, `Add a Claude or OpenAI key in Settings to ask questions.` and the model label (e.g. `GPT-6 Luna`). The owner wants a way to remove all of it.
 
@@ -13,6 +13,7 @@
 ### Session 2026-10-22 (owner)
 
 - Q52: How does setup let a user finish without a chat key? → A: The chat key may be left empty. Finishing setup with it empty turns Ask off; entering one leaves Ask on, as today. The setup screen gets no new text (decision 102).
+- Q53: The setting's label and place? → A: A tick box `Ask questions about the meeting`, the first line under the existing **Questions** heading in Settings. Unticking it hides the provider choice, the key field and the provider-retention text below it; the heading and the tick box stay (decision 103).
 
 ### Session 2026-10-22 (decided without the owner; each can be overruled)
 
@@ -68,9 +69,9 @@ A new user installs live-assist and only wants the live transcript. Setup lets t
 
 ### Functional Requirements
 
-- **FR-001**: Settings MUST offer one tick box that turns Ask on and off [NEEDS CLARIFICATION: Q53, its label and where it sits in Settings], on by default for every user.
+- **FR-001**: Settings MUST offer one tick box, `Ask questions about the meeting`, as the first line under the **Questions** heading, that turns Ask on and off, on by default for every user (decision 103).
 - **FR-002**: While Ask is off, the main view MUST NOT show the question box, `Ask`, `Stop`, the missing-key line, the model label, the conversation strip, citations, or the notes control for the next meeting or for the meeting shown.
-- **FR-003**: While Ask is off, Settings MUST NOT show the provider choice, the chat key field or the provider-retention text; the Ask tick box itself stays visible.
+- **FR-003**: While Ask is off, Settings MUST NOT show the provider choice, the chat key field or the provider-retention text; the **Questions** heading and the Ask tick box stay visible.
 - **FR-004**: While Ask is off, the extension MUST NOT send anything to OpenAI or Anthropic.
 - **FR-005**: Turning Ask off MUST NOT delete the stored chat key, provider, model, questions and answers, or notes; turning it on again MUST restore the Ask and notes elements with that data, without re-entering the key.
 - **FR-006**: The setting MUST apply to the open panel as soon as it changes and MUST be remembered across panel openings and browser restarts.

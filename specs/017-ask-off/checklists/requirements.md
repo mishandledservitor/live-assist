@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain (Q52 setup, Q53 label and place)
+- [x] No [NEEDS CLARIFICATION] markers remain (Q52, Q53 answered 2026-10-22)
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,4 +31,4 @@
 
 ## Notes
 
-- Two clarifications open, asked one at a time as Q52 and Q53.
+- Q52 (decision 102) and Q53 (decision 103) answered by the owner.
