@@ -35,6 +35,21 @@ describe('App setup gating (T070)', () => {
     expect((await screen.findByRole<HTMLButtonElement>('button', { name: /^start$/i })).disabled).toBe(false);
   });
 
+  // 017 FR-008, SC-004 (design decision 102): only an ElevenLabs key; the main view opens with Ask off.
+  it('a fresh install finished without a chat key reaches the main view with Start and no Ask', async () => {
+    const f = fakeSettingsApi();
+    const chat = fakeChatApi({});
+    render(<App api={f.api} meetings={fakeMeetingApi().api} chat={chat.api} />);
+    fireEvent.change(await screen.findByLabelText('Your name'), { target: { value: 'Alex' } });
+    fireEvent.change(screen.getByLabelText('ElevenLabs API key'), { target: { value: 'sk_test_fixture_app_1234' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Check keys and save' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Done' }));
+    expect((await screen.findByRole<HTMLButtonElement>('button', { name: /^start$/i })).disabled).toBe(false);
+    expect(screen.queryByRole('textbox', { name: 'Question' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Ask' })).toBeNull();
+    expect(f.state.settings.askEnabled).toBe(false);
+  });
+
   it('an install set up before 003 sees only the chat step, once, then the main view', async () => {
     const f = fakeSettingsApi({ userName: 'Alex', firstRunComplete: true }, 'a1b2', { anthropic: null, openai: null });
     f.state.settings = { ...f.state.settings, chat: { ...f.state.settings.chat, setupComplete: false } };

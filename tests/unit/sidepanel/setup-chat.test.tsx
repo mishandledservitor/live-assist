@@ -65,6 +65,7 @@ describe('Setup: chat provider and key (T068)', () => {
     expect(f.api.validateKey.mock.invocationCallOrder[0]!).toBeLessThan(
       f.api.replaceChatKey.mock.invocationCallOrder[0]!,
     );
+    // 017 FR-008: a setup finished with a chat key leaves Ask on.
     expect(f.api.saveSettings).toHaveBeenCalledWith({
       userName: 'Alex',
       firstRunComplete: true,
@@ -73,6 +74,7 @@ describe('Setup: chat provider and key (T068)', () => {
         models: { anthropic: 'claude-sonnet-5-5', openai: 'gpt-6-luna' },
         setupComplete: true,
       },
+      askEnabled: true,
     });
   });
 
@@ -103,13 +105,34 @@ describe('Setup: chat provider and key (T068)', () => {
     });
   });
 
-  it('an empty chat key is refused before any check', async () => {
+  // 017 FR-008 (design decision 102): the chat key may be left empty; setup then finishes with Ask off, no new text.
+  it('an empty chat key finishes setup with Ask off, checking only the ElevenLabs key', async () => {
     const f = setup();
     fill({ chat: '  ' });
     submit();
-    expect((await screen.findByRole('alert')).textContent).toBe('Enter your OpenAI API key.');
-    expect(f.api.validateKey).not.toHaveBeenCalled();
-    expect(f.api.saveSettings).not.toHaveBeenCalled();
+    const line = await screen.findByText(/saved on this computer only/);
+    expect(line.textContent).toBe('Key saved on this computer only: ••••a1b2');
+    expect(f.api.validateKey).toHaveBeenCalledWith(ELEVEN);
+    expect(f.api.replaceChatKey).not.toHaveBeenCalled();
+    expect(f.api.saveSettings).toHaveBeenCalledWith({
+      userName: 'Alex',
+      firstRunComplete: true,
+      chat: {
+        provider: 'openai',
+        models: { anthropic: 'claude-sonnet-5-5', openai: 'gpt-6-luna' },
+        setupComplete: true,
+      },
+      askEnabled: false,
+    });
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Allow microphone' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Done' }));
+    expect(f.onComplete).toHaveBeenCalledWith({
+      settings: f.state.settings,
+      keyHint: 'a1b2',
+      chatKeyHints: { anthropic: null, openai: null },
+    });
+    expect(f.state.settings.askEnabled).toBe(false);
   });
 
   it.each([
@@ -194,6 +217,7 @@ describe('Setup: chat step only (installs set up before 003, T070)', () => {
         models: { anthropic: 'claude-sonnet-5-5', openai: 'gpt-6-luna' },
         setupComplete: true,
       },
+      askEnabled: true,
     });
     expect(f.state.settings.keyterms).toEqual(['Northwind']);
     expect(screen.queryByRole('button', { name: /allow microphone/i })).toBeNull();
@@ -203,5 +227,27 @@ describe('Setup: chat step only (installs set up before 003, T070)', () => {
       keyHint: 'a1b2',
       chatKeyHints: { anthropic: null, openai: 'c3d4' },
     });
+  });
+
+  // 017 FR-008: with no key to confirm, the chat-only step finishes at once with Ask off.
+  it('an empty key finishes the chat step at once with Ask off', async () => {
+    const f = chatOnly();
+    fireEvent.click(screen.getByRole('button', { name: 'Check key and save' }));
+    await waitFor(() => expect(f.onComplete).toHaveBeenCalledTimes(1));
+    expect(f.api.replaceChatKey).not.toHaveBeenCalled();
+    expect(f.api.saveSettings).toHaveBeenCalledWith({
+      chat: {
+        provider: 'openai',
+        models: { anthropic: 'claude-sonnet-5-5', openai: 'gpt-6-luna' },
+        setupComplete: true,
+      },
+      askEnabled: false,
+    });
+    expect(f.onComplete).toHaveBeenCalledWith({
+      settings: f.state.settings,
+      keyHint: 'a1b2',
+      chatKeyHints: { anthropic: null, openai: null },
+    });
+    expect(screen.queryByRole('alert')).toBeNull();
   });
 });

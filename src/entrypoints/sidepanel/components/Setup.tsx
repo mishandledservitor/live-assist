@@ -1,8 +1,10 @@
 // First-run setup (US2, FR-001/002/005; 003 FR-011a): name, ElevenLabs key and the chat provider with its key, each
 // key checked by the service worker and then shown only masked, with what each provider keeps; then the one-time
 // microphone permission. Installs set up before 003 get the chat step alone, once (`mode="chat"`, research R16).
+// 017 (design decision 102): the chat key may be left empty; setup then finishes with Ask off, and gains no text.
 import { useState, type FormEvent } from 'react';
 import { KEY_PRODUCT_NAMES, setupChatKeyErrorText } from '../../../core/chat/messages';
+import type { ChatKeyHintsReply } from '../../../core/messaging/protocol';
 import type { ChatProviderId } from '../../../core/chat/models';
 import { MAX_USER_NAME_LENGTH, validateUserName } from '../../../core/settings/schema';
 import { KEY_ERROR_MESSAGES, maskedKey } from '../key-messages';
@@ -44,7 +46,7 @@ export function Setup({ api, initial, mode = 'full', onComplete }: SetupProps) {
     const candidate = key.trim();
     if (full && candidate === '') return setError(KEY_ERROR_MESSAGES.missing);
     const chatCandidate = chatKey.trim();
-    if (chatCandidate === '') return setError(setupChatKeyErrorText(provider, 'missing-key'));
+    const askEnabled = chatCandidate !== '';
 
     setError(null);
     setChecking(true);
@@ -59,33 +61,48 @@ export function Setup({ api, initial, mode = 'full', onComplete }: SetupProps) {
           keyHint = result.hint;
         }
       }
-      const chatResult = await api.replaceChatKey(provider, chatCandidate);
-      if (!chatResult.ok) return setError(setupChatKeyErrorText(provider, chatResult.kind));
+      let chatKeyHints: ChatKeyHintsReply = initial.chatKeyHints;
+      if (askEnabled) {
+        const chatResult = await api.replaceChatKey(provider, chatCandidate);
+        if (!chatResult.ok) return setError(setupChatKeyErrorText(provider, chatResult.kind));
+        chatKeyHints = { ...initial.chatKeyHints, [provider]: chatResult.hint };
+      }
 
       // The whole chat object, so each provider's model survives the shallow settings merge.
       const chat = { ...initial.settings.chat, provider, setupComplete: true };
       const settings = await api.saveSettings(
-        nameResult?.ok ? { userName: nameResult.value, firstRunComplete: true, chat } : { chat },
+        nameResult?.ok
+          ? { userName: nameResult.value, firstRunComplete: true, chat, askEnabled }
+          : { chat, askEnabled },
       );
       setKey('');
       setChatKey('');
-      setSaved({ settings, keyHint, chatKeyHints: { ...initial.chatKeyHints, [provider]: chatResult.hint } });
+      const loaded = { settings, keyHint, chatKeyHints };
+      // The chat step alone with no key has nothing to confirm.
+      if (!full && !askEnabled) return onComplete(loaded);
+      setSaved(loaded);
     } finally {
       setChecking(false);
     }
   }
 
   if (saved) {
-    const chatHint = saved.chatKeyHints[saved.settings.chat.provider] ?? '';
+    const chatHint = saved.settings.askEnabled ? saved.chatKeyHints[saved.settings.chat.provider] : null;
     return (
       <section aria-labelledby="setup-heading">
         <h2 id="setup-heading">Set up live-assist</h2>
         {full ? (
           <>
-            <p>
-              Keys saved on this computer only: ElevenLabs <code>{maskedKey(saved.keyHint ?? '')}</code>,{' '}
-              {KEY_PRODUCT_NAMES[saved.settings.chat.provider]} <code>{maskedKey(chatHint)}</code>
-            </p>
+            {chatHint ? (
+              <p>
+                Keys saved on this computer only: ElevenLabs <code>{maskedKey(saved.keyHint ?? '')}</code>,{' '}
+                {KEY_PRODUCT_NAMES[saved.settings.chat.provider]} <code>{maskedKey(chatHint)}</code>
+              </p>
+            ) : (
+              <p>
+                Key saved on this computer only: <code>{maskedKey(saved.keyHint ?? '')}</code>
+              </p>
+            )}
             <p>
               live-assist also transcribes your microphone. Chrome asks for microphone access once, in a separate tab;
               after that it is used only while you transcribe.
@@ -96,7 +113,7 @@ export function Setup({ api, initial, mode = 'full', onComplete }: SetupProps) {
           </>
         ) : (
           <p>
-            Key saved on this computer only: <code>{maskedKey(chatHint)}</code>
+            Key saved on this computer only: <code>{maskedKey(chatHint ?? '')}</code>
           </p>
         )}
         <button type="button" onClick={() => onComplete(saved)}>
