@@ -110,6 +110,7 @@ The record of every product decision settled before the constitution was ratifie
 | 104 | Settings rework after 017 (018) | 017 (turn Ask off) ships first as specified; the Settings screen's layout and copy are reworked next as 018, starting from the 2026-10-22 review (`specs/018-settings-layout/input-2026-10-22.md`), so two branches never edit the same Settings files | User, 2026-10-22 (Q54 A) |
 | 105 | Settings groups (018) | Settings has three groups, in order: **Transcription** (ElevenLabs key with the account line and what ElevenLabs keeps, key terms, leave out fillers, allow microphone, consent reminder), **Speaker names** (your name, show Meet captions, remembered names), **Questions** (the 017 tick box, provider and model, the provider's key with what it keeps). Each key sits with what it powers | User, 2026-10-22 (Q55 A) |
 | 106 | Key blocks in Settings (018) | Each key is one line: the masked key, `Replace`, `Remove`. `Replace` opens the field with `Check and save` and `Cancel` in place of the line (Escape also cancels); with no key saved the field shows at once. The ElevenLabs remove confirmation stays | User, 2026-10-22 (Q56 A) |
+| 107 | One chat key shown (018) | Questions shows only the key of the provider selected under `Answers from`; switching provider shows the other's; a key saved for the provider not in use is kept, not shown | User, 2026-10-22 (Q57 A) |
 
 ## Senior-dev defaults (user may override)
 

@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-22
 
-**Status**: Draft (clarifications pending)
+**Status**: Clarified (decisions 105-107)
 
 **Input**: Owner, 2026-10-22: "your whole settings page is a disaster", with `/embody-dont-announce`. The review of that day (`input-2026-10-22.md` in this folder) found four structural problems (no order or grouping; the same four-row key block three times, both chat keys shown when one provider is selected; a heading over single controls; a raw form layout at panel width) and a copy list (Delete, Rewrite, Keep, Do not add). Built after 017 (decision 104): 017's `Ask questions about the meeting` tick box is part of the screen.
 
@@ -14,6 +14,7 @@
 
 - Q55: The groups and their order? → A: Three groups, in this order. **Transcription**: the ElevenLabs key with the account line and what ElevenLabs keeps, key terms, `Leave out fillers and false starts`, `Allow microphone`, the consent reminder. **Speaker names**: `Your name`, `Show Meet captions`, remembered names. **Questions**: `Ask questions about the meeting`, the provider and model, and the provider's key with what it keeps (decision 105).
 - Q56: How a key block looks and works? → A: One line: the masked key, then `Replace` and `Remove`. `Replace` swaps that line for the key field and `Check and save` (Escape or `Cancel` puts the line back unchanged); a key that passes the check is saved and the line returns with the new masked key. With no key saved, the field and `Check and save` show at once beside `No key saved.`. `Remove` keeps the ElevenLabs confirmation (`Remove the saved key? Transcription cannot start without one.`) (decision 106).
+- Q57: Which chat keys show under Questions? → A: Only the key of the provider selected under `Answers from`; switching provider shows the other provider's key block; a key saved for the provider not in use is kept, not shown (decision 107).
 
 ### Session 2026-10-22 (decided without the owner; each can be overruled)
 
@@ -50,7 +51,7 @@ Each key (ElevenLabs, and the chat provider's) is one compact block: what is sav
 **Acceptance Scenarios**:
 
 1. **Given** a saved key, **When** the user looks at its block, **Then** it shows the masked key and the replace and remove actions on one line, `Replace` opens the field with `Check and save` in its place, and Escape or `Cancel` closes it unchanged.
-2. **Given** Ask is on, **When** the user looks at Questions, **Then** only the selected provider's key block is shown [NEEDS CLARIFICATION: Q57, only the selected provider's key, or both]; switching provider shows the other provider's block, and a key saved for the other provider is kept.
+2. **Given** Ask is on, **When** the user looks at Questions, **Then** only the selected provider's key block is shown; switching provider shows the other provider's block, and a key saved for the other provider is kept.
 3. **Given** Ask is off (017), **When** the user looks at Questions, **Then** only the heading and the tick box are shown, as 017 decided.
 
 ---
@@ -82,7 +83,7 @@ The reviewed strings are deleted or rewritten as listed; nothing new is added in
 - **FR-001**: Settings MUST present its controls in three groups, in this order (decision 105): **Transcription** (the ElevenLabs key block with the account line and what ElevenLabs keeps; key terms; `Leave out fillers and false starts`; `Allow microphone`; the consent reminder), **Speaker names** (`Your name`; `Show Meet captions`; remembered names), **Questions** (`Ask questions about the meeting`; provider and model; the provider's key block with what it keeps). The group names are the only new headings.
 - **FR-002**: Each key MUST be one block with the masked key (or `No key saved.`), a replace action that checks the key before saving it, and a remove action (with the ElevenLabs confirmation kept), laid out on one line with `Replace` and `Remove`, `Replace` opening the field with `Check and save` and `Cancel` (decision 106). The new strings `Replace` and `Check and save` replace `New key` and `Check and replace key` on the Settings screen.
 - **FR-003**: Each provider's retention text MUST be shown beside that provider's key block, word for word.
-- **FR-004**: Questions MUST show the key block of the selected provider only, unless Q57 decides otherwise; a key stored for the other provider MUST be kept.
+- **FR-004**: Questions MUST show the key block of the selected provider only (decision 107); a key stored for the other provider MUST be kept.
 - **FR-005**: The headings `Consent reminder`, `Clean transcript` and `Microphone` MUST be removed; each control keeps its own label.
 - **FR-006**: The sentence `When you rename someone Meet's captions named, the new name is used for them in later meetings too.` MUST be removed; `Changes here apply from the next meeting.` stays.
 - **FR-007**: The account error MUST read `Couldn't reach ElevenLabs to check your plan.` and the refresh control MUST carry the visible label `Check again`.

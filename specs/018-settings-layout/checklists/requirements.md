@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain (Q55 groups, Q56 key block, Q57 chat keys)
+- [x] No [NEEDS CLARIFICATION] markers remain (Q55-Q57 answered 2026-10-22)
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,4 +31,4 @@
 
 ## Notes
 
-- Three clarifications open, asked one at a time as Q55, Q56, Q57.
+- Q55 (decision 105), Q56 (decision 106), Q57 (decision 107) answered by the owner.
