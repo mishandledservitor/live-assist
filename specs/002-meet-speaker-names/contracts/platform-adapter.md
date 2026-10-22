@@ -67,7 +67,7 @@ Unchanged behaviour; the unsupported `captions` reason becomes "Speaker names ar
 
 ## `BridgedMeetAdapter` (core, `src/core/platform/meet-bridge-adapter.ts`)
 
-- `id: 'meet'`; `matches(url)` → `url.protocol === 'https:' && url.hostname === 'meet.google.com' && /^\/[a-z]{3}-[a-z]{4}-[a-z]{3}(\/|$)/.test(url.pathname)` (a call URL; the Meet landing page does not match and gets the generic adapter).
+- `id: 'meet'`; `matches(url)` → `url.protocol === 'https:' && url.hostname === 'meet.google.com' && /^\/(meet\/)?[a-z]{3}-[a-z]{4}-[a-z]{3}(\/|$)/.test(url.pathname)` (a call URL, `/abc-defg-hij` or, since October 2026, `/meet/abc-defg-hij`, decision 101; the Meet landing page does not match and gets the generic adapter).
 - Built with a `BridgeConnector` (injected; the offscreen host supplies ports named `platform:meet`). Implements the capabilities by sending and receiving [meet-bridge](meet-bridge.md) messages; validates every inbound message and drops unknown ones.
 - Before a port arrives: `captions` state `starting` ("Connecting to the Meet page…"), `mute.current()` = `{ muted: null }`. No port within `ATTACH_TIMEOUT_MS` (5 s) → `unavailable`, "Couldn't connect to the Meet page — reload the Meet tab".
 - Deadline: if captions are neither `on` nor in the lobby (`starting` with the lobby reason) by `NAMES_DEADLINE_MS` (9 s) after `enable()`, the state becomes `unavailable` with the latest reason ("Couldn't connect to the Meet page — reload the Meet tab" or "Couldn't turn on Meet captions"); a later `on` still recovers (SC-003).
