@@ -316,9 +316,8 @@
       "absent": [
         "New ElevenLabs API key"
       ],
-      "present": [
-        "New key"
-      ]
+      "present": [],
+      "$comment": "006's New key label was removed by 018 R35 (the field takes its block's heading); only the old label stays checked absent"
     },
     {
       "id": "R22",
@@ -327,8 +326,9 @@
         "Consent reminder: remind me"
       ],
       "present": [
-        "Remind me to tell participants they are being transcribed each time I press Start"
-      ]
+        "Remind me to tell people before I start"
+      ],
+      "$comment": "the label as 018 R40 (design decision 108) left it"
     },
     {
       "id": "R23",
@@ -474,13 +474,12 @@
     {
       "id": "A5",
       "enabled": true,
-      "$comment": "003 ask-ui Settings screen additions 4a-4c (the key controls as 018 R33, R34 left them)",
+      "$comment": "003 ask-ui Settings screen additions 4a-4c (the key controls as 018 R33, R34, D17 left them)",
       "absent": [],
       "present": [
         "Questions",
         "Model",
         "No key saved.",
-        "Saved key:",
         "Replace",
         "Check and save",
         "Remove",
@@ -737,6 +736,96 @@
         "Transcription",
         "Speaker names",
         "Questions"
+      ]
+    },
+    {
+      "id": "D17",
+      "enabled": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the masked key stands alone",
+      "absent": [
+        "Saved key:"
+      ],
+      "present": []
+    },
+    {
+      "id": "D18",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the ElevenLabs account heading (the section and the header badge keep it as their accessible name)",
+      "absent": [
+        "ElevenLabs account"
+      ],
+      "present": []
+    },
+    {
+      "id": "D19",
+      "enabled": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): remembered names are not shown while there are none",
+      "absent": [
+        "No remembered names yet"
+      ],
+      "present": [
+        "Changes here apply from the next meeting."
+      ]
+    },
+    {
+      "id": "D20",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 (design decision 109): the retention texts in Settings are closed until opened; their text is unchanged (checked on the rendered screen)",
+      "absent": [],
+      "present": [
+        "What ElevenLabs keeps"
+      ]
+    },
+    {
+      "id": "R36",
+      "enabled": true,
+      "dom": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the Settings key headings (setup keeps ElevenLabs API key, OpenAI API key, Claude API key)",
+      "absent": [
+        "ElevenLabs API key",
+        "OpenAI API key",
+        "Claude API key"
+      ],
+      "present": [
+        "ElevenLabs key",
+        "OpenAI key",
+        "Claude key"
+      ]
+    },
+    {
+      "id": "R37",
+      "enabled": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the key-term limits",
+      "absent": [
+        "Names and words that should be recognised correctly"
+      ],
+      "present": [
+        "Up to ",
+        " characters each. Used from the next Start."
+      ]
+    },
+    {
+      "id": "R38",
+      "enabled": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the add field's label",
+      "absent": [
+        "New key terms, separated by commas or one per line"
+      ],
+      "present": [
+        "Add terms, separated by commas"
+      ]
+    },
+    {
+      "id": "R39",
+      "enabled": true,
+      "$comment": "018 (design decision 108, the trims of 2026-10-22): the consent reminder's label",
+      "absent": [
+        "Remind me to tell participants they are being transcribed each time I press Start"
+      ],
+      "present": [
+        "Remind me to tell people before I start"
       ]
     }
   ]

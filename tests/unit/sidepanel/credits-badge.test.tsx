@@ -79,12 +79,13 @@ describe('CreditsBadge in the panel', () => {
     expect(start().disabled).toBe(false);
   });
 
-  it('opens Settings with the account heading focused', async () => {
+  // 018 decision 108: the account section has no heading of its own; focus lands on the section, named for it.
+  it('opens Settings with the account section focused', async () => {
     renderApp(Promise.resolve({ ok: true, usage }));
     const badge = await screen.findByRole('button', { name: /^Creator plan · 84% of credits left/ });
     fireEvent.click(badge);
-    const heading = screen.getByRole('heading', { name: 'ElevenLabs account' });
-    await waitFor(() => expect(document.activeElement).toBe(heading));
+    const account = screen.getByRole('region', { name: 'ElevenLabs account' });
+    await waitFor(() => expect(document.activeElement).toBe(account));
     expect(screen.getByRole('heading', { level: 2, name: 'Settings' })).toBeTruthy();
   });
 });

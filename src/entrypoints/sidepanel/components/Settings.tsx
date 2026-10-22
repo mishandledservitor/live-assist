@@ -117,7 +117,7 @@ export function Settings({ api, loaded, onChange, account }: SettingsProps) {
       <section aria-labelledby="settings-transcription" className="settings-group">
         <h3 id="settings-transcription">Transcription</h3>
         <KeyBlock
-          heading="ElevenLabs API key"
+          heading="ElevenLabs key"
           hint={keyHint}
           check={async (candidate) => {
             const result = await api.validateKey(candidate);
@@ -131,13 +131,10 @@ export function Settings({ api, loaded, onChange, account }: SettingsProps) {
           onHint={(hint) => publish(settings, hint)}
         />
         {account}
-        <RetentionNotice headingLevel={4} />
+        <RetentionNotice collapsible />
 
         <h4 id="keyterms-heading">Key terms</h4>
-        <p>
-          Names and words that should be recognised correctly (at most {MAX_KEYTERMS}, each up to {MAX_KEYTERM_LENGTH}{' '}
-          characters). Used from the next Start.
-        </p>
+        <p>{`Up to ${MAX_KEYTERMS}, ${MAX_KEYTERM_LENGTH} characters each. Used from the next Start.`}</p>
         <ul aria-label="Key terms" className="keyterm-list">
           {drafts.map((term, i) => (
             <li key={i} className="field-row">
@@ -170,7 +167,7 @@ export function Settings({ api, loaded, onChange, account }: SettingsProps) {
           </ul>
         )}
         <form onSubmit={(e) => void addTerms(e)}>
-          <label htmlFor="settings-new-terms">New key terms, separated by commas or one per line</label>
+          <label htmlFor="settings-new-terms">Add terms, separated by commas</label>
           <div className="field-row">
             <input
               id="settings-new-terms"
@@ -188,10 +185,7 @@ export function Settings({ api, loaded, onChange, account }: SettingsProps) {
             Allow microphone
           </button>
         </p>
-        {checkbox(
-          'consentReminder',
-          'Remind me to tell participants they are being transcribed each time I press Start',
-        )}
+        {checkbox('consentReminder', 'Remind me to tell people before I start')}
       </section>
 
       <section aria-labelledby="settings-speaker-names" className="settings-group">

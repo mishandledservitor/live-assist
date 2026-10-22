@@ -114,15 +114,15 @@ describe('the Ask setting in Settings (017 FR-001, FR-003, FR-005)', () => {
     expect(settingsScreen().getByRole('heading', { name: 'Questions' })).toBeTruthy();
     expect(settingsScreen().getByRole<HTMLInputElement>('checkbox', { name: ASK }).checked).toBe(false);
     expect(settingsScreen().queryByRole('combobox', { name: 'Model' })).toBeNull();
-    expect(settingsScreen().queryByRole('region', { name: 'OpenAI API key' })).toBeNull();
-    expect(settingsScreen().queryByRole('region', { name: 'Claude API key' })).toBeNull();
-    expect(settingsScreen().queryByRole('region', { name: 'What OpenAI keeps' })).toBeNull();
+    expect(settingsScreen().queryByRole('region', { name: 'OpenAI key' })).toBeNull();
+    expect(settingsScreen().queryByRole('region', { name: 'Claude key' })).toBeNull();
+    expect(settingsScreen().queryByText('What OpenAI keeps')).toBeNull();
 
     fireEvent.click(settingsScreen().getByRole('checkbox', { name: ASK }));
     expect(s.api.saveSettings).toHaveBeenLastCalledWith({ askEnabled: true });
-    const openai = await settingsScreen().findByRole('region', { name: 'OpenAI API key' });
+    const openai = await settingsScreen().findByRole('region', { name: 'OpenAI key' });
     expect(within(openai).getByText('abcd', { exact: false })).toBeTruthy();
-    expect(settingsScreen().getByRole('region', { name: 'What OpenAI keeps' })).toBeTruthy();
+    expect(settingsScreen().getByText('What OpenAI keeps', { selector: 'summary' })).toBeTruthy(); // 018 decision 109
     expect(s.api.removeChatKey).not.toHaveBeenCalled();
   });
 
@@ -131,7 +131,7 @@ describe('the Ask setting in Settings (017 FR-001, FR-003, FR-005)', () => {
     await openSettings();
     expect(settingsScreen().getByRole<HTMLInputElement>('checkbox', { name: ASK }).checked).toBe(false);
     expect(settingsScreen().queryByRole('radiogroup', { name: 'Answers from' })).toBeNull();
-    expect(settingsScreen().queryByRole('region', { name: 'What OpenAI keeps' })).toBeNull();
+    expect(settingsScreen().queryByText('What OpenAI keeps')).toBeNull();
   });
 });
 

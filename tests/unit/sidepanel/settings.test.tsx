@@ -46,7 +46,7 @@ describe('Settings: name', () => {
 
 describe('Settings: key', () => {
   // 018 (decision 106): one line, the masked key with Replace and Remove; the field opens on Replace.
-  const eleven = () => within(screen.getByRole('region', { name: 'ElevenLabs API key' }));
+  const eleven = () => within(screen.getByRole('region', { name: 'ElevenLabs key' }));
   const replace = () => fireEvent.click(eleven().getByRole('button', { name: 'Replace' }));
 
   it('shows the saved key only masked', () => {
@@ -57,7 +57,7 @@ describe('Settings: key', () => {
   it('names the field by its heading, with no New key label and no heading repeating the name label (006 R21, D11)', () => {
     renderSettings();
     replace();
-    expect(eleven().getByLabelText('ElevenLabs API key')).toBeTruthy();
+    expect(eleven().getByLabelText('ElevenLabs key')).toBeTruthy();
     expect(screen.queryByText('New key')).toBeNull();
     expect(screen.queryByRole('heading', { name: 'Your name' })).toBeNull();
     expect(screen.getByLabelText('Your name')).toBeTruthy();
@@ -66,7 +66,7 @@ describe('Settings: key', () => {
   it('replaces the key after a successful check', async () => {
     const { api, onChange } = renderSettings();
     replace();
-    fireEvent.change(eleven().getByLabelText('ElevenLabs API key'), { target: { value: KEY } });
+    fireEvent.change(eleven().getByLabelText('ElevenLabs key'), { target: { value: KEY } });
     fireEvent.click(eleven().getByRole('button', { name: 'Check and save' }));
     expect(await screen.findByText(/key replaced/i)).toBeTruthy();
     expect(api.validateKey).toHaveBeenCalledWith(KEY);
@@ -78,7 +78,7 @@ describe('Settings: key', () => {
     const f = renderSettings();
     f.failNextValidation('invalid');
     replace();
-    fireEvent.change(eleven().getByLabelText('ElevenLabs API key'), { target: { value: KEY } });
+    fireEvent.change(eleven().getByLabelText('ElevenLabs key'), { target: { value: KEY } });
     fireEvent.click(eleven().getByRole('button', { name: 'Check and save' }));
     expect((await screen.findByRole('alert')).textContent).toMatch(/rejected this key/i);
     expect(f.onChange).not.toHaveBeenCalledWith(expect.objectContaining({ keyHint: 'c3d4' }));
@@ -95,7 +95,7 @@ describe('Settings: key', () => {
     expect(await eleven().findByText('No key saved.')).toBeTruthy(); // 006 R20
     expect(api.removeKey).toHaveBeenCalled();
     expect(onChange).toHaveBeenLastCalledWith(expect.objectContaining({ keyHint: null }));
-    expect(eleven().getByLabelText('ElevenLabs API key')).toBeTruthy();
+    expect(eleven().getByLabelText('ElevenLabs key')).toBeTruthy();
     expect(eleven().getByRole('button', { name: 'Check and save' })).toBeTruthy();
   });
 });
@@ -104,7 +104,7 @@ describe('Settings: key terms', () => {
   const list = () => within(screen.getByRole('list', { name: /^key terms$/i }));
 
   // 001 FR-004a (T120): the field takes a list; copy-review K17a.
-  const NEW_TERMS = 'New key terms, separated by commas or one per line';
+  const NEW_TERMS = 'Add terms, separated by commas'; // 018 decision 108
   const newTerms = () => screen.getByLabelText<HTMLInputElement>(NEW_TERMS);
   const add = () => fireEvent.click(screen.getByRole('button', { name: 'Add terms' }));
   const paste = (text: string) =>
@@ -216,7 +216,7 @@ describe('Settings: consent reminder and microphone', () => {
     // 006 R22: the label is the action; 018 D13 removed the heading above it.
     expect(screen.queryByRole('heading', { name: 'Consent reminder' })).toBeNull();
     const box = screen.getByRole<HTMLInputElement>('checkbox', {
-      name: 'Remind me to tell participants they are being transcribed each time I press Start',
+      name: 'Remind me to tell people before I start', // 018 decision 108
     });
     expect(box.checked).toBe(true);
     fireEvent.click(box);
@@ -280,9 +280,21 @@ describe('Settings: remembered names', () => {
   ];
   const list = () => screen.getByRole('list', { name: 'Remembered names' });
 
-  it('says so when there are none', async () => {
-    renderSettings();
-    expect(await screen.findByText(/no remembered names yet/i)).toBeTruthy();
+  // 018 decision 108: while there are none, nothing of the section shows.
+  it('shows nothing while there are none', async () => {
+    const { api } = renderSettings();
+    await vi.waitFor(() => expect(api.listSpeakerNames).toHaveBeenCalled());
+    await Promise.resolve();
+    expect(screen.queryByRole('heading', { name: 'Remembered names' })).toBeNull();
+    expect(screen.queryByText(/Changes here apply from the next meeting/)).toBeNull();
+    expect(screen.queryByText(/no remembered names yet/i)).toBeNull();
+  });
+
+  it('shows the heading, the timing line and the list once there is one', async () => {
+    renderSettings({ speakerNameMappings: mappings });
+    expect(await screen.findByRole('heading', { name: 'Remembered names' })).toBeTruthy();
+    expect(screen.getByText('Changes here apply from the next meeting.')).toBeTruthy();
+    expect(within(list()).getAllByRole('listitem')).toHaveLength(2);
   });
 
   it('lists caption name → display name', async () => {
@@ -319,7 +331,8 @@ describe('Settings: remembered names', () => {
   // T082: a rename made in the transcript (MeetingApi → SettingsApi.rememberSpeakerName) shows without a remount.
   it('shows a name remembered elsewhere, and drops one forgotten elsewhere, without remounting', async () => {
     const { api } = renderSettings();
-    expect(await screen.findByText(/no remembered names yet/i)).toBeTruthy();
+    await vi.waitFor(() => expect(api.listSpeakerNames).toHaveBeenCalled());
+    expect(screen.queryByRole('heading', { name: 'Remembered names' })).toBeNull();
     await api.rememberSpeakerName('Emma Jones', 'Emma');
     const input = await screen.findByLabelText<HTMLInputElement>('Name shown for Emma Jones');
     expect(input.value).toBe('Emma');
@@ -327,8 +340,9 @@ describe('Settings: remembered names', () => {
     await vi.waitFor(() =>
       expect(screen.getByLabelText<HTMLInputElement>('Name shown for Emma Jones').value).toBe('Ave'),
     );
+    expect(screen.getByRole('heading', { name: 'Remembered names' })).toBeTruthy();
     await api.forgetSpeakerName('Emma Jones');
-    expect(await screen.findByText(/no remembered names yet/i)).toBeTruthy();
+    await vi.waitFor(() => expect(screen.queryByRole('heading', { name: 'Remembered names' })).toBeNull());
   });
 
   it('removes one', async () => {

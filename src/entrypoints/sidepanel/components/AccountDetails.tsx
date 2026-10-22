@@ -22,17 +22,16 @@ export function AccountDetails({ account, now = Date.now, timeZone }: AccountDet
   } else line = <p className="account-line error">{ACCOUNT_ERROR_MESSAGES[reply.kind]}</p>;
 
   return (
-    <section aria-labelledby="account-heading" aria-busy={busy} className="account">
+    // 018 (decision 108): no heading of its own; it sits under the ElevenLabs key, and the name stays for screen
+    // readers. The header badge opens Settings with focus here.
+    <section id="account-section" aria-label="ElevenLabs account" tabIndex={-1} aria-busy={busy} className="account">
       <div className="account-head">
-        <h4 id="account-heading" tabIndex={-1}>
-          ElevenLabs account
-        </h4>
+        {line}
         {/* 018 (copy review R32): an error says what to do, so the control carries its words. */}
         <button type="button" className="secondary" aria-disabled={busy} onClick={refresh}>
           Check again
         </button>
       </div>
-      {line}
       {detail.map((sentence) => (
         <p key={sentence} className="account-detail">
           {sentence}

@@ -485,12 +485,25 @@ input:not([type='checkbox']) {
 
 .account-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
+  margin: 4px 0;
 }
 
-.account-head h4 {
+.account-head .account-line {
   flex: 1;
+  margin: 0;
+}
+
+/* 018 (decision 109): what a provider keeps, closed by default under its key; the summary is the heading text. */
+.settings-group details.retention {
+  margin: 6px 0;
+}
+
+.settings-group details.retention > summary {
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .account-line.error {

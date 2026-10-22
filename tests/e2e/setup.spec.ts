@@ -75,7 +75,7 @@ test('first-run setup persists across a browser restart, keys masked, Start and 
     await panel.getByRole('button', { name: 'Settings' }).click();
     await expect(panel.getByRole('region', { name: 'Settings' })).toBeVisible();
     await expect(panel.getByText('••••e2e1')).toBeVisible();
-    await expect(panel.getByRole('region', { name: 'OpenAI API key' })).toContainText('••••ab12');
+    await expect(panel.getByRole('region', { name: 'OpenAI key' })).toContainText('••••ab12');
     await expect(panel.getByLabel('Your name')).toHaveValue('Alex');
     await expect(panel.locator('body')).not.toContainText(GOOD_KEY);
     await expect(panel.locator('body')).not.toContainText(CHAT_KEY);

@@ -103,7 +103,7 @@ export function ChatSettings({
           {/* 018 (decision 107): the selected provider's key only; the other provider's stays stored. */}
           <KeyBlock
             key={chat.provider}
-            heading={`${KEY_PRODUCT_NAMES[chat.provider]} API key`}
+            heading={`${KEY_PRODUCT_NAMES[chat.provider]} key`}
             hint={hints[chat.provider]}
             check={async (candidate) => {
               const result = await api.replaceChatKey(chat.provider, candidate);
@@ -116,7 +116,7 @@ export function ChatSettings({
             remove={() => api.removeChatKey(chat.provider)}
             onHint={(h) => setHint(chat.provider, h)}
           />
-          <ChatRetention provider={chat.provider} headingLevel={4} />
+          <ChatRetention provider={chat.provider} collapsible />
         </>
       )}
     </>

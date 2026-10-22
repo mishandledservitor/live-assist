@@ -177,7 +177,8 @@ test('Ask: the conversation strip and the Questions settings have no axe violati
 
   await panel.getByRole('button', { name: 'Settings' }).click();
   await expect(panel.getByRole('heading', { name: 'Questions' })).toBeVisible();
-  await expect(panel.getByRole('region', { name: 'What Anthropic keeps' })).toBeVisible();
+  await expect(panel.getByText('What Anthropic keeps', { exact: true })).toBeVisible();
+  await panel.getByText('What Anthropic keeps', { exact: true }).click(); // 018 decision 109: open the disclosure too
   await expectNoAxeViolationsInBothModes(panel, 'settings with Questions');
 });
 

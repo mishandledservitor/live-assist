@@ -287,6 +287,8 @@ test('built output has no deleted copy', () => {
 // the ElevenLabs key, OpenAI selected with its key saved, no remembered names.
 /** Settings screen scroll height at 380 px with these settings on the build before 018 (research R7). */
 const SETTINGS_HEIGHT_BEFORE_018 = 1762;
+/** The same after 018's trims and closed retention texts (decisions 108, 109), macOS: 749 px. */
+const SETTINGS_HEIGHT_AFTER_018 = 749;
 
 async function seedLayoutSettings(panel: Page): Promise<void> {
   await panel.evaluate(() =>
@@ -332,17 +334,20 @@ test('Settings fits the panel: no sideways scroll at 320 px, one line per field 
   const height = await settings.evaluate((el) => el.scrollHeight);
   console.log(`Settings scroll height at 380 px: ${height} (before 018: ${SETTINGS_HEIGHT_BEFORE_018} on macOS)`);
   // The baseline was measured on macOS; other systems' fonts wrap the text differently, so there it is reported only.
-  if (process.platform === 'darwin') expect(height).toBeLessThanOrEqual((SETTINGS_HEIGHT_BEFORE_018 * 2) / 3);
+  if (process.platform === 'darwin') {
+    expect(height).toBeLessThanOrEqual((SETTINGS_HEIGHT_BEFORE_018 * 2) / 3);
+    expect(height).toBeLessThanOrEqual(SETTINGS_HEIGHT_AFTER_018 + 40);
+  }
 
   await onOneLine(settings.getByLabel('Your name'), settings.getByRole('button', { name: 'Save name' }));
-  const eleven = settings.getByRole('region', { name: 'ElevenLabs API key' });
-  await onOneLine(eleven.getByText('Saved key:'), eleven.getByRole('button', { name: 'Replace' }));
+  const eleven = settings.getByRole('region', { name: 'ElevenLabs key' });
+  await onOneLine(eleven.getByText('••••0001'), eleven.getByRole('button', { name: 'Replace' }));
   await onOneLine(eleven.getByRole('button', { name: 'Replace' }), eleven.getByRole('button', { name: 'Remove' }));
   await onOneLine(settings.getByLabel('Key term 1'), settings.getByRole('button', { name: 'Remove Northwind' }));
-  const newTerms = settings.getByLabel('New key terms, separated by commas or one per line');
+  const newTerms = settings.getByLabel('Add terms, separated by commas');
   await onOneLine(newTerms, settings.getByRole('button', { name: 'Add terms' }));
   await eleven.getByRole('button', { name: 'Replace' }).click();
-  await onOneLine(eleven.getByLabel('ElevenLabs API key'), eleven.getByRole('button', { name: 'Check and save' }));
+  await onOneLine(eleven.locator('input[type="password"]'), eleven.getByRole('button', { name: 'Check and save' }));
 
   await panel.setViewportSize({ width: 320, height: 700 });
   for (const el of ['html', '.settings-screen'])

@@ -26,8 +26,14 @@ const before = (a: Element, b: Element) => (a.compareDocumentPosition(b) & Node.
 const inOrder = (els: Element[]) => els.every((el, i) => i === 0 || before(els[i - 1]!, el));
 const h4s = (group: HTMLElement) =>
   within(group)
-    .getAllByRole('heading', { level: 4 })
+    .queryAllByRole('heading', { level: 4 })
     .map((h) => h.textContent);
+/** 018 decision 109: a retention text in Settings is a closed disclosure whose summary is its heading text. */
+const disclosure = (container: HTMLElement, summary: string) => {
+  const details = within(container).getByText(summary, { selector: 'summary' }).closest('details');
+  expect(details).not.toBeNull();
+  return details!;
+};
 
 describe('Settings screen contents (006 US3; 018 groups, decision 105)', () => {
   it('has three groups, Transcription, Speaker names and Questions, and nothing outside them', async () => {
@@ -42,16 +48,22 @@ describe('Settings screen contents (006 US3; 018 groups, decision 105)', () => {
   it('Transcription: the ElevenLabs key, account and what it keeps, key terms, fillers, microphone, consent reminder', async () => {
     const { screenEl } = await openSettings();
     const group = within(screenEl).getByRole('region', { name: 'Transcription' });
-    expect(h4s(group)).toEqual(['ElevenLabs API key', 'ElevenLabs account', 'What ElevenLabs keeps', 'Key terms']);
+    // 018 decision 108: no `ElevenLabs account` heading; the plan line sits right under the key line.
+    expect(h4s(group)).toEqual(['ElevenLabs key', 'Key terms']);
     const g = within(group);
+    const key = g.getByRole('region', { name: 'ElevenLabs key' });
+    const account = g.getByRole('region', { name: 'ElevenLabs account' });
+    expect(key.nextElementSibling).toBe(account);
+    expect(within(account).queryByRole('heading')).toBeNull();
     expect(
       inOrder([
-        g.getByRole('region', { name: 'What ElevenLabs keeps' }),
+        account,
+        disclosure(group, 'What ElevenLabs keeps'),
         g.getByRole('heading', { name: 'Key terms' }),
         g.getByRole('checkbox', { name: 'Leave out fillers and false starts' }),
         g.getByRole('button', { name: 'Allow microphone' }),
         g.getByRole('checkbox', {
-          name: 'Remind me to tell participants they are being transcribed each time I press Start',
+          name: 'Remind me to tell people before I start',
         }),
       ]),
     ).toBe(true);
@@ -61,30 +73,30 @@ describe('Settings screen contents (006 US3; 018 groups, decision 105)', () => {
     const { screenEl } = await openSettings();
     const group = within(screenEl).getByRole('region', { name: 'Speaker names' });
     const g = within(group);
-    expect(h4s(group)).toEqual(['Remembered names']);
     expect(
       inOrder([
         g.getByLabelText('Your name'),
         g.getByRole('button', { name: 'Save name' }),
         g.getByRole('checkbox', { name: 'Show Meet captions' }),
-        g.getByRole('heading', { name: 'Remembered names' }),
       ]),
     ).toBe(true);
-    expect(await g.findByText(/No remembered names yet/)).toBeTruthy();
+    // 018 decision 108: no remembered names, no section.
+    await waitFor(() => expect(h4s(group)).toEqual([]));
+    expect(group.textContent).not.toContain('Changes here apply from the next meeting.');
   });
 
   it('Questions: the Ask tick box, provider and model, the selected provider’s key and what it keeps', async () => {
     const { screenEl } = await openSettings();
     const group = within(screenEl).getByRole('region', { name: 'Questions' });
     const g = within(group);
-    expect(h4s(group)).toEqual(['OpenAI API key', 'What OpenAI keeps']);
+    expect(h4s(group)).toEqual(['OpenAI key']);
     expect(
       inOrder([
         g.getByRole('checkbox', { name: 'Ask questions about the meeting' }),
         g.getByRole('radiogroup', { name: 'Answers from' }),
         g.getByRole('combobox', { name: 'Model' }),
-        g.getByRole('region', { name: 'OpenAI API key' }),
-        g.getByRole('region', { name: 'What OpenAI keeps' }),
+        g.getByRole('region', { name: 'OpenAI key' }),
+        disclosure(group, 'What OpenAI keeps'),
       ]),
     ).toBe(true);
   });
@@ -125,7 +137,8 @@ describe('Settings screen contents (006 US3; 018 groups, decision 105)', () => {
 
   it('holds the retention disclosure', async () => {
     const { screenEl } = await openSettings();
-    const retention = within(screenEl).getByRole('region', { name: 'What ElevenLabs keeps' });
+    const retention = disclosure(screenEl, 'What ElevenLabs keeps');
+    expect(retention.open).toBe(false);
     expect(retention.textContent).toContain('Audio is sent to ElevenLabs for transcription.');
     expect(within(retention).getByRole('link', { name: 'ElevenLabs privacy policy' })).toBeTruthy();
   });

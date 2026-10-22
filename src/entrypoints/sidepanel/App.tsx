@@ -228,9 +228,9 @@ function Panel({
   // The badge opens Settings at the account section (FR-015).
   const openAccount = () => {
     focusNext.current = () => {
-      const heading = document.getElementById('account-heading');
-      heading?.scrollIntoView?.({ block: 'start' });
-      return heading;
+      const account = document.getElementById('account-section');
+      account?.scrollIntoView?.({ block: 'start' });
+      return account;
     };
     setScreen('settings');
   };

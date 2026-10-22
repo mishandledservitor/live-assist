@@ -228,7 +228,7 @@ describe('Ask on the main view', () => {
     const settingsScreen = screen.getByRole('region', { name: 'Settings' });
     fireEvent.click(within(settingsScreen).getByRole('radio', { name: 'OpenAI' }));
     await waitFor(() => expect(f.state.settings.chat.provider).toBe('openai'));
-    const openaiKey = within(settingsScreen).getByRole('region', { name: 'OpenAI API key' });
+    const openaiKey = within(settingsScreen).getByRole('region', { name: 'OpenAI key' });
     fireEvent.click(within(openaiKey).getByRole('button', { name: 'Remove' }));
     await within(openaiKey).findByText('No key saved.');
     fireEvent.click(within(settingsScreen).getByRole('button', { name: 'Back' }));

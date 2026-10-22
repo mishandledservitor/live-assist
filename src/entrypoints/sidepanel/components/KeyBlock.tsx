@@ -117,10 +117,9 @@ export function KeyBlock({ heading, hint, check, emptyText, savedText, remove, r
     );
   else
     body = (
-      <p className="field-row key-line">
-        <span>
-          Saved key: <code>{maskedKey(hint)}</code>
-        </span>{' '}
+      // 018 decision 108: the masked key alone, in a line named by the block's heading.
+      <p className="field-row key-line" role="group" aria-labelledby={`${id}-heading`}>
+        <code>{maskedKey(hint)}</code>{' '}
         <button
           type="button"
           ref={replaceRef}

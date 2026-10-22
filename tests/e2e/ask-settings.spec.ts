@@ -14,14 +14,14 @@ test('switching to Claude in Settings sends the next question to Claude', async 
   const settings = panel.getByRole('region', { name: 'Settings' });
   await expect(settings.getByRole('heading', { name: 'Questions' })).toBeVisible();
   await settings.getByRole('radio', { name: 'Claude' }).check();
-  await expect(settings.getByRole('region', { name: 'What Anthropic keeps' })).toBeVisible();
-  const claudeKey = settings.getByRole('region', { name: 'Claude API key' });
+  await expect(settings.getByText('What Anthropic keeps', { exact: true })).toBeVisible();
+  const claudeKey = settings.getByRole('region', { name: 'Claude key' });
   await expect(claudeKey).toContainText('No key saved.');
-  await claudeKey.getByLabel('Claude API key').fill(CLAUDE_KEY);
+  await claudeKey.getByLabel('Claude key').and(panel.locator('input')).fill(CLAUDE_KEY);
   await claudeKey.getByRole('button', { name: 'Check and save' }).click();
   await expect(claudeKey).toContainText('Key works.');
   await expect(claudeKey).toContainText('••••wx12');
-  await expect(claudeKey.getByLabel('Claude API key')).toHaveCount(0);
+  await expect(claudeKey.getByLabel('Claude key').and(panel.locator('input'))).toHaveCount(0);
   await settings.getByRole('button', { name: 'Back' }).click();
 
   await expect(panel.locator('.main-view').getByText('Claude Sonnet 5.5')).toBeVisible();
