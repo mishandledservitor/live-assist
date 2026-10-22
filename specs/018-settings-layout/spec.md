@@ -10,6 +10,10 @@
 
 ## Clarifications
 
+### Session 2026-10-22 (owner)
+
+- Q55: The groups and their order? → A: Three groups, in this order. **Transcription**: the ElevenLabs key with the account line and what ElevenLabs keeps, key terms, `Leave out fillers and false starts`, `Allow microphone`, the consent reminder. **Speaker names**: `Your name`, `Show Meet captions`, remembered names. **Questions**: `Ask questions about the meeting`, the provider and model, and the provider's key with what it keeps (decision 105).
+
 ### Session 2026-10-22 (decided without the owner; each can be overruled)
 
 - Q: Does any setting change what it does? → A: No. Every setting keeps its stored value, its default and its effect. Only the screen's order, grouping, layout and the reviewed strings change.
@@ -29,7 +33,7 @@ The user opens Settings to change one thing (their name, a key, key terms, capti
 
 **Acceptance Scenarios**:
 
-1. **Given** Settings is open, **When** the user looks at it, **Then** the controls are in the groups and order of FR-001 [NEEDS CLARIFICATION: Q55, the groups and their order].
+1. **Given** Settings is open, **When** the user looks at it, **Then** the controls are in the groups and order of FR-001.
 2. **Given** any setting, **When** the user changes it, **Then** it saves and takes effect exactly as before 018.
 
 ---
@@ -74,7 +78,7 @@ The reviewed strings are deleted or rewritten as listed; nothing new is added in
 
 ### Functional Requirements
 
-- **FR-001**: Settings MUST present its controls in named groups in a fixed order (Q55).
+- **FR-001**: Settings MUST present its controls in three groups, in this order (decision 105): **Transcription** (the ElevenLabs key block with the account line and what ElevenLabs keeps; key terms; `Leave out fillers and false starts`; `Allow microphone`; the consent reminder), **Speaker names** (`Your name`; `Show Meet captions`; remembered names), **Questions** (`Ask questions about the meeting`; provider and model; the provider's key block with what it keeps). The group names are the only new headings.
 - **FR-002**: Each key MUST be one block with the masked key (or `No key saved.`), a replace action that checks the key before saving it, and a remove action (with the ElevenLabs confirmation kept), laid out as decided by Q56.
 - **FR-003**: Each provider's retention text MUST be shown beside that provider's key block, word for word.
 - **FR-004**: Questions MUST show the key block of the selected provider only, unless Q57 decides otherwise; a key stored for the other provider MUST be kept.
