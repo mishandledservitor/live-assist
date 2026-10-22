@@ -263,3 +263,40 @@ describe('PastTranscript: a meeting with kept captions (013)', () => {
     expect(screen.getByRole('group', { name: 'Confirm delete' }).querySelector('p')?.textContent).toBe(P13);
   });
 });
+
+// 016 T017 (spec FR-015, FR-016, decision 97, A3, A5; contracts/download-ui.md "Download originals").
+describe('PastTranscript: Download originals (016)', () => {
+  const segments = [storedSegment('m1', 0, { text: 'First.', ...spokenBy('Jane') })];
+  const turns = [storedCaptionTurn('m1', 1, { speakerName: 'Jane', text: 'The harbour survey starts on Monday.' })];
+
+  it('a meeting with lines and kept captions: Download transcript, Download originals, Delete transcript, in order', () => {
+    setup({ meeting: meetingWithCaptions(), segments, loadOriginals: vi.fn(() => Promise.resolve(null)) });
+    expect(document.querySelector('.past-actions')!.textContent).toBe(
+      'Download transcriptDownload originalsDelete transcript',
+    );
+  });
+
+  it('a press on Download originals saves what its own load gives, once, and nothing else is loaded', async () => {
+    const meeting = meetingWithCaptions();
+    const zip = meetingDownload({ meeting, segments, captionTurns: turns }, AT)!;
+    const loadOriginals = vi.fn(() => Promise.resolve(zip));
+    const { props, container } = setup({ meeting, segments, loadOriginals });
+    const before = container.innerHTML;
+    fireEvent.click(screen.getByRole('button', { name: 'Download originals' }));
+    await waitFor(() => expect(props.save).toHaveBeenCalledTimes(1));
+    expect(props.save).toHaveBeenCalledWith('Meeting — 07-10-2026 at 14h30.zip', zip.data, 'application/zip');
+    expect(loadOriginals).toHaveBeenCalledTimes(1);
+    expect(props.load).not.toHaveBeenCalled();
+    expect(container.innerHTML).toBe(before);
+    expect(container.textContent).not.toContain('harbour');
+  });
+
+  it('no Download originals with one record: lines only, or captions only', () => {
+    const { unmount } = setup({ segments, loadOriginals: vi.fn(() => Promise.resolve(null)) });
+    expect(screen.queryByRole('button', { name: 'Download originals' })).toBeNull();
+    unmount();
+    setup({ meeting: meetingWithCaptions(), segments: [], loadOriginals: vi.fn(() => Promise.resolve(null)) });
+    expect(screen.queryByRole('button', { name: 'Download originals' })).toBeNull();
+    expect(document.querySelector('.past-actions')!.textContent).toBe('Download transcriptDelete transcript');
+  });
+});

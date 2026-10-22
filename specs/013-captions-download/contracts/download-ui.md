@@ -19,6 +19,8 @@ Label `Download transcript` everywhere; accessible name in a row `Download trans
 | captions only | `Meeting — DD-MM-YYYY at HHhMM — Meet captions.txt` | `text/plain;charset=utf-8` |
 | neither | no button | |
 
+(Amended 2026-10-22, feature 016, decision 93: for a meeting that is no longer running, the "transcript lines and captions" row saves `Meeting — DD-MM-YYYY at HHhMM — Transcript.txt`, the merged transcript, as `text/plain;charset=utf-8`; the zip is saved by `Download originals` on the Transcripts screen's single-meeting view, decision 97. A running meeting still saves the zip.)
+
 A browser download of a local blob through an anchor, as 007: no message, no network, no permission. One download per press, so Chrome's multiple-downloads prompt cannot appear. The panel shows nothing new afterwards. If the stored captions cannot be read, the press saves nothing and shows nothing; the transcript is never saved alone in place of the zip.
 
 ## Reminder on Start
@@ -46,4 +48,4 @@ Buttons, focus, Escape, the failure line and the announcement are 006's and 012'
 
 ## Never add (copy review)
 
-A "captions kept" badge, dot, status row or count; a line under the button saying what the zip holds or that it is a zip; a second button for the captions; a message that a meeting has no captions; a `Downloaded` message; a setting to turn captions keeping on or off; any caption text, anywhere in the panel; a note in the captions file or the zip (header, footer, readme); a marker for a gap in the captions file.
+A "captions kept" badge, dot, status row or count; a line under the button saying what the zip holds or that it is a zip; a second button for the captions; a message that a meeting has no captions; a `Downloaded` message; a setting to turn captions keeping on or off; any caption text, anywhere in the panel; a note in the captions file or the zip (header, footer, readme); a marker for a gap in the captions file. (Amended 2026-10-22, feature 016, decision 97: `Download originals` on the single-meeting view is the one second download button, and only there.)

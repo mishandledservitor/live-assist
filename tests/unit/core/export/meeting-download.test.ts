@@ -2,7 +2,8 @@
 // `Download transcript` saves. Nothing, the one file a meeting has as text, or a zip of both. Every caption sentence is
 // invented.
 import { describe, expect, it } from 'vitest';
-import { meetingDownload } from '@/core/export/meeting-download';
+import { meetingDownload, mergedMeetingDownload } from '@/core/export/meeting-download';
+import { mergedTranscriptFile } from '@/core/export/merged-transcript';
 import { meetingFiles } from '@/core/export/meeting-files';
 import { zipStored } from '@/core/export/zip';
 import { spokenBy, storedCaptionTurn, storedMeeting, storedSegment } from '../../../support/stored-meetings';
@@ -74,5 +75,38 @@ describe('meetingDownload', () => {
     expect(later).toHaveLength(first.length);
     expect(later).not.toEqual(first);
     expect(source).toEqual(before);
+  });
+});
+
+// 016 T007 (spec FR-001, FR-003, decisions 93 and 99; contracts/merged-file.md "mergedMeetingDownload"): what a press
+// saves after the meeting. The merged transcript when the meeting has both records; otherwise exactly 013's download.
+describe('mergedMeetingDownload', () => {
+  it('both a transcript line and a caption turn: the merged transcript as text under "— Transcript.txt", no zip', () => {
+    const lines = [storedSegment('m1', 0, { text: 'We should ship the beta on Friday.' })];
+    const turns = [
+      storedCaptionTurn('m1', 1, { speakerName: 'Sarah Brown', text: 'we should ship the beta on friday' }),
+    ];
+    expect(mergedMeetingDownload({ meeting, segments: lines, captionTurns: turns }, AT)).toEqual({
+      name: 'Meeting — 07-10-2026 at 14h30 — Transcript.txt',
+      type: 'text/plain;charset=utf-8',
+      data: '[00:00] Sarah Brown: We should ship the beta on Friday.\n',
+    });
+    expect(mergedMeetingDownload({ meeting, segments: lines, captionTurns: turns }, AT)!.data).toBe(
+      mergedTranscriptFile(meeting, lines, turns).body,
+    );
+  });
+
+  it('one record or none: exactly what meetingDownload saves', () => {
+    for (const source of [
+      { meeting, segments },
+      { meeting, segments, captionTurns: [] },
+      { meeting, segments: [], captionTurns },
+      { meeting, segments: [] },
+    ])
+      expect(mergedMeetingDownload(source, AT)).toEqual(meetingDownload(source, AT));
+  });
+
+  it('leaves meetingDownload as it was: both records still give 013’s zip', () => {
+    expect(meetingDownload({ meeting, segments, captionTurns }, AT)?.type).toBe('application/zip');
   });
 });

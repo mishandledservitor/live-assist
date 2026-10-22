@@ -604,6 +604,24 @@
         "Close transcript",
         "Couldn't close this transcript. Try again."
       ]
+    },
+    {
+      "id": "A12",
+      "enabled": true,
+      "$comment": "016 FR-022 (design decisions 93-99, copy review K47): Download originals, and merged-download never add of 2026-10-22",
+      "absent": [
+        "Merged transcript",
+        "merged with",
+        "Download both",
+        "Download live transcript",
+        "Download captions",
+        "repeats removed",
+        "Repeated passages",
+        "Names from captions"
+      ],
+      "present": [
+        "Download originals"
+      ]
     }
   ]
 }

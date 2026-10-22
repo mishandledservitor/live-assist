@@ -31,7 +31,7 @@ It runs on your own API keys: ElevenLabs for the transcription, and OpenAI or An
 5. Click **Allow microphone**. A tab opens and Chrome asks for microphone access; allow it and close the tab. Without the microphone, live-assist still transcribes everyone else but not you.
 6. Join your meeting, click the live-assist icon **on the meeting tab**, and press **Start**. A reminder asks you to tell everyone the meeting is being transcribed; confirm it with **I've told them — start**. Lines appear in the panel as people speak.
 7. Type a question in the box under the transcript at any time. Answers cite the moments they rely on as `[mm:ss]`; click one to jump to that line.
-8. Press **Stop** when you are done, or just leave the call on Google Meet. The transcript is kept, and **Download transcript** saves it to your Downloads folder.
+8. Press **Stop** when you are done, or just leave the call on Google Meet. The transcript is kept, and **Download transcript** saves it to your Downloads folder. After a Google Meet call the file names each speaker from Meet's captions.
 
 To update later, run `git pull` and `pnpm build`, then click the reload icon on live-assist's card in `chrome://extensions`.
 
@@ -63,11 +63,11 @@ Removing the chat key in Settings turns off questions but never stops transcript
 
 **Meeting notes.** Attach an agenda or notes from a `.txt` or `.md` file, or paste them, before or during a meeting. Answers can then draw on them as well, and they say so with "From your notes:". Notes go only to the chat provider, never to ElevenLabs.
 
-**Past meetings.** The **Transcripts** screen lists every stored meeting. Open one to read it or download it, or delete it with its questions, answers and notes.
+**Past meetings.** The **Transcripts** screen lists every stored meeting. Open one to read it or download it, or delete it with its questions, answers and notes. For a Google Meet meeting, **Download originals** saves live-assist's own transcript and Meet's captions as two files in a zip.
 
 ## Your data
 
-- Transcripts, questions, answers and notes are stored only in the extension's local storage on your computer, until you delete them.
+- Transcripts, Meet's captions, questions, answers and notes are stored only in the extension's local storage on your computer, until you delete them.
 - Your keys are stored locally and are never synced. Only the extension's background service worker reads them.
 - The extension talks only to `api.elevenlabs.io`, `api.openai.com` and `api.anthropic.com`. Audio goes to ElevenLabs; the transcript, your question and any notes go to the chat provider you chose. OpenAI requests are sent with storage turned off.
 - ElevenLabs may use audio to improve its models. To stop that, sign in to ElevenLabs, open your account settings and turn off "Improve the models for everyone".

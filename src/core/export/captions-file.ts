@@ -1,6 +1,7 @@
 // The captions file (013 FR-014, FR-015, decision 66): the meeting platform's own captions as kept, one line per turn,
 // with the names the transcript shows. It is the platform's transcription, saved under a name that says so; it is
-// never merged with live-assist's transcript and carries no header, footer or gap marker. Platform-free.
+// saved as kept, never merged into this file, and carries no header, footer or gap marker; 016's merged transcript
+// reads the turns separately (merged-transcript.ts). Platform-free.
 import type { StoredCaptionTurn } from '../captions/model';
 import { normaliseName } from '../transcript/labels';
 import type { Meeting } from '../transcript/model';
