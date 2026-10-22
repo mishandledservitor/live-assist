@@ -35,5 +35,5 @@
 ## R7 Measuring SC-002
 
 - Decision: an e2e case in `tests/e2e/panel-layout.spec.ts` seeds the same settings (name, two key terms, ElevenLabs key, OpenAI selected with its key saved, no remembered names), opens Settings at 380 px and reads the Settings screen's `scrollHeight`. The value before 018, measured on the pre-018 build with the same test, is recorded here and in the test; the test asserts the new value is at most two thirds of it.
-- Measured on macOS (2026-10-22): 1762 px before 018, 1146 px after (35% shorter; the bound is 1174 px). The assertion runs on macOS only: the baseline is a macOS measurement, and other systems' fonts wrap the same text differently, so there the height is logged, not compared.
+- Measured on macOS (2026-10-22): 1762 px before 018, 1146 px after (35% shorter; the bound is 1174 px); 749 px after the trims and closed retention texts of decisions 108 and 109 (57% shorter), which the test also holds to within 40 px. The assertion runs on macOS only: the baseline is a macOS measurement, and other systems' fonts wrap the same text differently, so there the height is logged, not compared.
 - To reach the bound without touching copy, the groups use a line height of 1.35 and tighter heading and paragraph margins, and the three retention texts are set at 13 px (the account detail's size) beside their keys.

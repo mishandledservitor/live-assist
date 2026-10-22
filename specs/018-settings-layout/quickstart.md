@@ -14,4 +14,4 @@ By hand (built extension, `pnpm build`, load unpacked): open Settings at the pan
 
 ## SC-002 measurement
 
-Settings screen scroll height at 380 px with the seeded settings of the e2e case, macOS, 2026-10-22: 1762 px before 018, 1146 px after (35% shorter; SC-002 asks for at most 1174 px).
+Settings screen scroll height at 380 px with the seeded settings of the e2e case, macOS, 2026-10-22: 1762 px before 018, 1146 px after (35% shorter; SC-002 asks for at most 1174 px). After the trims and closed retention texts (decisions 108, 109): 749 px (57% shorter).

@@ -54,10 +54,10 @@
 
 ## Phase 7: Trims and closed retention texts (decisions 108, 109; FR-012 to FR-018)
 
-- [ ] T017 Write failing tests: tests/unit/sidepanel/key-block.test.tsx (masked key alone, its accessible name; headings `ElevenLabs key`), tests/unit/sidepanel/settings.test.tsx and chat-settings.test.tsx (new headings, key-term strings, consent label, remembered names hidden while none and shown when one is remembered), tests/unit/sidepanel/settings-screen.test.tsx (no `ElevenLabs account` heading; plan line and `Check again` under the key; the badge opening focuses the account section; retention disclosures closed with the heading as summary), tests/unit/sidepanel/chat-retention.test.tsx (Settings closed, setup open), tests/unit/copy/keep-strings.test.tsx with the fixture entries D17-D20, R36-R40 and the count; see them fail
-- [ ] T018 Apply the trims in src/entrypoints/sidepanel/components/KeyBlock.tsx, Settings.tsx, ChatSettings.tsx, AccountDetails.tsx, RememberedNames.tsx and App.tsx (badge focus)
-- [ ] T019 Make RetentionNotice and ChatRetention closed disclosures in Settings only (src/entrypoints/sidepanel/components/RetentionNotice.tsx, ChatRetention.tsx), with styles in style.css
-- [ ] T020 Update the e2e specs naming the changed strings or regions (account, a11y, ask-settings, ask-off, panel-layout) and the SC-002 numbers; record D17-D20, R36-R40 in specs/006-panel-redesign/copy-review.md; CHANGELOG; gates
+- [X] T017 Write failing tests: tests/unit/sidepanel/key-block.test.tsx (masked key alone, its accessible name; headings `ElevenLabs key`), tests/unit/sidepanel/settings.test.tsx and chat-settings.test.tsx (new headings, key-term strings, consent label, remembered names hidden while none and shown when one is remembered), tests/unit/sidepanel/settings-screen.test.tsx (no `ElevenLabs account` heading; plan line and `Check again` under the key; the badge opening focuses the account section; retention disclosures closed with the heading as summary), tests/unit/sidepanel/chat-retention.test.tsx (Settings closed, setup open), tests/unit/copy/keep-strings.test.tsx with the fixture entries D17-D20, R36-R39 and the count; see them fail
+- [X] T018 Apply the trims in src/entrypoints/sidepanel/components/KeyBlock.tsx, Settings.tsx, ChatSettings.tsx, AccountDetails.tsx, RememberedNames.tsx and App.tsx (badge focus)
+- [X] T019 Make RetentionNotice and ChatRetention closed disclosures in Settings only (src/entrypoints/sidepanel/components/RetentionNotice.tsx, ChatRetention.tsx), with styles in style.css
+- [X] T020 Update the e2e specs naming the changed strings or regions (account, a11y, ask-settings, ask-off, panel-layout) and the SC-002 numbers; record D17-D20, R36-R39 in specs/006-panel-redesign/copy-review.md; CHANGELOG; gates
 
 ## Dependencies
 

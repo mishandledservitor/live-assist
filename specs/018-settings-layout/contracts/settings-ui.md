@@ -1,5 +1,7 @@
 # UI contract: the Settings screen after 018
 
+Amended by decisions 108 and 109 (spec FR-012 to FR-018): the masked key stands alone (`••••{hint}`, the line named by its heading); the key headings read `ElevenLabs key`, `OpenAI key`, `Claude key`; the account section has no heading and sits under the ElevenLabs key; key terms read `Up to 50, 20 characters each. Used from the next Start.` and `Add terms, separated by commas`; the consent label reads `Remind me to tell people before I start`; remembered names show only once there is one; each `What … keeps` is a closed disclosure. Where the tables below differ, this paragraph wins.
+
 Under the screen bar (`Back`, heading `Settings`, unchanged), three groups in this order. `h3` = group heading (role `region` named by it), `h4` = sub-heading (role `region` named by it where it was one before).
 
 ## Transcription (`h3`)
