@@ -8,6 +8,7 @@ import type { Page } from '@playwright/test';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import type { StoredCaptionTurn } from '@/core/captions/model';
+import { mergedTranscriptFile } from '@/core/export/merged-transcript';
 import { transcriptFile } from '@/core/export/transcript-file';
 import { CAPTION_MARKER, CAPTION_MARKER_GREEK, holdsMarker } from '../support/caption-marker-text';
 import { longTranscript, spokenBy, spokenBySelf, storedMeeting, storedSegment } from '../support/stored-meetings';
@@ -76,7 +77,7 @@ function captioned(id = 'm-cap', startedAt = at(7, 14, 30)): SeededMeeting {
   ];
   const captionTurns = [
     turn(id, 1, 4_000, 'Sarah Brown', 'Good morning, can everyone see the roadmap slide?'),
-    turn(id, 2, 11_000, 'You', "Yes, it's up.", true),
+    turn(id, 2, 11_000, 'You', "Morning. Yes, it's up.", true),
     turn(id, 3, 15_000, 'Bob B.', 'I will take the notes today.'),
     turn(id, 4, 21_000, 'Irene K.', 'Sorry I am late.'),
     turn(id, 5, 26_000, 'Sarah Brown', 'Καλημέρα σε όλους, ας ξεκινήσουμε.'),
@@ -88,7 +89,7 @@ function captioned(id = 'm-cap', startedAt = at(7, 14, 30)): SeededMeeting {
 /** The captions file of `captioned()`, written out: the names the transcript shows, never a single-line correction. */
 const CAPTIONS_BODY =
   '[00:04] Sarah Brown: Good morning, can everyone see the roadmap slide?\n\n' +
-  "[00:11] Alex: Yes, it's up.\n\n" +
+  "[00:11] Alex: Morning. Yes, it's up.\n\n" +
   '[00:15] Bob Brown: I will take the notes today.\n\n' +
   '[00:21] Irene Kosta: Sorry I am late.\n\n' +
   '[00:26] Sarah Brown: Καλημέρα σε όλους, ας ξεκινήσουμε.\n\n' +
@@ -100,7 +101,24 @@ const TRANSCRIPT_BODY =
   '[00:04] Bob Brown: I can take notes.\n\n' +
   '[00:06] Mike: Thanks for that.\n';
 
+/**
+ * 016: the merged transcript of `captioned()`, written out: the transcript's words with the speakers Meet's captions
+ * give them, the user's name for Meet's "You", the rename, and the single-line correction kept (spec A1).
+ */
+const MERGED_BODY =
+  '[00:00] Sarah Brown: Good morning everyone.\n\n' +
+  '[00:02] Alex: Morning.\n\n' +
+  '[00:04] Bob Brown: I can take notes.\n\n' +
+  '[00:06] Mike: Thanks for that.\n';
+
 type Saved = Awaited<ReturnType<typeof saveFrom>>;
+
+/** 016: asserts a saved download is the merged transcript of `seed`: one plain `.txt`, its body byte for byte. */
+function expectMergedOf(saved: Saved, seed: SeededMeeting, body: string): void {
+  expect(saved.download.suggestedFilename()).toBe(`${baseName(seed.meeting.startedAt)} — Transcript.txt`);
+  expect(mergedTranscriptFile(seed.meeting, seed.segments ?? [], seed.captionTurns ?? []).body).toBe(body);
+  expect(saved.bytes.equals(utf8(body))).toBe(true);
+}
 
 /** Asserts a saved download is the zip of `seed`: its name, its two entries in order, and both bodies byte for byte. */
 async function expectZipOf(saved: Saved, seed: SeededMeeting, captionsBody: string): Promise<void> {
@@ -117,7 +135,7 @@ async function expectZipOf(saved: Saved, seed: SeededMeeting, captionsBody: stri
 }
 
 test.describe('US1: Meet\u2019s captions come with the transcript', () => {
-  test('one press saves one zip holding the transcript and the captions, each under its name, byte for byte', async ({
+  test('016: after the meeting one press saves one merged transcript, the captions naming its speakers, byte for byte', async ({
     context,
     extensionId,
   }) => {
@@ -130,14 +148,16 @@ test.describe('US1: Meet\u2019s captions come with the transcript', () => {
     panel.on('download', (d) => downloads.push(d.suggestedFilename()));
 
     const saved = await saveFrom(panel, mainDownload(panel));
-    expect(saved.download.suggestedFilename()).toBe('Meeting — 07-10-2026 at 14h30.zip');
-    await expectZipOf(saved, seed, CAPTIONS_BODY);
-    // 007's body, unchanged, under the new name; written out once so the formatter is not its own witness.
+    expectMergedOf(saved, seed, MERGED_BODY);
+    // No caption text in the file: only the transcript's words.
+    for (const kept of seed.captionTurns!) expect(saved.bytes.toString('utf8')).not.toContain(kept.text);
+    // 007's body, unchanged, is what Download originals saves in the zip; written out once so the formatter is not its
+    // own witness.
     expect(transcriptFile(seed.meeting, seed.segments!).body).toBe(TRANSCRIPT_BODY);
 
     // One press, one file; the panel says nothing about it and shows no caption sentence.
     await panel.waitForTimeout(2_000);
-    expect(downloads).toEqual(['Meeting — 07-10-2026 at 14h30.zip']);
+    expect(downloads).toEqual(['Meeting — 07-10-2026 at 14h30 — Transcript.txt']);
     expect(await panel.locator('body').innerText()).toBe(before);
     for (const kept of seed.captionTurns!) expect(before).not.toContain(kept.text);
   });
@@ -253,7 +273,7 @@ test.describe('US3: captions of a running or past meeting', () => {
     await expect(panel.getByRole('button', { name: 'Start' })).toBeVisible();
   });
 
-  test('the Transcripts screen saves the same zip from a row and from the meeting, and its delete names the captions', async ({
+  test('016: the Transcripts screen saves the same merged file from a row and from the meeting, the zip from Download originals, and its delete names the captions', async ({
     context,
     extensionId,
   }) => {
@@ -273,11 +293,12 @@ test.describe('US3: captions of a running or past meeting', () => {
     await transcriptsButton(panel).click();
     await expect(rows(panel)).toHaveCount(3);
 
-    // The row: the same name and the same two entries the main view saves for this seed (US1 above).
+    // The row: the same merged file the main view saves for this seed (US1 above), and no Download originals.
     const inRow = row(panel, 'm-cap').getByRole('button', { name: `Download transcript of ${title(at(7, 14, 30))}` });
     await expect(inRow).toHaveText('Download transcript');
+    await expect(row(panel, 'm-cap').getByRole('button', { name: 'Download originals' })).toHaveCount(0);
     const before = await transcriptsScreen(panel).innerText();
-    await expectZipOf(await saveFrom(panel, inRow), middle, CAPTIONS_BODY);
+    expectMergedOf(await saveFrom(panel, inRow), middle, MERGED_BODY);
     expect(await transcriptsScreen(panel).innerText()).toBe(before);
     for (const kept of middle.captionTurns!) expect(before).not.toContain(kept.text);
 
@@ -288,12 +309,23 @@ test.describe('US3: captions of a running or past meeting', () => {
     await expect(confirmation(panel).locator('p').first()).toHaveText(P13(at(5, 16, 0)));
     await confirmation(panel).getByRole('button', { name: 'Cancel' }).click();
 
-    // The meeting itself: the same zip, and a confirmation that names Meet's captions.
+    // The meeting itself: the same merged file; Download originals saves 013's zip of the two originals, byte for
+    // byte; and a confirmation that names Meet's captions.
     await openControl(panel, at(7, 14, 30)).click();
     await expect(transcriptsScreen(panel).getByText('Thanks for that.')).toBeVisible();
     const here = panel.locator('.past-actions');
-    await expectZipOf(
+    await expect(here.getByRole('button')).toHaveText([
+      'Download transcript',
+      'Download originals',
+      'Delete transcript',
+    ]);
+    expectMergedOf(
       await saveFrom(panel, here.getByRole('button', { name: 'Download transcript', exact: true })),
+      middle,
+      MERGED_BODY,
+    );
+    await expectZipOf(
+      await saveFrom(panel, here.getByRole('button', { name: 'Download originals', exact: true })),
       middle,
       CAPTIONS_BODY,
     );
