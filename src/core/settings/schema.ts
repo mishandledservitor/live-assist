@@ -44,6 +44,8 @@ export interface Settings {
   cleanTranscript: boolean;
   /** 002 FR-028 (design decision 61): leave Meet's captions visible while transcribing. Default off (hidden). */
   showMeetCaptions: boolean;
+  /** 017 FR-001 (design decision 103): Settings → Questions → Ask questions about the meeting. Default on. */
+  askEnabled: boolean;
 }
 
 export const DEFAULT_SETTINGS: Readonly<Settings> = Object.freeze({
@@ -57,6 +59,7 @@ export const DEFAULT_SETTINGS: Readonly<Settings> = Object.freeze({
   chat: DEFAULT_CHAT_SETTINGS,
   cleanTranscript: true,
   showMeetCaptions: false,
+  askEnabled: true,
 });
 
 export const MAX_USER_NAME_LENGTH = 60;
@@ -88,6 +91,7 @@ export function parseSettings(raw: unknown): Settings {
     chat: parseChatSettings(raw.chat),
     cleanTranscript: bool(raw.cleanTranscript, d.cleanTranscript),
     showMeetCaptions: bool(raw.showMeetCaptions, d.showMeetCaptions),
+    askEnabled: bool(raw.askEnabled, d.askEnabled),
   };
 }
 

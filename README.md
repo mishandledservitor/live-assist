@@ -27,7 +27,7 @@ It runs on your own API keys: ElevenLabs for the transcription, and OpenAI or An
 
 2. Open `chrome://extensions`, turn on **Developer mode** (top right), click **Load unpacked** and choose the `.output/chrome-mv3` folder inside the repository.
 3. Pin live-assist from Chrome's extensions menu so its icon stays in the toolbar.
-4. Click the icon to open the side panel. The first time, it shows **Set up live-assist**. Enter your name (your own lines are labelled with it), your ElevenLabs key, choose who answers your questions (OpenAI or Claude) and paste that provider's key. Then click **Check keys and save**. Each key is checked with its provider before it is saved.
+4. Click the icon to open the side panel. The first time, it shows **Set up live-assist**. Enter your name (your own lines are labelled with it) and your ElevenLabs key. To ask questions about the meeting, also choose who answers them (OpenAI or Claude) and paste that provider's key; leave it empty if you only want the transcript. Then click **Check keys and save**. Each key is checked with its provider before it is saved.
 5. Click **Allow microphone**. A tab opens and Chrome asks for microphone access; allow it and close the tab. Without the microphone, live-assist still transcribes everyone else but not you.
 6. Join your meeting, click the live-assist icon **on the meeting tab**, and press **Start**. A reminder asks you to tell everyone the meeting is being transcribed; confirm it with **I've told them — start**. Lines appear in the panel as people speak.
 7. Type a question in the box under the transcript at any time. Answers cite the moments they rely on as `[mm:ss]`; click one to jump to that line.
@@ -49,7 +49,7 @@ To update later, run `git pull` and `pnpm build`, then click the reload icon on 
 - For Anthropic, create a key at [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys). The default model is Claude Sonnet 5.5; Claude Opus 5.5 and Claude Haiku 5.5 are also offered.
 - These are API keys, billed per use by the provider. A ChatGPT or Claude subscription does not include API access.
 
-Removing the chat key in Settings turns off questions but never stops transcription.
+To turn questions off, untick **Ask questions about the meeting** in Settings: the question box, answers and notes leave the panel and nothing is sent to OpenAI or Anthropic. Your keys and earlier answers are kept for when you tick it again. Neither this nor removing the chat key ever stops transcription.
 
 ## Using it
 

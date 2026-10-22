@@ -15,6 +15,9 @@ export interface ChatSettingsProps {
   hints: ChatKeyHintsReply;
   onSettings: (settings: Settings) => void;
   onHints: (hints: ChatKeyHintsReply) => void;
+  /** 017 (design decision 103): Ask on; off leaves only the heading and the tick box. */
+  askEnabled: boolean;
+  onAskEnabled: (askEnabled: boolean) => void;
 }
 
 /** `Answers from`: the provider radios, shared with first-run setup. */
@@ -120,7 +123,15 @@ function ChatKeySection({
   );
 }
 
-export function ChatSettings({ api, chat: initial, hints: initialHints, onSettings, onHints }: ChatSettingsProps) {
+export function ChatSettings({
+  api,
+  chat: initial,
+  hints: initialHints,
+  onSettings,
+  onHints,
+  askEnabled,
+  onAskEnabled,
+}: ChatSettingsProps) {
   const [chat, setChat] = useState(initial);
   const [hints, setHints] = useState(initialHints);
 
@@ -142,24 +153,33 @@ export function ChatSettings({ api, chat: initial, hints: initialHints, onSettin
   return (
     <>
       <h3>Questions</h3>
-      <ProviderRadios name="settings-provider" value={chat.provider} onChange={(p) => void save({ provider: p })} />
-      <p>
-        <label htmlFor="settings-model">Model</label>{' '}
-        <select
-          id="settings-model"
-          value={chat.models[chat.provider]}
-          onChange={(e) => void save({ provider: chat.provider, model: e.target.value })}
-        >
-          {modelsFor(chat.provider).map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.label}
-            </option>
+      {/* 017 (design decision 103, copy-review K48): first under the heading; nothing says what turning it off hides. */}
+      <label className="setting-alone">
+        <input type="checkbox" checked={askEnabled} onChange={(e) => onAskEnabled(e.target.checked)} /> Ask questions
+        about the meeting
+      </label>
+      {askEnabled && (
+        <>
+          <ProviderRadios name="settings-provider" value={chat.provider} onChange={(p) => void save({ provider: p })} />
+          <p>
+            <label htmlFor="settings-model">Model</label>{' '}
+            <select
+              id="settings-model"
+              value={chat.models[chat.provider]}
+              onChange={(e) => void save({ provider: chat.provider, model: e.target.value })}
+            >
+              {modelsFor(chat.provider).map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+          </p>
+          {CHAT_PROVIDERS.map((p) => (
+            <ChatKeySection key={p} provider={p} hint={hints[p]} api={api} onHint={(h) => setHint(p, h)} />
           ))}
-        </select>
-      </p>
-      {CHAT_PROVIDERS.map((p) => (
-        <ChatKeySection key={p} provider={p} hint={hints[p]} api={api} onHint={(h) => setHint(p, h)} />
-      ))}
+        </>
+      )}
     </>
   );
 }

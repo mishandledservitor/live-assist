@@ -47,7 +47,16 @@ describe('parseSettings', () => {
       chat: DEFAULT_CHAT_SETTINGS,
       cleanTranscript: true,
       showMeetCaptions: false,
+      askEnabled: true,
     });
+  });
+
+  // 017 FR-001, SC-005 (design decision 103): Ask is on by default, installs from before 017 included.
+  it('ask: on unless the user turned it off', () => {
+    expect(parseSettings({ userName: 'Alex', firstRunComplete: true }).askEnabled).toBe(true);
+    expect(parseSettings({ askEnabled: 'no' }).askEnabled).toBe(true);
+    expect(parseSettings({ askEnabled: 0 }).askEnabled).toBe(true);
+    expect(parseSettings({ askEnabled: false }).askEnabled).toBe(false);
   });
 
   // Design decision 41 (001 FR-011b): clean transcript is on by default, existing installs included.
@@ -85,6 +94,7 @@ describe('parseSettings', () => {
       chat: DEFAULT_CHAT_SETTINGS,
       cleanTranscript: true,
       showMeetCaptions: false,
+      askEnabled: true,
     });
   });
 
