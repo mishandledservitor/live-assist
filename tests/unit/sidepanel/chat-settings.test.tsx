@@ -20,7 +20,15 @@ function renderChat(
   const onSettings = vi.fn();
   const onHints = vi.fn();
   const view = render(
-    <ChatSettings api={f.api} chat={f.state.settings.chat} hints={hints} onSettings={onSettings} onHints={onHints} />,
+    <ChatSettings
+      api={f.api}
+      chat={f.state.settings.chat}
+      hints={hints}
+      onSettings={onSettings}
+      onHints={onHints}
+      askEnabled
+      onAskEnabled={vi.fn()}
+    />,
   );
   return { ...f, onSettings, onHints, view };
 }

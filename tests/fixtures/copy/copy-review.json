@@ -622,6 +622,23 @@
       "present": [
         "Download originals"
       ]
+    },
+    {
+      "id": "A13",
+      "enabled": true,
+      "$comment": "017 FR-010 (design decisions 102, 103, copy review K48): the Ask setting, and ask-off-ui never add of 2026-10-22",
+      "absent": [
+        "Ask is off",
+        "Ask is turned off",
+        "Turn on Ask",
+        "Questions are off",
+        "Skip this step",
+        "is optional",
+        "Turning this off"
+      ],
+      "present": [
+        "Ask questions about the meeting"
+      ]
     }
   ]
 }

@@ -229,6 +229,11 @@ export function Settings({ api, loaded, onChange, account }: SettingsProps) {
         hints={chatKeyHints}
         onSettings={(next) => publish(next, keyHint)}
         onHints={(hints) => publish(settings, keyHint, hints)}
+        askEnabled={settings.askEnabled}
+        onAskEnabled={(askEnabled) => {
+          setSettings((s) => ({ ...s, askEnabled }));
+          void save({ askEnabled });
+        }}
       />
 
       <h3>Consent reminder</h3>

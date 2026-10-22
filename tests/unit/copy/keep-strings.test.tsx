@@ -1,4 +1,4 @@
-// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K46) still reads exactly as before. Strings the panel
+// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K48) still reads exactly as before. Strings the panel
 // shows are checked on the rendered screen in the state that shows them; reasons produced deeper down (Meet, runtime,
 // provider) and the manifest are checked as the literals that produce them.
 import { join } from 'node:path';
@@ -255,6 +255,8 @@ describe('Keep strings: Settings screen (K13, K14–K20, K24–K26)', () => {
       'Leave out fillers and false starts',
       // K42 (design decision 61, 002 FR-028).
       'Show Meet captions',
+      // K48 (017 FR-001, design decision 103).
+      'Ask questions about the meeting',
       'Remembered names',
       "When you rename someone Meet's captions named, the new name is used for them in later meetings too. Changes here apply from the next meeting.",
       'Microphone',

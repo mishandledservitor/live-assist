@@ -79,6 +79,11 @@ function MainView({
   notes?: NotesApi | undefined;
 }) {
   const transcriptRef = useRef<TranscriptHandle>(null);
+  // 017 (design decision 103): with Ask off the main view is as without the chat and notes APIs. Unmounting the Ask
+  // area stops an answer still arriving (useChat, 014 research R3) and drops a waiting question and unsent text.
+  const ask = loaded.settings.askEnabled;
+  const chatApi = ask ? chat : undefined;
+  const notesApi = ask ? notes : undefined;
   const ready = isReadyToStart(loaded.settings, loaded.keyHint !== null);
   const running = isRunning(live);
   const { meeting, segments } = live;
@@ -140,7 +145,7 @@ function MainView({
         onOpenTranscripts={onOpenTranscripts}
         transcriptsRef={transcriptsRef}
         badge={badge}
-        notes={notes && <NotesControl api={notes} target={{ kind: 'next' }} reloadKey={meetingId} />}
+        notes={notesApi && <NotesControl api={notesApi} target={{ kind: 'next' }} reloadKey={meetingId} />}
       />
       <StatusLine status={live.status} running={running} onFixMic={onFixMic} />
       {meetingId === null ? (
@@ -165,15 +170,15 @@ function MainView({
           }
         />
       )}
-      {chat && (
+      {chatApi && (
         <AskArea
-          api={chat}
+          api={chatApi}
           meetingId={meetingId}
           segments={live.segments}
           chat={loaded.settings.chat}
           keyHints={loaded.chatKeyHints}
           onCite={(segmentId) => transcriptRef.current?.scrollToSegment(segmentId)}
-          notesApi={notes}
+          notesApi={notesApi}
         />
       )}
     </div>
@@ -315,7 +320,7 @@ function Panel({
           account={accountState && <AccountDetails account={accountState} />}
         />
         <RetentionNotice headingLevel={3} />
-        <ChatRetention provider={loaded.settings.chat.provider} />
+        {loaded.settings.askEnabled && <ChatRetention provider={loaded.settings.chat.provider} />}
       </SettingsScreen>
       {/* Mounted only while it shows, so every opening reads storage afresh (012 FR-009, research R1). */}
       {transcripts && screen === 'transcripts' && (
