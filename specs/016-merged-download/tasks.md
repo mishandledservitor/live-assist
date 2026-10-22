@@ -8,15 +8,15 @@
 
 ## Phase 1: Setup
 
-- [ ] T001 Confirm the baseline: `pnpm test` passes on the branch before any change (no file changes)
+- [X] T001 Confirm the baseline: `pnpm test` passes on the branch before any change (no file changes)
 
 ## Phase 2: Foundational
 
 **Purpose**: the alignment every story rests on.
 
-- [ ] T002 [P] Write failing tests for `matchingBlocks` (contracts/merged-file.md) against blocks Python's `difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks()` gives for the same inputs, written into the test as literals (empty sides, no match, identical, ties of equal blocks, repeated symbols, a block made of two adjacent ones joined, a 2,000-symbol pseudo-random pair) in tests/unit/core/export/matching-blocks.test.ts
-- [ ] T003 Implement `matchingBlocks` (research R2 "difflib, exactly") in src/core/export/matching-blocks.ts
-- [ ] T004 [P] Add a seeded generator of invented meetings (lines with word timings, caption turns that carry the same words with Meet-like differences, the user's own turns, optional replayed passages) in tests/support/synthetic-meeting.ts
+- [X] T002 [P] Write failing tests for `matchingBlocks` (contracts/merged-file.md) against blocks Python's `difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks()` gives for the same inputs, written into the test as literals (empty sides, no match, identical, ties of equal blocks, repeated symbols, a block made of two adjacent ones joined, a 2,000-symbol pseudo-random pair) in tests/unit/core/export/matching-blocks.test.ts
+- [X] T003 Implement `matchingBlocks` (research R2 "difflib, exactly") in src/core/export/matching-blocks.ts
+- [X] T004 [P] Add a seeded generator of invented meetings (lines with word timings, caption turns that carry the same words with Meet-like differences, the user's own turns, optional replayed passages) in tests/support/synthetic-meeting.ts
 
 **Checkpoint**: the alignment matches difflib.
 
@@ -26,10 +26,10 @@
 
 **Independent Test**: `mergedMeetingDownload` on a meeting with lines and captions returns one `text/plain` file named `… — Transcript.txt` whose words are the transcript file's; the panel saves it from the main view after Stop, a row and the single-meeting view.
 
-- [ ] T005 [P] [US1] Write failing tests for `mergedTranscript` and `mergedTranscriptFile`: word normalisation (case, accents, punctuation, Greek); an anchor names a live "Others" line; a single short matched word is ignored; the proportional, hint, same-speaker and backchannel gap rules and `Others`; sentence majority with weights and its tie-breaks; a punctuation-only sentence; cutting at a sentence end and keeping the line's time; joining across lines only when the earlier one does not end a sentence; display names (self → user's name or its rename, a caption rename, Meet's name); a corrected line keeps its correction and is not cut; pending lines left out; the contracts/merged-file.md example byte for byte; and over 50 generated meetings: words equal the written words, every time is a written line's time, determinism, a captions-only marker word never in the body; in tests/unit/core/export/merged-transcript.test.ts
-- [ ] T006 [US1] Implement `mergedTranscript` and `mergedTranscriptFile` without the repeat rule (research R2, R4) in src/core/export/merged-transcript.ts
-- [ ] T007 [P] [US1] Write failing tests for `mergedMeetingDownload`: lines and captions → one merged `.txt`; lines only, captions only, neither → exactly `meetingDownload`'s result; `meetingDownload` itself unchanged; in tests/unit/core/export/meeting-download.test.ts
-- [ ] T008 [US1] Implement `mergedMeetingDownload` in src/core/export/meeting-download.ts
+- [X] T005 [P] [US1] Write failing tests for `mergedTranscript` and `mergedTranscriptFile`: word normalisation (case, accents, punctuation, Greek); an anchor names a live "Others" line; a single short matched word is ignored; the proportional, hint, same-speaker and backchannel gap rules and `Others`; sentence majority with weights and its tie-breaks; a punctuation-only sentence; cutting at a sentence end and keeping the line's time; joining across lines only when the earlier one does not end a sentence; display names (self → user's name or its rename, a caption rename, Meet's name); a corrected line keeps its correction and is not cut; pending lines left out; the contracts/merged-file.md example byte for byte; and over 50 generated meetings: words equal the written words, every time is a written line's time, determinism, a captions-only marker word never in the body; in tests/unit/core/export/merged-transcript.test.ts
+- [X] T006 [US1] Implement `mergedTranscript` and `mergedTranscriptFile` without the repeat rule (research R2, R4) in src/core/export/merged-transcript.ts
+- [X] T007 [P] [US1] Write failing tests for `mergedMeetingDownload`: lines and captions → one merged `.txt`; lines only, captions only, neither → exactly `meetingDownload`'s result; `meetingDownload` itself unchanged; in tests/unit/core/export/meeting-download.test.ts
+- [X] T008 [US1] Implement `mergedMeetingDownload` in src/core/export/meeting-download.ts
 - [ ] T009 [P] [US1] Write failing panel tests: main view of a stopped meeting with captions saves the merged `.txt`; a running one saves the 013 zip; in tests/unit/sidepanel/app-captions.test.tsx (the stopped-meeting zip expectations become the merged file)
 - [ ] T010 [US1] Choose the download by `running` on the main view in src/entrypoints/sidepanel/App.tsx
 - [ ] T011 [P] [US1] Write failing Transcripts screen tests: a row and the single-meeting view save the merged `.txt`, same name and bytes as the main view, in tests/unit/sidepanel/transcripts-screen.test.tsx
