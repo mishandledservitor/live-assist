@@ -71,7 +71,7 @@ Removing the later copy keeps the passage at its first time. When the later copy
 
 **Design**: words are interned to integers once; the caption side's positions per word are one sorted array (`b2j` as offsets into a flat `Int32Array`); each row of `find_longest_match` uses two stamped typed arrays instead of dictionaries; the lower bound is a binary search. Pass 2 runs only when lines were removed. Everything is synchronous and allocation-light, and runs in the press handler, as 013's zip does.
 
-**Measured**: at implementation (task T019), recorded here.
+**Measured**: at implementation (task T021), recorded here.
 
 **The 013 timing test**: `tests/e2e/captions-download.spec.ts` "a 3-hour meeting …" seeds 5,000 lines that each repeat one sentence and 1,200 caption turns that each repeat another, so that every word occurs thousands of times on both sides: the worst case for any longest-common-block alignment, unlike speech. That test keeps timing the 013 zip, now through `Download originals`; the merged file's bound is timed on synthetic text with a realistic spread of words (R7, `tests/support/synthetic-meeting.ts`).
 
@@ -85,7 +85,7 @@ Removing the later copy keeps the passage at its first time. When the later copy
 
 **Decision**: `spikes/data/016-parity/parity.ts` (gitignored, never committed) reads each call's `transcript.txt` and `captions.txt` (the live downloads), turns them into stored-model records (one line per transcript line with its label as caption-sourced unless it is `Others`; one caption turn per captions line), runs `mergedTranscript`, and compares word by word with the reference merge's `merged.txt` (first names compared, as the reference's own comparison did, because the reference rewrote names through its list) and with the live labels. Reported per call and in total: words, words removed as repeats, `Others` share live and merged, agreement with the reference on words both name, agreement with live on words both name, and the time each merge took.
 
-**Results**: at implementation (task T030), recorded here as metrics only.
+**Results**: at implementation (task T022), recorded here as metrics only.
 
 ## R8 — What stays the same, and how that is held
 
