@@ -151,9 +151,39 @@ function alignable(lines: readonly Line[], words: Words): Aligned {
 }
 
 /** Pairs of matched positions `[transcript word, caption word]`, from the matching blocks (research R2 step 3). */
-function anchorsOf(rec: Aligned, capIds: Int32Array): [number, number][] {
+/**
+ * When the exact matching falls back to difflib's autojunk (research R5). Only text in which nearly every word recurs
+ * thousands of times on both sides comes near either bound; recorded speech does not. PAIRS: the equal pairs between
+ * the transcript's and the captions' words; the six recorded calls joined into one 35,000-word meeting had 13 million
+ * (373 per word), the 013 timing test's 3-hour meeting of one repeated sentence 108 million (1,200 per word). Above it
+ * the exact search is not tried. EXACT_WORK: what the exact search may then still spend; the joined calls needed 36
+ * million steps (0.2 s).
+ */
+const PAIRS = 50_000_000;
+const EXACT_WORK = 150_000_000;
+
+/** Whether this meeting's alignment has fallen back to autojunk; once it has, the second pass uses it too. */
+interface Matching {
+  autojunk: boolean;
+  /** How often each caption word occurs, by word id. */
+  counts: Map<number, number>;
+}
+
+function pairs(rec: Aligned, counts: ReadonlyMap<number, number>): number {
+  let n = 0;
+  for (const id of rec.ids) n += counts.get(id) ?? 0;
+  return n;
+}
+
+function anchorsOf(rec: Aligned, capIds: Int32Array, matching: Matching): [number, number][] {
+  if (!matching.autojunk && pairs(rec, matching.counts) > PAIRS) matching.autojunk = true;
+  let blocks = matching.autojunk ? null : matchingBlocks(rec.ids, capIds, { maxWork: EXACT_WORK });
+  if (blocks === null) {
+    matching.autojunk = true;
+    blocks = matchingBlocks(rec.ids, capIds, { autojunk: true })!;
+  }
   const anchors: [number, number][] = [];
-  for (const [a, b, size] of matchingBlocks(rec.ids, capIds)) {
+  for (const [a, b, size] of blocks) {
     if (size === 1 && [...rec.norms[a]!].length < SHORT_MATCH) continue;
     for (let k = 0; k < size; k += 1) anchors.push([a + k, b + k]);
   }
@@ -326,14 +356,17 @@ export function mergedTranscript(
   const capIds = Int32Array.from(captions.norms, (n) => words.id(n));
   const lines = transcriptLines(meeting, segments, new Set(captions.names));
   let rec = alignable(lines, words);
-  let anchors = anchorsOf(rec, capIds);
+  const counts = new Map<number, number>();
+  for (const id of capIds) counts.set(id, (counts.get(id) ?? 0) + 1);
+  const matching: Matching = { autojunk: false, counts };
+  let anchors = anchorsOf(rec, capIds, matching);
   const anchored = new Uint8Array(rec.ids.length);
   for (const [r] of anchors) anchored[r] = 1;
   const removed = repeatedLines(lines, rec, anchored);
   const kept = removed.size === 0 ? lines : lines.filter((_, index) => !removed.has(index));
   if (removed.size > 0) {
     rec = alignable(kept, words);
-    anchors = anchorsOf(rec, capIds);
+    anchors = anchorsOf(rec, capIds, matching);
   }
   return {
     lines: speakerLines(kept, place(rec, captions, anchors)),

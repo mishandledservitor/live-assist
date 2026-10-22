@@ -68,8 +68,8 @@ Covered by T007 (fallbacks), T009 (running meeting) and the unchanged 013 tests.
 
 ## Phase 7: Measurements
 
-- [ ] T021 Write the speed test (a generated 15,000-word meeting under 1 s, 45,000 words under 2 s) in tests/unit/core/export/merged-transcript-speed.test.ts; record the measured times in research.md R5
-- [ ] T022 Run the local parity check (spikes/data/016-parity/parity.ts, gitignored, never committed) on the six recorded calls and record per-call metrics in research.md R7
+- [X] T021 Write the speed test (a generated 15,000-word meeting under 1 s, 45,000 words under 2 s) in tests/unit/core/export/merged-transcript-speed.test.ts; record the measured times in research.md R5
+- [X] T022 Run the local parity check (spikes/data/016-parity/parity.ts, gitignored, never committed) on the six recorded calls and record per-call metrics in research.md R7
 
 ## Phase 8: Polish & Cross-Cutting
 

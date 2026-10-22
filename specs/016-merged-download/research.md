@@ -69,11 +69,24 @@ Removing the later copy keeps the passage at its first time. When the later copy
 
 **Target** (SC-005): a 15,000-word meeting in under 1 s from the press to the file handed to the browser; a 3-hour meeting (about 45,000 words) under 2 s (013 SC-008).
 
-**Design**: words are interned to integers once; the caption side's positions per word are one sorted array (`b2j` as offsets into a flat `Int32Array`); each row of `find_longest_match` uses two stamped typed arrays instead of dictionaries; the lower bound is a binary search. Pass 2 runs only when lines were removed. Everything is synchronous and allocation-light, and runs in the press handler, as 013's zip does.
+**Design**: words are interned to integers once; the caption side's positions per word are one sorted array (`b2j` as offsets into a flat `Int32Array`); each row of `find_longest_match` uses two stamped typed arrays instead of dictionaries; the lower bound is a binary search. Pass 2 runs only when lines were removed. Everything is synchronous and runs in the press handler, as 013's zip does.
 
-**Measured**: at implementation (task T021), recorded here.
+**Measured** (T021, Node 24 on the development machine, an Apple-silicon laptop; single runs):
 
-**The 013 timing test**: `tests/e2e/captions-download.spec.ts` "a 3-hour meeting …" seeds 5,000 lines that each repeat one sentence and 1,200 caption turns that each repeat another, so that every word occurs thousands of times on both sides: the worst case for any longest-common-block alignment, unlike speech. That test keeps timing the 013 zip, now through `Download originals`; the merged file's bound is timed on synthetic text with a realistic spread of words (R7, `tests/support/synthetic-meeting.ts`).
+| Input | Words | Time |
+|---|---|---|
+| The six recorded calls (R7) | 1,228 to 14,499 | 4 to 124 ms each |
+| The six calls' words joined into one meeting (alignment only) | 35,378 | 199 ms, 36 million search steps |
+| Generated meeting, `tests/unit/core/export/merged-transcript-speed.test.ts` | 15,000 | 132–160 ms |
+| Generated meeting, same test | 45,000 | 900–920 ms |
+| 013's 3-hour timing meeting (5,000 lines of one repeated sentence, 1,200 caption turns of another), exact search | 90,000 | minutes (1,000 lines: 1.1 s; 2,000 lines: 9 s; growth about cubic) |
+| The same, with the fallback below | 90,000 | 403–431 ms |
+
+**Fallback for text that is not speech-like**: difflib's longest-block search re-scans what is left after each block it finds; when nearly every word recurs thousands of times on both sides, the blocks are short and many and the work grows about with the cube of the length. Speech does not do this (the joined calls: 373 equal pairs per word), but a meeting made of a repeated phrase would freeze the panel for minutes. So the exact search is skipped when the transcript's and the captions' words have more than 50 million equal pairs (about 1,000 per word at 45,000 words; the 013 timing meeting has 108 million), and abandoned after 150 million search steps; either way the alignment is redone with difflib's own `autojunk` (a word making up more than 1% of the captions is not used to start a block, though blocks extend over it), ported and checked against Python's output like the exact search (`matching-blocks.test.ts`). The real calls never come near either bound, so their numbers in R7 are the exact search's.
+
+**The panel while it builds**: the merge runs in the press handler, so the panel does not respond until it is done: under 0.2 s up to about 15,000 words, about 1 s at 45,000. 013 SC-008's "never unresponsive for more than 200 ms" is therefore kept for the meetings people actually hold (the six calls: at most 124 ms) but not for a 3-hour one, where the file still reaches Downloads inside SC-005's 2 s. Moving the merge to a worker would remove the pause; it is left open (not needed for the measured meetings, and a new entrypoint and message protocol for the panel).
+
+**The 013 timing test**: `tests/e2e/captions-download.spec.ts` "a 3-hour meeting …" seeds that repeated-sentence meeting. It keeps timing the 013 zip, now through `Download originals`; the merged file of the same meeting is timed beside it (the fallback above), and the merged file of a speech-like meeting in the unit test above (`tests/support/synthetic-meeting.ts`).
 
 ## R6 — `Download originals`
 
@@ -85,7 +98,19 @@ Removing the later copy keeps the passage at its first time. When the later copy
 
 **Decision**: `spikes/data/016-parity/parity.ts` (gitignored, never committed) reads each call's `transcript.txt` and `captions.txt` (the live downloads), turns them into stored-model records (one line per transcript line with its label as caption-sourced unless it is `Others`; one caption turn per captions line), runs `mergedTranscript`, and compares word by word with the reference merge's `merged.txt` (first names compared, as the reference's own comparison did, because the reference rewrote names through its list) and with the live labels. Reported per call and in total: words, words removed as repeats, `Others` share live and merged, agreement with the reference on words both name, agreement with live on words both name, and the time each merge took.
 
-**Results**: at implementation (task T022), recorded here as metrics only.
+**Results** (T022, 2026-10-22; metrics only, calls named m1–m6). "Others" is the share of words without a name: live of all words, reference of all words (the reference does not remove repeats), merged of the words left after removal. Agreement is on words both sides name, compared by first name.
+
+| Call | Words | Removed as repeats | Others live | Others reference | Others merged | Agreement with reference | Agreement with live | Time |
+|---|---|---|---|---|---|---|---|---|
+| m1 | 4,774 | 296 (6.2%) | 16.8% | 6.7% | 0.5% | 4,456 of 4,456 | 98.4% | 27 ms |
+| m2 | 8,750 | 377 (4.3%) | 26.7% | 5.2% | 0.9% | 8,296 of 8,296 | 98.3% | 42 ms |
+| m3 | 3,136 | 104 (3.3%) | 12.6% | 5.8% | 4.0% | 2,895 of 2,895 | 99.3% | 10 ms |
+| m4 | 1,228 | 71 (5.8%) | 13.1% | 6.4% | 0.4% | 1,150 of 1,150 | 98.7% | 4 ms |
+| m5 | 3,082 | 188 (6.1%) | 19.8% | 5.6% | 0.6% | 2,869 of 2,871 | 98.1% | 9 ms |
+| m6 | 14,499 | 298 (2.1%) | 12.9% | 2.8% | 0.8% | 14,076 of 14,076 | 98.9% | 109 ms |
+| All | 35,469 | 1,334 (3.8%) in 34 lines | 17.4% | 4.5% | 1.0% | 33,742 of 33,744 (99.99%) | 98.7% | |
+
+The port gives the reference's names on every word both name except two (in m5, around a removed repeat, where the second alignment pass places them differently). The repeat rule removed the same 34 lines as the Python prototype of R3 and kept the same two candidates (m2's line said twice, m3's line the captions do not carry); with it the unnamed share falls from 4.5% to 1.0%, against SC-004's "about 1%, at most 2%". m3 stays at 4.0%: its captions match fewer of its words than the other calls' do (R3), and the 30-word line kept for lack of caption evidence is part of it.
 
 ## R8 — What stays the same, and how that is held
 

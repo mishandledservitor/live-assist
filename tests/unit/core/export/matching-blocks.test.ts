@@ -146,4 +146,64 @@ describe('matchingBlocks (difflib get_matching_blocks, autojunk off)', () => {
       [5, 4, 0],
     ]);
   });
+
+  // 016 research R5: on text where every word recurs thousands of times the exact matching does far more work than on
+  // speech. Past a work limit it gives up (null), and the caller aligns again with difflib's own shortcut, autojunk.
+  describe('autojunk, as difflib with autojunk=True', () => {
+    it('a pseudo-random pair of 2,000 symbols each', () => {
+      const symbol = (r: number) => Math.min(r % 61, (r >>> 8) % 61);
+      const blocks = matchingBlocks(take(xorshift(2463534242), 2000, symbol), take(xorshift(88172645), 2000, symbol), {
+        autojunk: true,
+      })!;
+      expect(blocks.slice(0, 3)).toEqual([
+        [4, 98, 1],
+        [37, 172, 1],
+        [46, 328, 1],
+      ]);
+      expect(blocks).toHaveLength(11);
+      expect(blocks.reduce((n, [, , size]) => n + size, 0)).toBe(10);
+      expect(digest(blocks)).toBe('0x4b74166a');
+    });
+
+    it('a 3,000-symbol sequence against a perturbed copy', () => {
+      const gen = xorshift(123456789);
+      const a = take(gen, 3000, (r) => Math.min(r % 300, (r >>> 9) % 300));
+      gen.next();
+      const b: number[] = [];
+      for (const x of a) {
+        const r = gen.next().value as number;
+        if (r % 10 === 0) continue;
+        if (r % 10 === 1) {
+          b.push((r >>> 4) % 300);
+          continue;
+        }
+        if (r % 10 === 2) b.push((r >>> 4) % 300);
+        b.push(x);
+      }
+      const blocks = matchingBlocks(a, b, { autojunk: true })!;
+      expect(blocks).toHaveLength(727);
+      expect(blocks.reduce((n, [, , size]) => n + size, 0)).toBe(2376);
+      expect(digest(blocks)).toBe('0x35c86a64');
+    });
+
+    it('does nothing below 200 symbols in b, as difflib', () => {
+      expect(matchingBlocks([1, 1, 2], [1, 1, 1, 2], { autojunk: true })).toEqual(
+        matchingBlocks([1, 1, 2], [1, 1, 1, 2]),
+      );
+    });
+  });
+
+  describe('maxWork', () => {
+    const symbol = (r: number) => Math.min(r % 61, (r >>> 8) % 61);
+    const a = take(xorshift(2463534242), 2000, symbol);
+    const b = take(xorshift(88172645), 2000, symbol);
+
+    it('gives the same blocks when the work stays within the limit', () => {
+      expect(matchingBlocks(a, b, { maxWork: 1e9 })).toEqual(matchingBlocks(a, b));
+    });
+
+    it('gives up with null past the limit', () => {
+      expect(matchingBlocks(a, b, { maxWork: 1_000 })).toBeNull();
+    });
+  });
 });
