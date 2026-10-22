@@ -13,7 +13,7 @@ import {
   type KeyboardEvent,
   type Ref,
 } from 'react';
-import { meetingDownload } from '../../../core/export/meeting-download';
+import { meetingDownload, mergedMeetingDownload } from '../../../core/export/meeting-download';
 import { currentSummary, meetingState } from '../../../core/history/meeting-summary';
 import type { Meeting, MeetingSummary, TranscriptSegment } from '../../../core/transcript/model';
 import type { SaveBlob } from '../save-file';
@@ -160,9 +160,18 @@ export function TranscriptsScreen(props: TranscriptsScreenProps) {
   });
 
   // FR-014, 013 FR-019: a Download, in a row or beside the transcript, reads the meeting on press and saves what every
-  // Download saves: the transcript, Meet's captions, or a zip of both. The caption turns are used for that one file
-  // and dropped. A meeting that is gone, or whose captions cannot be read, saves nothing.
+  // Download saves. Nothing listed here runs (its row has no Download), so from 016 (decision 93) a meeting with both
+  // records saves the merged transcript; one with one record saves it as 013 does. The caption turns are used for that
+  // one file and dropped. A meeting that is gone, or whose captions cannot be read, saves nothing.
   const load = useCallback(
+    async (id: string) => {
+      const opened = await api.open(id);
+      return opened ? mergedMeetingDownload(opened, new Date()) : null;
+    },
+    [api],
+  );
+  // 016 (decision 97): `Download originals` beside the transcript being read saves 013's download, the zip of both.
+  const loadOriginals = useCallback(
     async (id: string) => {
       const opened = await api.open(id);
       return opened ? meetingDownload(opened, new Date()) : null;
@@ -251,6 +260,7 @@ export function TranscriptsScreen(props: TranscriptsScreenProps) {
           segments={view.segments}
           state={meetingState(view.meeting, runningId)}
           load={() => load(view.meeting.id)}
+          loadOriginals={() => loadOriginals(view.meeting.id)}
           save={save}
           remove={() => api.remove(view.meeting.id)}
           onDeleted={() => deleted(view.meeting.id)}

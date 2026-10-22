@@ -30,10 +30,10 @@
 - [X] T006 [US1] Implement `mergedTranscript` and `mergedTranscriptFile` without the repeat rule (research R2, R4) in src/core/export/merged-transcript.ts
 - [X] T007 [P] [US1] Write failing tests for `mergedMeetingDownload`: lines and captions → one merged `.txt`; lines only, captions only, neither → exactly `meetingDownload`'s result; `meetingDownload` itself unchanged; in tests/unit/core/export/meeting-download.test.ts
 - [X] T008 [US1] Implement `mergedMeetingDownload` in src/core/export/meeting-download.ts
-- [ ] T009 [P] [US1] Write failing panel tests: main view of a stopped meeting with captions saves the merged `.txt`; a running one saves the 013 zip; in tests/unit/sidepanel/app-captions.test.tsx (the stopped-meeting zip expectations become the merged file)
-- [ ] T010 [US1] Choose the download by `running` on the main view in src/entrypoints/sidepanel/App.tsx
-- [ ] T011 [P] [US1] Write failing Transcripts screen tests: a row and the single-meeting view save the merged `.txt`, same name and bytes as the main view, in tests/unit/sidepanel/transcripts-screen.test.tsx
-- [ ] T012 [US1] Use `mergedMeetingDownload` for the screen's `load` in src/entrypoints/sidepanel/components/TranscriptsScreen.tsx
+- [X] T009 [P] [US1] Write failing panel tests: main view of a stopped meeting with captions saves the merged `.txt`; a running one saves the 013 zip; in tests/unit/sidepanel/app-captions.test.tsx (the stopped-meeting zip expectations become the merged file)
+- [X] T010 [US1] Choose the download by `running` on the main view in src/entrypoints/sidepanel/App.tsx
+- [X] T011 [P] [US1] Write failing Transcripts screen tests: a row and the single-meeting view save the merged `.txt`, same name and bytes as the main view, in tests/unit/sidepanel/transcripts-screen.test.tsx
+- [X] T012 [US1] Use `mergedMeetingDownload` for the screen's `load` in src/entrypoints/sidepanel/components/TranscriptsScreen.tsx
 
 **Checkpoint**: US1 works without repeat removal.
 
@@ -54,11 +54,11 @@
 
 **Independent Test**: tests/unit/sidepanel/download-originals.test.tsx and past-transcript.test.tsx.
 
-- [ ] T015 [P] [US3] Write failing tests: `DownloadButton` (label as given, builds on press, saves one file, nothing on null or rejection); `DownloadOriginals` reads `Download originals`; `DownloadTranscript` unchanged; in tests/unit/sidepanel/download-originals.test.tsx
-- [ ] T016 [US3] Extract `DownloadButton` from src/entrypoints/sidepanel/components/DownloadTranscript.tsx into src/entrypoints/sidepanel/components/DownloadButton.tsx and add src/entrypoints/sidepanel/components/DownloadOriginals.tsx
-- [ ] T017 [P] [US3] Write failing tests: the single-meeting view shows `Download transcript`, `Download originals`, `Delete transcript` for a meeting with lines and captions, and no `Download originals` with one record; its press saves the 013 zip (byte for byte `meetingDownload`); rows and the main view never show it; in tests/unit/sidepanel/past-transcript.test.tsx and tests/unit/sidepanel/transcripts-screen.test.tsx
-- [ ] T018 [US3] Add `loadOriginals` to src/entrypoints/sidepanel/components/PastTranscript.tsx and pass `meetingDownload` from src/entrypoints/sidepanel/components/TranscriptsScreen.tsx
-- [ ] T019 [US3] Copy: K47 cases in tests/unit/copy/keep-strings.test.tsx (the label, its place, nothing beside it; K44 C5's single-view expectation amended for decision 97), the A12 never-add entry in tests/fixtures/copy/copy-review.json with the entry count in tests/unit/copy/copy-review.test.ts; see them fail before T016/T018, pass after; record K47 and the review paragraph in specs/006-panel-redesign/copy-review.md
+- [X] T015 [P] [US3] Write failing tests: `DownloadButton` (label as given, builds on press, saves one file, nothing on null or rejection); `DownloadOriginals` reads `Download originals`; `DownloadTranscript` unchanged; in tests/unit/sidepanel/download-originals.test.tsx
+- [X] T016 [US3] Extract `DownloadButton` from src/entrypoints/sidepanel/components/DownloadTranscript.tsx into src/entrypoints/sidepanel/components/DownloadButton.tsx and add src/entrypoints/sidepanel/components/DownloadOriginals.tsx
+- [X] T017 [P] [US3] Write failing tests: the single-meeting view shows `Download transcript`, `Download originals`, `Delete transcript` for a meeting with lines and captions, and no `Download originals` with one record; its press saves the 013 zip (byte for byte `meetingDownload`); rows and the main view never show it; in tests/unit/sidepanel/past-transcript.test.tsx and tests/unit/sidepanel/transcripts-screen.test.tsx
+- [X] T018 [US3] Add `loadOriginals` to src/entrypoints/sidepanel/components/PastTranscript.tsx and pass `meetingDownload` from src/entrypoints/sidepanel/components/TranscriptsScreen.tsx
+- [X] T019 [US3] Copy: K47 cases in tests/unit/copy/keep-strings.test.tsx (the label, its place, nothing beside it; K44 C5's single-view expectation amended for decision 97), the A12 never-add entry in tests/fixtures/copy/copy-review.json with the entry count in tests/unit/copy/copy-review.test.ts; see them fail before T016/T018, pass after; record K47 and the review paragraph in specs/006-panel-redesign/copy-review.md
 
 ## Phase 6: User Story 4 - Everything else downloads as before (Priority: P2)
 
