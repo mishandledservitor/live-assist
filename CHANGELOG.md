@@ -4,6 +4,8 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-22
+
 ### Fixed
 
 - Speaker names work again on Google Meet calls opened at Meet's newer address, `meet.google.com/meet/…`. On those calls the panel had said speaker names work on Google Meet only.
