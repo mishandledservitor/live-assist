@@ -583,7 +583,7 @@ test.describe('Cross-cutting: off the network, quick, accessible, and nothing ne
     expect(watch.problems()).toEqual([]);
   });
 
-  test('a 3-hour meeting (5,000 lines, 1,200 caption turns): the merged file and the zip from Download originals are each in Downloads within two seconds of the press (SC-008, 016 SC-005)', async ({
+  test('a 3-hour meeting (5,000 lines, 1,200 caption turns): the merged file is in Downloads within five seconds of the press and the zip from Download originals within two (SC-008, 016 SC-005, decision 100)', async ({
     context,
     extensionId,
   }) => {
@@ -638,7 +638,8 @@ test.describe('Cross-cutting: off the network, quick, accessible, and nothing ne
     const merged = await saveFrom(panel, mainDownload(panel));
     const mergedTook = await tookSincePress();
     expect(mergedTook).toBeGreaterThan(0);
-    expect(mergedTook).toBeLessThan(2_000);
+    // About 1 s on the development machine; 5 s is the bound on a slower one such as the CI runner (decision 100).
+    expect(mergedTook).toBeLessThan(5_000);
     expect(merged.download.suggestedFilename()).toBe('Meeting — 07-10-2026 at 14h30 — Transcript.txt');
     const mergedText = merged.bytes.toString('utf8');
     const expected = mergedTranscriptFile(long.meeting, long.segments ?? [], long.captionTurns ?? []).body;

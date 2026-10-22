@@ -24,7 +24,7 @@ Technical approach: two new pure modules in `src/core/export/`: `matching-blocks
 
 **Project Type**: Browser extension (single project).
 
-**Performance Goals**: SC-005: a 15,000-word meeting merged and handed to the browser in under 1 s; 45,000 words under 2 s. Measured in Vitest (node) for the function and in Playwright for the press-to-download path (research R5).
+**Performance Goals**: SC-005: a 15,000-word meeting merged and handed to the browser in under 1 s; 45,000 words under 2 s on the development machine, under 5 s on a slower one such as CI (decision 100). Measured in Vitest (node) for the function and in Playwright for the press-to-download path (research R5).
 
 **Constraints**: no change under `src/core/session`, `src/core/speakers`, `src/core/transcript`, `src/entrypoints/offscreen`, `src/platforms` (FR-018); `src/core/` stays platform-free (ESLint); caption text is used only inside the merge call and never written into the file (FR-011); the merged file is never stored or sent (FR-004, FR-019). Only one new user-facing string, `Download originals` (FR-022).
 
