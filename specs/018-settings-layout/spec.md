@@ -16,6 +16,8 @@
 - Q56: How a key block looks and works? → A: One line: the masked key, then `Replace` and `Remove`. `Replace` swaps that line for the key field and `Check and save` (Escape or `Cancel` puts the line back unchanged); a key that passes the check is saved and the line returns with the new masked key. With no key saved, the field and `Check and save` show at once beside `No key saved.`. `Remove` keeps the ElevenLabs confirmation (`Remove the saved key? Transcription cannot start without one.`) (decision 106).
 - Q57: Which chat keys show under Questions? → A: Only the key of the provider selected under `Answers from`; switching provider shows the other provider's key block; a key saved for the provider not in use is kept, not shown (decision 107).
 
+- Q58 (after seeing PR 10, the owner asked for fewer words and accepted seven trims, decision 108): should the retention texts in Settings be shown in full? → A: No. `What ElevenLabs keeps` and the chat provider's `What OpenAI keeps` / `What Anthropic keeps` are closed-by-default disclosures in Settings whose summary is the existing heading text; opening one shows the existing text and link word for word. First-run setup keeps them open (decision 109).
+
 ### Session 2026-10-22 (decided without the owner; each can be overruled)
 
 - Q: Does any setting change what it does? → A: No. Every setting keeps its stored value, its default and its effect. Only the screen's order, grouping, layout and the reviewed strings change.
@@ -91,6 +93,14 @@ The reviewed strings are deleted or rewritten as listed; nothing new is added in
 - **FR-009**: The screen MUST have no sideways scrolling at 320 px, and a field and its button MUST sit on one line where the width allows.
 - **FR-010**: No setting's stored value, default or effect changes; every behaviour test of the current Settings keeps passing with only position and the reviewed strings updated.
 - **FR-011**: Every changed string MUST be recorded in `specs/006-panel-redesign/copy-review.md` and its fixture, and nothing is added in place of deleted lines.
+
+- **FR-012** (decision 108): A saved key MUST show as the masked key alone (`••••{hint}`, no `Saved key:`), with an accessible name saying which key it is, and no new visible text.
+- **FR-013** (decision 108): In Settings the key headings MUST read `ElevenLabs key`, `OpenAI key` and `Claude key`; setup's labels are unchanged.
+- **FR-014** (decision 108): The `ElevenLabs account` heading MUST be removed: the plan line and `Check again` sit directly under the ElevenLabs key line; the section keeps the accessible name `ElevenLabs account`, and opening Settings from the header badge puts focus on that section.
+- **FR-015** (decision 108): The key-terms description MUST read `Up to {MAX_KEYTERMS}, {MAX_KEYTERM_LENGTH} characters each. Used from the next Start.` and the add field's label `Add terms, separated by commas` (a pasted list with one term per line still works).
+- **FR-016** (decision 108): The consent reminder's label MUST read `Remind me to tell people before I start`.
+- **FR-017** (decision 108): With no remembered names, the remembered-names section MUST NOT be shown at all; with one or more it shows its heading, `Changes here apply from the next meeting.` and the list, and it appears when a name is remembered while Settings is open.
+- **FR-018** (decision 109): In Settings each retention text MUST be a disclosure, closed by default, whose summary is its heading text (`What ElevenLabs keeps`, `What OpenAI keeps`, `What Anthropic keeps`); opened, it shows the existing text and link unchanged. Setup shows them open, as before.
 
 ## Success Criteria *(mandatory)*
 
