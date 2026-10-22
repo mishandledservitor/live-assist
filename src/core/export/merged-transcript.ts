@@ -150,7 +150,6 @@ function alignable(lines: readonly Line[], words: Words): Aligned {
   return { norms, ids: Int32Array.from(norms, (n) => words.id(n)), hints };
 }
 
-/** Pairs of matched positions `[transcript word, caption word]`, from the matching blocks (research R2 step 3). */
 /**
  * When the exact matching falls back to difflib's autojunk (research R5). Only text in which nearly every word recurs
  * thousands of times on both sides comes near either bound; recorded speech does not. PAIRS: the equal pairs between

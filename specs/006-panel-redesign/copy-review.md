@@ -154,8 +154,8 @@ Nothing is added in place of a deleted string: no counters, progress bars, summa
 
 013 (captions download) adds none of these either (`specs/013-captions-download/contracts/download-ui.md` "Never add"): a "captions kept" badge, dot, status row or count; a line under the button saying what the zip holds or that it is a zip; a second button for the captions (from 016, decision 97, the single-meeting view has `Download originals`, K47; nowhere else); a message that a meeting has no captions; a `Downloaded` message; a setting to turn captions keeping on or off; any caption text, anywhere in the panel; a note in the captions file or the zip (header, footer, readme); a marker for a gap in the captions file.
 
-
 016 (merged download) adds none of these (`specs/016-merged-download/contracts/download-ui.md` "Never add"): a line or tooltip saying the file is merged, how names were found or that repeated passages were removed; a count of removed passages; `Download originals` on the main view or in a Transcripts row; a header or note in the merged file; a setting to turn merging off.
+
 ## Checking the result
 
 Deleted strings. After 006, a search of `src/` and of the built `.output/chrome-mv3/` must find none of these (each is a distinctive substring of D1–D11 or of the removed half of a rewrite):
