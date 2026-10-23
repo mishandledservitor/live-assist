@@ -4,6 +4,8 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-23
+
 ### Added
 
 - **Ask questions about the meeting**, a tick box in Settings, turns questions off: the question box, answers, the model name and the notes controls leave the panel, and nothing is sent to OpenAI or Anthropic. Your keys, earlier answers and notes are kept and come back when you tick it again. Setup can now be finished with only an ElevenLabs key, which leaves questions off.
