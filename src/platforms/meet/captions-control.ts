@@ -5,7 +5,15 @@
 // captions on (FR-028, design decision 61); the band Meet reserves for captions is never touched either way.
 import { MEET_REASONS } from '../../core/messaging/meet-bridge';
 import type { CaptionsState } from '../../core/platform/adapter';
-import { captionsButton, captionsOn, captionsRegion, inCall, micButton } from './locators';
+import {
+  captionsButton,
+  captionsOn,
+  captionsRegion,
+  inCall,
+  liveCaptionsSwitch,
+  micButton,
+  opensCaptionsMenu,
+} from './locators';
 
 /** How often the page is checked while enabled. */
 export const POLL_MS = 250;
@@ -42,6 +50,8 @@ export class CaptionsControl {
    * the click, so an `enable()` in between must not read the stale "on" as the user's own captions (T080).
    */
   private restoreClickAt: number | null = null;
+  /** The captions-and-translation menu clicks under way (decision 110); stopped by the next flip and by restore. */
+  private menuTimer: ReturnType<typeof setInterval> | null = null;
   /** Settings → Show Meet captions (FR-028): while true nothing is hidden. */
   private shown = false;
   private readonly now: () => number;
@@ -79,6 +89,7 @@ export class CaptionsControl {
   restore(): void {
     if (this.timer !== null) clearInterval(this.timer);
     this.timer = null;
+    this.stopMenu();
     const wasEnabled = this.phase !== 'idle';
     this.phase = 'idle';
     this.unhide();
@@ -86,7 +97,7 @@ export class CaptionsControl {
     this.wasOn = null;
     const button = captionsButton(this.deps.doc).value;
     if (button && captionsOn(button).value === true) {
-      button.click();
+      this.flip(button);
       this.restoreClickAt = this.now();
     }
   }
@@ -142,7 +153,7 @@ export class CaptionsControl {
         }
         this.wasOn ??= on;
         if (on) return this.turnedOn();
-        button.click();
+        this.flip(button);
         this.enter('turning-on');
         return;
       case 'turning-on':
@@ -170,6 +181,48 @@ export class CaptionsControl {
       default:
         return;
     }
+  }
+
+  /**
+   * Switches Meet's captions. The older captions button takes one click. The captions-and-translation menu (decision
+   * 110) is opened, its Live captions switch clicked once it shows, and a menu opened here is closed again; if the
+   * switch never shows, the menu is closed after CAPTIONS_ON_TIMEOUT_MS and the caller's own timeout reports it.
+   */
+  private flip(button: HTMLElement): void {
+    this.stopMenu();
+    if (!opensCaptionsMenu(button)) return button.click();
+    const { doc } = this.deps;
+    const started = this.now();
+    let opened = false;
+    let switched = false;
+    const step = () => {
+      const menu = captionsButton(doc).value;
+      const expanded = menu?.getAttribute('aria-expanded') === 'true';
+      if (!switched) {
+        const toggle = liveCaptionsSwitch(doc).value;
+        if (toggle) {
+          toggle.click();
+          switched = true;
+          return; // the menu is closed on the next step
+        }
+        if (this.now() - started < CAPTIONS_ON_TIMEOUT_MS) {
+          if (!opened && !expanded) {
+            menu?.click();
+            opened = true;
+          }
+          return;
+        }
+      }
+      if (opened && expanded) menu?.click();
+      this.stopMenu();
+    };
+    this.menuTimer = setInterval(step, POLL_MS);
+    step();
+  }
+
+  private stopMenu(): void {
+    if (this.menuTimer !== null) clearInterval(this.menuTimer);
+    this.menuTimer = null;
   }
 
   private turnedOn(): void {

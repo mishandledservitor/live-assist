@@ -9,6 +9,8 @@ import {
   captionsRegion,
   inCall,
   isMuted,
+  liveCaptionsSwitch,
+  opensCaptionsMenu,
   isSelfName,
   meetingCode,
   meetingTitle,
@@ -16,7 +18,14 @@ import {
   speakerNameOf,
   type Tier,
 } from '@/platforms/meet/locators';
-import { addCaptionItem, loadMeetSnapshot, MEET_SNAPSHOTS, setCaptionText } from '../../../support/meet-snapshot';
+import {
+  addCaptionItem,
+  closeCaptionsMenu,
+  loadMeetSnapshot,
+  MEET_SNAPSHOTS,
+  openCaptionsMenu,
+  setCaptionText,
+} from '../../../support/meet-snapshot';
 
 const NOTHING = { value: null, tier: null };
 const icon = (el: Element | null) => el?.querySelector('.google-symbols')?.textContent;
@@ -90,6 +99,63 @@ describe('D2 the captions button exists in a call and shows its state', () => {
     b.removeAttribute('aria-pressed');
     b.querySelector('.google-symbols')!.textContent = 'cc';
     expect(captionsOn(b as HTMLElement)).toEqual(NOTHING);
+  });
+});
+
+describe('D2a the captions-and-translation menu (decision 110, seen 2026-11-03)', () => {
+  it.each([
+    ['menu-captions-off', { value: false, tier: 1 }],
+    ['menu-captions-on', { value: true, tier: 1 }],
+  ] as const)('%s: the translate_cc button is the captions button, its state read from aria-pressed', (name, state) => {
+    const button = captionsButton(loadMeetSnapshot(name));
+    expect(button.tier).toBe(1);
+    expect(icon(button.value)).toBe('translate_cc');
+    expect(captionsOn(button.value!)).toEqual(state);
+    expect(opensCaptionsMenu(button.value!)).toBe(true);
+  });
+
+  it('is found by its icon even when the "Jump to most recent captions" button comes first', () => {
+    const doc = loadMeetSnapshot('menu-captions-on');
+    expect(captionsButton(doc).value?.getAttribute('aria-label')).toBe('Captions and translation');
+  });
+
+  it("the older captions button doesn't open a menu", () => {
+    for (const name of ['in-call-captions-off', 'real-dom-captions-on', 'greek-ui'])
+      expect(opensCaptionsMenu(captionsButton(loadMeetSnapshot(name)).value!)).toBe(false);
+  });
+
+  it('the Live captions switch is there only while the menu is open', () => {
+    const doc = loadMeetSnapshot('menu-captions-off');
+    expect(liveCaptionsSwitch(doc)).toEqual(NOTHING);
+    openCaptionsMenu(doc);
+    const found = liveCaptionsSwitch(doc);
+    expect(found.tier).toBe(3);
+    expect(found.value?.textContent).toContain('Live captions');
+    closeCaptionsMenu(doc);
+    expect(liveCaptionsSwitch(doc)).toEqual(NOTHING);
+  });
+
+  it('with the switch on, it is still the Live captions switch, never the speech translation one', () => {
+    const doc = loadMeetSnapshot('menu-captions-on');
+    openCaptionsMenu(doc);
+    expect(liveCaptionsSwitch(doc).value?.getAttribute('aria-label')).toBe('Turn off live captions');
+  });
+
+  it('without English labels: the first switch of the menu (tier 4)', () => {
+    const doc = loadMeetSnapshot('menu-captions-off');
+    const dialog = openCaptionsMenu(doc);
+    for (const b of dialog.querySelectorAll('button')) b.removeAttribute('aria-label');
+    for (const s of dialog.querySelectorAll('span')) s.textContent = 'Λεζάντες';
+    expect(liveCaptionsSwitch(doc)).toEqual({ value: dialog.querySelector('button'), tier: 4 });
+  });
+
+  it('a dialog that is not the captions menu has no switch', () => {
+    const doc = loadMeetSnapshot('menu-captions-off');
+    const other = doc.createElement('div');
+    other.setAttribute('role', 'dialog');
+    other.innerHTML = '<button aria-label="Close">x</button>';
+    doc.body.append(other);
+    expect(liveCaptionsSwitch(doc)).toEqual(NOTHING);
   });
 });
 

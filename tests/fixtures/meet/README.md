@@ -14,6 +14,7 @@ Built by hand from the open-source projects listed in `specs/002-meet-speaker-na
 | `greek-ui.html` | Greek Meet UI: localised labels, self word guessed as "Εσύ" (unverified) |
 | `changed-page.html` | A redesigned page where every locator must fail cleanly |
 | `real-dom-captions-on.html` | Rebuilt from the real Meet DOM inspected 2026-10-08 (research R13): the notifications region (with an avatar chip) before the captions region, two turns (one "You"), mic and camera both with `data-is-muted`, captions button without `aria-pressed` |
+| `menu-captions-on.html`, `menu-captions-off.html` | `real-dom-captions-*` with the captions-and-translation button seen in a real call on 2026-11-03 (decision 110) in place of the captions button; its menu is opened by `openCaptionsMenu` in `tests/support/meet-snapshot.ts`, with the attributes seen that day (the switch's off label is a guess) |
 | `real-dom-captions-off.html` | The same page with captions off and an empty captions region (the off state was not seen; a guess) |
 
 The caption turns hold invented sentences, which the product now reads and keeps (013, `specs/013-captions-download/contracts/captions-capture.md` D8–D10). `captionTextOf` must read exactly these, in page order:

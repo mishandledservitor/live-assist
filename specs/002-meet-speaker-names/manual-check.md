@@ -39,6 +39,7 @@ About 20 minutes. Do them in one call where you can; step 11 needs a non-Meet ta
 | 2 Names (SC-001) | ≥ 90 % of lines named correctly, yours included | | | Correct / total |
 | 2 No wrong confirmed names (SC-002) | 0 | | | Count |
 | 3 Quick exchange | Overlap → "Others" | | | |
+| 1 Captions menu (decision 110) | With captions off, Start turns on `Live captions` in Meet's `Captions and translation` menu and the menu closes again; speaker names work | | | Seen the menu stay open, or flash? |
 | 4 Stop restores (captions were off) | Captions off, nothing hidden | | | |
 | 4 Stop restores (captions were on) | Captions stay on | | | |
 | 5 Captions turned off | Reason shown, new lines Others, earlier kept; recovery on | | | |

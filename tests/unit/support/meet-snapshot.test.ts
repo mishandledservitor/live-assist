@@ -26,6 +26,8 @@ describe('loadMeetSnapshot', () => {
       'in-call-captions-off',
       'in-call-captions-on',
       'lobby',
+      'menu-captions-off',
+      'menu-captions-on',
       'real-dom-captions-off',
       'real-dom-captions-on',
     ]);

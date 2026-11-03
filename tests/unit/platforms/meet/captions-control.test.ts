@@ -3,7 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CaptionsState } from '@/core/platform/adapter';
 import { MEET_REASONS } from '@/core/messaging/meet-bridge';
 import { CaptionsControl, HIDE_CSS, HIDE_STYLE_ID } from '@/platforms/meet/captions-control';
-import { loadMeetSnapshot, setCaptionsButton } from '../../../support/meet-snapshot';
+import {
+  loadMeetSnapshot,
+  meetCaptionsMenu,
+  openCaptionsMenu,
+  setCaptionsButton,
+} from '../../../support/meet-snapshot';
 
 beforeEach(() => void vi.useFakeTimers());
 afterEach(() => void vi.useRealTimers());
@@ -400,6 +405,91 @@ describe('CaptionsControl', () => {
       expect(last()).toEqual({ state: 'on' });
       expect(clicks.n).toBe(1);
       expect(tagged(doc)).toEqual([]);
+    });
+  });
+
+  describe('captions-and-translation menu (decision 110)', () => {
+    const menuOpen = (doc: Document) => doc.querySelector('[role="dialog"]') !== null;
+
+    it('captions off: opens the menu, clicks Live captions once, closes the menu, reports on and hides', async () => {
+      const { doc, control, last } = setup('menu-captions-off');
+      const clicks = meetCaptionsMenu(doc);
+      control.enable();
+      await vi.advanceTimersByTimeAsync(2000);
+      expect(clicks.toggle).toBe(1);
+      expect(last()).toEqual({ state: 'on' });
+      expect(menuOpen(doc)).toBe(false);
+      expect(clicks.menu).toBe(2); // opened, then closed
+      expect(hiddenContainer(doc)).toBe(region(doc));
+      await vi.advanceTimersByTimeAsync(5000);
+      expect(clicks).toEqual({ menu: 2, toggle: 1 });
+    });
+
+    it('captions already on: clicks nothing', async () => {
+      const { doc, control, last } = setup('menu-captions-on');
+      const clicks = meetCaptionsMenu(doc);
+      control.enable();
+      await vi.advanceTimersByTimeAsync(2000);
+      expect(clicks).toEqual({ menu: 0, toggle: 0 });
+      expect(last()).toEqual({ state: 'on' });
+    });
+
+    it('a menu the user already opened: clicks Live captions in it and leaves it open', async () => {
+      const { doc, control, last } = setup('menu-captions-off');
+      const clicks = meetCaptionsMenu(doc);
+      doc.querySelector<HTMLElement>('[aria-label="Captions and translation"]')!.click(); // the user
+      await vi.advanceTimersByTimeAsync(200);
+      control.enable();
+      await vi.advanceTimersByTimeAsync(2000);
+      expect(clicks).toEqual({ menu: 1, toggle: 1 });
+      expect(last()).toEqual({ state: 'on' });
+      expect(menuOpen(doc)).toBe(true);
+    });
+
+    it('a menu with no Live captions switch: unavailable after 4 s, the menu closed again, no further clicks', async () => {
+      const { doc, control, last } = setup('menu-captions-off');
+      const button = doc.querySelector<HTMLElement>('[aria-label="Captions and translation"]')!;
+      let menuClicks = 0;
+      button.addEventListener('click', () => {
+        menuClicks += 1;
+        if (button.getAttribute('aria-expanded') === 'true') {
+          doc.querySelector('[role="dialog"]')?.remove();
+          button.setAttribute('aria-expanded', 'false');
+        } else {
+          openCaptionsMenu(doc).querySelector('button')!.remove(); // the menu changed: no Live captions switch
+          button.setAttribute('aria-expanded', 'true');
+        }
+      });
+      control.enable();
+      await vi.advanceTimersByTimeAsync(4500);
+      expect(last()).toEqual({ state: 'unavailable', reason: MEET_REASONS.cantTurnOn });
+      expect(menuOpen(doc)).toBe(false);
+      await vi.advanceTimersByTimeAsync(10_000);
+      expect(menuClicks).toBe(2);
+    });
+
+    it('restore turns captions off through the menu when they were off before Start', async () => {
+      const { doc, control } = setup('menu-captions-off');
+      const clicks = meetCaptionsMenu(doc);
+      control.enable();
+      await vi.advanceTimersByTimeAsync(2000);
+      control.restore();
+      await vi.advanceTimersByTimeAsync(2000);
+      expect(clicks).toEqual({ menu: 4, toggle: 2 });
+      expect(doc.querySelector('[aria-label="Captions and translation"]')!.getAttribute('aria-pressed')).toBe('false');
+      expect(menuOpen(doc)).toBe(false);
+      expect(hiddenContainer(doc)).toBeNull();
+    });
+
+    it('restore right after enable stops the pending menu clicks', async () => {
+      const { doc, control } = setup('menu-captions-on');
+      const clicks = meetCaptionsMenu(doc);
+      setCaptionsButton(doc, false);
+      control.enable();
+      await vi.advanceTimersByTimeAsync(50); // the menu is still opening
+      control.restore(); // captions were off and are still off: nothing to put back
+      await vi.advanceTimersByTimeAsync(3000);
+      expect(clicks.toggle).toBe(0);
     });
   });
 
