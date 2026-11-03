@@ -40,7 +40,8 @@ export function inCall(doc: Document): { value: boolean; tier: Tier | null } {
 }
 
 // ── D2 captions button ──
-const CAPTION_ICONS = ['closed_caption', 'closed_caption_off'];
+/** `translate_cc`: the captions-and-translation menu button that replaced the captions button (decision 110). */
+const CAPTION_ICONS = ['closed_caption', 'closed_caption_off', 'translate_cc'];
 
 export function captionsButton(doc: Document): Located<HTMLElement> {
   const byIcon = buttons(doc).filter((b) => CAPTION_ICONS.includes(iconOf(b)));
@@ -63,6 +64,24 @@ export function captionsOn(button: Element): Located<boolean> {
   if (icon === 'closed_caption_off') return found(false, 2);
   if (icon === 'closed_caption') return found(true, 2);
   return NOTHING;
+}
+
+/** D2a: the captions button opens Meet's captions-and-translation menu instead of switching captions itself. */
+export function opensCaptionsMenu(button: Element): boolean {
+  return button.getAttribute('aria-haspopup') === 'dialog' || iconOf(button) === 'translate_cc';
+}
+
+/**
+ * D2a: the Live captions switch in the open captions-and-translation menu (seen 2026-11-03: a button labelled "Turn
+ * off live captions" first in the dialog, before the speech translation switch with the same jsname). Nothing while
+ * the menu is closed.
+ */
+export function liveCaptionsSwitch(doc: Document): Located<HTMLElement> {
+  const inMenus = [...doc.querySelectorAll('[role="dialog"]')].flatMap(buttons);
+  const byLabel = inMenus.find((b) => /live captions/i.test(labelOf(b)));
+  if (byLabel) return found(byLabel, 3);
+  const byName = inMenus.find((b) => b.getAttribute('jsname') === 'RrG0hf');
+  return byName ? found(byName, 4) : NOTHING;
 }
 
 // ── D3 captions region, items, speaker names ──

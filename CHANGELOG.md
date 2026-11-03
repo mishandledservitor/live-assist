@@ -4,6 +4,10 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+### Fixed
+
+- Captions turn on by themselves again at Start in Google Meet, which now keeps them in a `Captions and translation` menu; before, you had to turn on `Live captions` by hand for speaker names. Stop turns them off again if they were off before.
+
 ## [1.2.0] - 2026-10-23
 
 ### Added

@@ -15,6 +15,8 @@ export const MEET_SNAPSHOTS = [
   'changed-page',
   'real-dom-captions-on',
   'real-dom-captions-off',
+  'menu-captions-on',
+  'menu-captions-off',
 ] as const;
 
 export type MeetSnapshot = (typeof MEET_SNAPSHOTS)[number];
@@ -138,15 +140,89 @@ export function removeMicButton(doc: Document): void {
 /** Sets the captions button's pressed state, icon and (English only) label. */
 export function setCaptionsButton(doc: Document, on: boolean): void {
   const button = [...doc.querySelectorAll<HTMLElement>('button')].find((b) =>
-    /^closed_caption(_off)?$/.test(iconOf(b)),
+    /^(closed_caption(_off)?|translate_cc)$/.test(iconOf(b)),
   );
   if (!button) throw new Error('This snapshot has no captions button');
+  const toggle = liveCaptionsToggle(doc);
+  if (toggle) setToggle(toggle, on);
   // The real page (real-dom-* snapshots, research R13) has no aria-pressed and keeps its icon; only the label changes.
   if (button.hasAttribute('aria-pressed')) {
     button.setAttribute('aria-pressed', String(on));
     const icon = button.querySelector('.google-symbols');
-    if (icon) icon.textContent = on ? 'closed_caption' : 'closed_caption_off';
+    if (icon && icon.textContent !== 'translate_cc') icon.textContent = on ? 'closed_caption' : 'closed_caption_off';
   }
   if (/captions/i.test(button.getAttribute('aria-label') ?? ''))
     button.setAttribute('aria-label', on ? 'Turn off captions (c)' : 'Turn on captions (c)');
+}
+
+// ── The captions-and-translation menu (menu-* snapshots, decision 110) ──
+
+/** The toolbar button that opens the menu (icon `translate_cc`). */
+function captionsMenuButton(doc: Document): HTMLElement {
+  const button = [...doc.querySelectorAll<HTMLElement>('button')].find((b) => iconOf(b) === 'translate_cc');
+  if (!button) throw new Error('This snapshot has no captions menu button');
+  return button;
+}
+
+function liveCaptionsToggle(doc: Document): HTMLElement | null {
+  return doc.querySelector<HTMLElement>('[role="dialog"] button[jsname="RrG0hf"]');
+}
+
+/** The Live captions switch as seen 2026-11-03 when on; the off label and icon were not seen and are guesses. */
+function setToggle(toggle: HTMLElement, on: boolean): void {
+  toggle.setAttribute('aria-label', on ? 'Turn off live captions' : 'Turn on live captions');
+  const icon = toggle.querySelector('.google-symbols');
+  if (icon) icon.textContent = on ? 'check' : 'closed_caption';
+}
+
+/** Opens the menu as Meet does: a dialog with the Live captions and speech translation switches. */
+export function openCaptionsMenu(doc: Document): HTMLElement {
+  const button = captionsMenuButton(doc);
+  const dialog = doc.createElement('div');
+  dialog.setAttribute('role', 'dialog');
+  dialog.innerHTML = `
+    <button jscontroller="O626Fe" jsname="RrG0hf" data-tooltip-enabled="true" class="fDgRnf q7vyEf nQCzZ UDYwAf">
+      <i class="google-symbols" aria-hidden="true"></i><span>Live captions</span>
+    </button>
+    <button jscontroller="O626Fe" jsname="RrG0hf" aria-label="Turn on speech translation" class="fDgRnf q7vyEf nQCzZ GwrzBe">
+      <i class="google-symbols" aria-hidden="true">translate</i><span>Translate speech</span>
+    </button>
+    <button jscontroller="PIVayb" aria-label="Open speech translation settings" role="button" aria-haspopup="dialog" aria-expanded="false">
+      <i class="google-symbols" aria-hidden="true">settings</i>
+    </button>`;
+  setToggle(dialog.querySelector('button')!, button.getAttribute('aria-pressed') === 'true');
+  doc.body.append(dialog);
+  button.setAttribute('aria-expanded', 'true');
+  return dialog;
+}
+
+export function closeCaptionsMenu(doc: Document): void {
+  for (const dialog of doc.querySelectorAll('[role="dialog"]')) dialog.remove();
+  captionsMenuButton(doc).setAttribute('aria-expanded', 'false');
+}
+
+/**
+ * Behaves like Meet's menu: the toolbar button opens and closes it (after `delayMs`), and its Live captions switch
+ * flips captions (after `delayMs`) while the menu stays open. Returns the click counts.
+ */
+export function meetCaptionsMenu(doc: Document, delayMs = 100) {
+  const clicks = { menu: 0, toggle: 0 };
+  const button = captionsMenuButton(doc);
+  button.addEventListener('click', () => {
+    clicks.menu += 1;
+    const open = button.getAttribute('aria-expanded') === 'true';
+    setTimeout(() => {
+      if (open) return closeCaptionsMenu(doc);
+      const toggle = openCaptionsMenu(doc).querySelector('button')!;
+      toggle.addEventListener('click', () => {
+        clicks.toggle += 1;
+        const on = button.getAttribute('aria-pressed') !== 'true';
+        setTimeout(() => {
+          button.setAttribute('aria-pressed', String(on));
+          if (toggle.isConnected) setToggle(toggle, on);
+        }, delayMs);
+      });
+    }, delayMs);
+  });
+  return clicks;
 }
