@@ -14,7 +14,13 @@ import {
   type Ref,
 } from 'react';
 import type { PartialLine } from '../../../core/messaging/protocol';
-import { displayLabel, PENDING_LABEL, PENDING_LABEL_NAME, speakerKey } from '../../../core/transcript/labels';
+import {
+  displayLabel,
+  displayText,
+  PENDING_LABEL,
+  PENDING_LABEL_NAME,
+  speakerKey,
+} from '../../../core/transcript/labels';
 import {
   formatOffset,
   isConfirmedLabel,
@@ -26,6 +32,7 @@ import {
 import { sortSegments } from '../../../core/transcript/ordering';
 import type { RenameTarget } from '../meeting-api';
 import { LabelEditor } from './LabelEditor';
+import { TextEditor, type TextSelection } from './TextEditor';
 
 export interface TranscriptProps {
   segments: readonly TranscriptSegment[];
@@ -35,6 +42,8 @@ export interface TranscriptProps {
   /** 002 US4: with both handlers, every label is a button that opens the label editor. */
   onRenameSpeaker?: (speaker: RenameTarget, name: string) => void;
   onOverrideLine?: (segmentId: string, name: string | null) => void;
+  /** 020 US1: with it, a double-click on a settled line's text opens the text editor. Rejects when not stored. */
+  onOverrideText?: (segmentId: string, text: string | null) => Promise<void>;
   /** 006 FR-013: shown after the last line (Delete transcript for a stopped meeting). */
   footer?: ReactNode;
   /** 003 FR-005: lets a citation bring its line into view. */
@@ -55,6 +64,31 @@ type Renames = Meeting['speakerRenames'];
 
 /** How close to the bottom (px) still counts as "at the bottom". */
 const STICKY_SLACK = 24;
+
+/** The one open editor (020 research R5): a line's label (002) or its text (020), never both. */
+interface OpenEditor {
+  id: string;
+  kind: 'label' | 'text';
+  /** text only: the range to select in the field; null selects all. */
+  selection: TextSelection | null;
+}
+
+/**
+ * 020 R2: the browser's selection inside the line's text (a double-click selects the word under the pointer), as
+ * offsets into that text; null when the selection is elsewhere. A trailing space some platforms add to the word is left out.
+ */
+function selectionIn(span: HTMLElement): TextSelection | null {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return null;
+  const range = selection.getRangeAt(0);
+  if (!span.contains(range.startContainer) || !span.contains(range.endContainer)) return null;
+  const before = document.createRange();
+  before.selectNodeContents(span);
+  before.setEnd(range.startContainer, range.startOffset);
+  const start = before.toString().length;
+  const end = start + range.toString().trimEnd().length;
+  return { start, end };
+}
 
 function Label({
   text,
@@ -117,6 +151,8 @@ const Line = memo(function Line({
   pending,
   cited,
   onEdit,
+  onEditText,
+  editing,
   editor,
 }: {
   segment: TranscriptSegment;
@@ -127,9 +163,13 @@ const Line = memo(function Line({
   cited: boolean;
   /** Stable across renders, so it does not re-render lines. */
   onEdit?: ((segmentId: string, button: HTMLButtonElement) => void) | undefined;
-  /** Only the line being edited gets one. */
+  /** 020: stable too; called on a double-click on the text. */
+  onEditText?: ((segmentId: string, text: HTMLElement) => void) | undefined;
+  /** Only the line being edited gets these. A text editor takes the text's place. */
+  editing?: OpenEditor['kind'] | undefined;
   editor?: ReactNode;
 }) {
+  const textEditor = editing === 'text';
   return (
     <li
       className={cited ? 'line line-cited' : 'line'}
@@ -142,8 +182,25 @@ const Line = memo(function Line({
       ) : (
         <Label text={label} source={source} onClick={onEdit && ((button) => onEdit(segment.id, button))} />
       )}{' '}
-      <span data-text>{segment.text}</span>
-      {editor}
+      {textEditor ? (
+        editor
+      ) : (
+        <>
+          <span
+            data-text
+            onDoubleClick={!pending && onEditText ? (e) => onEditText(segment.id, e.currentTarget) : undefined}
+          >
+            {displayText(segment)}
+          </span>
+          {segment.textOverride !== null && (
+            <>
+              {' '}
+              <span className="line-edited">edited</span>
+            </>
+          )}
+          {editor}
+        </>
+      )}
     </li>
   );
 });
@@ -152,6 +209,7 @@ const Lines = memo(function Lines({
   segments,
   renames,
   onEdit,
+  onEditText,
   editing,
   editor,
   cited,
@@ -160,7 +218,8 @@ const Lines = memo(function Lines({
   renames: Renames;
   cited: string | null;
   onEdit?: ((segmentId: string, button: HTMLButtonElement) => void) | undefined;
-  editing: string | null;
+  onEditText?: ((segmentId: string, text: HTMLElement) => void) | undefined;
+  editing: OpenEditor | null;
   editor: ReactNode;
 }) {
   const ordered = useMemo(() => sortSegments(segments), [segments]);
@@ -177,7 +236,9 @@ const Lines = memo(function Lines({
             pending={label.pending === true}
             cited={s.id === cited}
             onEdit={onEdit}
-            editor={s.id === editing ? editor : undefined}
+            onEditText={onEditText}
+            editing={s.id === editing?.id ? editing.kind : undefined}
+            editor={s.id === editing?.id ? editor : undefined}
           />
         );
       })}
@@ -203,6 +264,7 @@ export function Transcript({
   meeting = null,
   onRenameSpeaker,
   onOverrideLine,
+  onOverrideText,
   footer,
   controlRef,
   follow = true,
@@ -212,22 +274,43 @@ export function Transcript({
   const inProgress = partials.filter((p) => p.text !== '');
   const renames = meeting?.speakerRenames ?? NO_RENAMES;
 
-  // The label editor (002 US4): which line is being edited, and the label button to give focus back to.
-  const [editing, setEditing] = useState<string | null>(null);
-  const editedButton = useRef<HTMLButtonElement | null>(null);
+  // The open editor (002 US4 label, 020 text) and, on close, focus back to the line's label button, or to the line
+  // itself when its label is plain text (020 FR-014).
+  const [editing, setEditing] = useState<OpenEditor | null>(null);
   const editable = onRenameSpeaker !== undefined && onOverrideLine !== undefined;
-  const onEdit = useCallback((segmentId: string, button: HTMLButtonElement) => {
-    editedButton.current = button;
-    setEditing(segmentId);
+  const onEdit = useCallback((segmentId: string) => {
+    setEditing({ id: segmentId, kind: 'label', selection: null });
+  }, []);
+  const onEditText = useCallback((segmentId: string, text: HTMLElement) => {
+    setEditing({ id: segmentId, kind: 'text', selection: selectionIn(text) });
   }, []);
   const closeEditor = useCallback(() => {
+    const id = editing?.id;
     setEditing(null);
-    editedButton.current?.focus();
-  }, []);
+    if (id === undefined) return;
+    const line = scroller.current?.querySelector<HTMLElement>(`[data-segment-id="${CSS.escape(id)}"]`);
+    const button = line?.querySelector<HTMLButtonElement>('.label-button');
+    if (button) return button.focus();
+    if (line) {
+      line.tabIndex = -1;
+      line.focus();
+    }
+  }, [editing?.id]);
 
-  const edited = editing === null ? undefined : segments.find((s) => s.id === editing);
+  const edited = editing === null ? undefined : segments.find((s) => s.id === editing.id);
   let editor: ReactNode = null;
-  if (edited && onRenameSpeaker && onOverrideLine) {
+  if (edited && editing?.kind === 'text' && onOverrideText) {
+    editor = (
+      <TextEditor
+        key={edited.id}
+        current={displayText(edited)}
+        selection={editing.selection}
+        corrected={edited.textOverride !== null}
+        onSave={(text) => onOverrideText(edited.id, text)}
+        onClose={closeEditor}
+      />
+    );
+  } else if (edited && editing?.kind === 'label' && onRenameSpeaker && onOverrideLine) {
     const key = speakerKey(edited);
     // "Others" has no rename-everywhere (decision 35): only this line can be corrected.
     const target: RenameTarget | null = isRenamableKey(key)
@@ -245,11 +328,13 @@ export function Transcript({
       />
     );
   }
+  const editorOpen = editor !== null;
 
   useLayoutEffect(() => {
     const el = scroller.current;
-    if (follow && el && atBottom.current) el.scrollTop = el.scrollHeight;
-  }, [follow, segments, partials]);
+    // 020 FR-011: an open editor is never scrolled away; following resumes when it closes.
+    if (follow && el && atBottom.current && !editorOpen) el.scrollTop = el.scrollHeight;
+  }, [follow, segments, partials, editorOpen]);
 
   // 003 FR-005: a citation scrolls its line into view and highlights it; live lines keep arriving below.
   const [cited, setCited] = useState<string | null>(null);
@@ -298,6 +383,7 @@ export function Transcript({
             segments={segments}
             renames={renames}
             onEdit={editable ? onEdit : undefined}
+            onEditText={onOverrideText ? onEditText : undefined}
             editing={editing}
             editor={editor}
             cited={cited}

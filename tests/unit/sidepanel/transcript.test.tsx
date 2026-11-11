@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { PartialLine } from '@/core/messaging/protocol';
 import { segmentId, type LabelSource, type TranscriptSegment } from '@/core/transcript/model';
@@ -285,5 +285,160 @@ describe('Transcript', () => {
         tall();
       }
     });
+  });
+});
+
+// 020 T007 (US1; FR-001–FR-003, FR-010, FR-011, FR-014; contracts/edit-text-ui.md): a double-click on a settled line's
+// text opens the text editor in place, with the double-clicked word selected.
+describe('editing a line’s text', () => {
+  const textOf = (li: HTMLElement) => li.querySelector<HTMLElement>('[data-text]')!;
+  const editorGroup = () => screen.queryByRole('group', { name: 'Edit line text' });
+  const field = () => within(editorGroup()!).getByRole<HTMLTextAreaElement>('textbox', { name: 'Line text' });
+
+  /** What the browser does on a double-click: select the word under the pointer, then fire dblclick. */
+  function doubleClickWord(span: HTMLElement, word: string) {
+    const node = span.firstChild!;
+    const start = node.textContent!.indexOf(word);
+    const range = document.createRange();
+    range.setStart(node, start);
+    range.setEnd(node, start + word.length);
+    const selection = window.getSelection()!;
+    selection.removeAllRanges();
+    selection.addRange(range);
+    fireEvent.doubleClick(span);
+  }
+
+  function setup(segments: TranscriptSegment[], over: Partial<Parameters<typeof Transcript>[0]> = {}) {
+    const onOverrideText = vi.fn((_id: string, _text: string | null) => Promise.resolve());
+    const props = {
+      segments,
+      partials: [] as PartialLine[],
+      meeting: { speakerRenames: {} },
+      onRenameSpeaker: vi.fn(),
+      onOverrideLine: vi.fn(),
+      onOverrideText,
+      ...over,
+    };
+    const view = render(<Transcript {...props} />);
+    return { ...view, props, onOverrideText };
+  }
+
+  it('opens on a double-click with the word selected, in place of the text', () => {
+    setup([seg(0, 0, 'the cue three budget'), seg(1, 1000, 'next')]);
+    doubleClickWord(textOf(items()[0]!), 'cue');
+    const [first] = items();
+    expect(within(first!).getByRole('group', { name: 'Edit line text' })).toBeTruthy();
+    expect(first!.querySelector('[data-text]')).toBeNull();
+    expect(field().value).toBe('the cue three budget');
+    expect([field().selectionStart, field().selectionEnd]).toEqual([4, 7]);
+    expect(document.activeElement).toBe(field());
+  });
+
+  it('holds the corrected text when the line has one, and selects all without a selection inside the text', () => {
+    setup([{ ...seg(0, 0, 'the cue three budget'), textOverride: 'the Q3 budget' }]);
+    window.getSelection()!.removeAllRanges();
+    fireEvent.doubleClick(textOf(items()[0]!));
+    expect(field().value).toBe('the Q3 budget');
+    expect([field().selectionStart, field().selectionEnd]).toEqual([0, 'the Q3 budget'.length]);
+  });
+
+  it('a single click opens nothing', () => {
+    setup([seg(0, 0, 'hello')]);
+    fireEvent.click(textOf(items()[0]!));
+    expect(editorGroup()).toBeNull();
+  });
+
+  it('the in-progress line and a pending line open nothing', () => {
+    setup([{ ...seg(0, 0, 'pending line'), labelPending: true }], {
+      partials: [{ stream: 'mixed', text: 'still talking' }],
+    });
+    fireEvent.doubleClick(textOf(items()[0]!));
+    const progress = screen
+      .getByRole('region', { name: 'Transcript' })
+      .querySelector<HTMLElement>('[data-in-progress]')!;
+    fireEvent.doubleClick(progress.lastElementChild!);
+    expect(editorGroup()).toBeNull();
+  });
+
+  it('without the handler nothing opens', () => {
+    render(<Transcript segments={[seg(0, 0, 'hello')]} partials={[]} />);
+    fireEvent.doubleClick(textOf(items()[0]!));
+    expect(editorGroup()).toBeNull();
+  });
+
+  it('saves through the handler, then shows the line again with focus on its label button', async () => {
+    const { onOverrideText } = setup([seg(0, 0, 'the cue three budget')]);
+    doubleClickWord(textOf(items()[0]!), 'cue');
+    fireEvent.change(field(), { target: { value: 'the Q3 budget' } });
+    fireEvent.click(within(editorGroup()!).getByRole('button', { name: 'Save' }));
+    await act(() => Promise.resolve());
+    expect(onOverrideText).toHaveBeenCalledWith('m1:mixed:0', 'the Q3 budget');
+    expect(editorGroup()).toBeNull();
+    expect(document.activeElement).toBe(within(items()[0]!).getByRole('button'));
+  });
+
+  it('Escape closes, nothing stored, focus on the label button', () => {
+    const { onOverrideText } = setup([seg(0, 0, 'hello')]);
+    doubleClickWord(textOf(items()[0]!), 'hello');
+    fireEvent.keyDown(field(), { key: 'Escape' });
+    expect(editorGroup()).toBeNull();
+    expect(textOf(items()[0]!).textContent).toBe('hello');
+    expect(onOverrideText).not.toHaveBeenCalled();
+    expect(document.activeElement).toBe(within(items()[0]!).getByRole('button'));
+  });
+
+  it('with plain labels focus returns to the line itself', () => {
+    render(<Transcript segments={[seg(0, 0, 'hello')]} partials={[]} onOverrideText={() => Promise.resolve()} />);
+    expect(within(items()[0]!).queryByRole('button')).toBeNull();
+    doubleClickWord(textOf(items()[0]!), 'hello');
+    fireEvent.keyDown(field(), { key: 'Escape' });
+    expect(document.activeElement).toBe(items()[0]);
+    expect(items()[0]!.tabIndex).toBe(-1);
+  });
+
+  it('new lines arriving keep the typed text, the caret and the focus', () => {
+    const lines = [seg(0, 0, 'hello there')];
+    const { rerender, props } = setup(lines);
+    doubleClickWord(textOf(items()[0]!), 'there');
+    fireEvent.change(field(), { target: { value: 'hello world' } });
+    field().setSelectionRange(5, 5);
+    rerender(
+      <Transcript
+        {...props}
+        segments={[{ ...lines[0]!, speakerLabel: 'Jane', labelSource: 'caption' }, seg(1, 1000, 'more')]}
+        partials={[{ stream: 'mixed', text: 'and' }]}
+      />,
+    );
+    expect(field().value).toBe('hello world');
+    expect([field().selectionStart, field().selectionEnd]).toEqual([5, 5]);
+    expect(document.activeElement).toBe(field());
+    expect(items()).toHaveLength(2);
+  });
+
+  it('opening the label editor closes the text editor, and the other way round', () => {
+    setup([seg(0, 0, 'hello'), seg(1, 1000, 'there')]);
+    doubleClickWord(textOf(items()[0]!), 'hello');
+    fireEvent.click(within(items()[1]!).getByRole('button'));
+    expect(editorGroup()).toBeNull();
+    expect(screen.getByRole('dialog', { name: 'Edit speaker name' })).toBeTruthy();
+    doubleClickWord(textOf(items()[0]!), 'hello');
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(editorGroup()).not.toBeNull();
+  });
+
+  it('does not auto-scroll while an editor is open, and follows again once it closes', () => {
+    const { rerender, props } = setup([seg(0, 0, 'a')]);
+    const log = screen.getByTestId('transcript-scroll');
+    let height = 1000;
+    Object.defineProperty(log, 'scrollHeight', { configurable: true, get: () => height });
+    Object.defineProperty(log, 'clientHeight', { configurable: true, get: () => 300 });
+    log.scrollTop = 700;
+    fireEvent.scroll(log);
+    doubleClickWord(textOf(items()[0]!), 'a');
+    height = 1200;
+    rerender(<Transcript {...props} segments={[seg(0, 0, 'a'), seg(1, 10, 'b')]} />);
+    expect(log.scrollTop).toBe(700);
+    fireEvent.keyDown(field(), { key: 'Escape' });
+    expect(log.scrollTop).toBe(1200);
   });
 });
