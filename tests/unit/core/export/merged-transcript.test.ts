@@ -154,6 +154,18 @@ describe('mergedTranscript: speakers from the captions', () => {
   });
 });
 
+// 020 T011 (FR-006): the merged file is built from the corrected words.
+describe('mergedTranscript: a corrected line (020)', () => {
+  it('writes the corrected text and aligns its words with the captions', () => {
+    expect(
+      merged(
+        [line(0, 'We should sip the beater on Friday.', { textOverride: 'We should ship the beta on Friday.' })],
+        [cap(1, 'Sarah Brown', 'we should ship the beta on friday')],
+      ),
+    ).toEqual(['[00:00] Sarah Brown: We should ship the beta on Friday.']);
+  });
+});
+
 describe('mergedTranscript: sentences and lines', () => {
   it('a sentence goes to the speaker with the most weight; a match outweighs an unplaced word, and on a tie a name beats "Others"', () => {
     // "alphanumeric" matches Sarah (weight 2); the next two words sit between Sarah and Mike, unplaced (1 each).

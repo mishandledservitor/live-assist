@@ -4,7 +4,7 @@
 // format left out). Built only for a download after the meeting; the live transcript is never touched (decision 94).
 // The caption text decides speakers inside this module and is never written into the file. Platform-free and pure.
 import type { StoredCaptionTurn } from '../captions/model';
-import { displayLabel } from '../transcript/labels';
+import { displayLabel, displayText, isOverridden } from '../transcript/labels';
 import type { Meeting, TranscriptSegment } from '../transcript/model';
 import { OTHERS_LABEL } from '../transcript/segment-builder';
 import { captionSpeaker } from './captions-file';
@@ -68,6 +68,8 @@ interface Line {
   norms: string[];
   /** A single-line correction: every word of the line is under it (spec A1). */
   correction: string | null;
+  /** The user corrected the line's speaker or text (020): a human correction is never removed as a repeat. */
+  corrected: boolean;
   /** The live line's own name, when the captions use it (research R4). */
   hint: string | null;
 }
@@ -111,7 +113,7 @@ function transcriptLines(
   captionNames: ReadonlySet<string>,
 ): Line[] {
   return writtenSegments(segments).map((segment) => {
-    const tokens = oneLine(segment.text).split(' ');
+    const tokens = oneLine(displayText(segment)).split(' ');
     const correction = segment.labelOverride ? oneLine(segment.labelOverride) : null;
     const label = displayLabel(segment, meeting);
     const named = correction === null && label.source === 'caption' ? oneLine(label.text) : null;
@@ -120,6 +122,7 @@ function transcriptLines(
       tokens,
       norms: tokens.map(normaliseWord),
       correction,
+      corrected: isOverridden(segment),
       hint: named !== null && captionNames.has(named) ? named : null,
     };
   });
@@ -326,7 +329,7 @@ function repeatedLines(lines: readonly Line[], rec: Aligned, anchored: Uint8Arra
     const from = r;
     r += line.norms.filter((w) => w !== '').length;
     const words = Array.from({ length: r - from }, (_, k) => from + k);
-    const repeated = line.correction === null && words.length > 0 && words.every((w) => source[w]! >= 0);
+    const repeated = !line.corrected && words.length > 0 && words.every((w) => source[w]! >= 0);
     if (repeated) {
       run.push(index);
       runWords.push(...words);

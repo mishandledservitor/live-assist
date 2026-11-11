@@ -61,6 +61,7 @@ function seg(seq: number, startMs: number, text: string, label: Partial<Transcri
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     words: [],
     timing: 'words',
     sessionId: 's1',
@@ -100,6 +101,19 @@ describe('transcriptFile', () => {
       seg(3, 2_000, 'Three.', tom),
     ]);
     expect(lines).toEqual(['[00:00] Tom Doe: One.', '[00:01] Mike: Two.', '[00:02] Tom Doe: Three.']);
+  });
+
+  // 020 T011 (FR-006): the file holds the corrected text, on one line.
+  it('writes a corrected line with its corrected text', () => {
+    expect(
+      transcriptFileLines(meeting(), [seg(1, 0, 'We ship on Monday.', { textOverride: 'We ship on Friday.' })]),
+    ).toEqual(['[00:00] Others: We ship on Friday.']);
+  });
+
+  it('writes a corrected line whose transcribed text was empty', () => {
+    expect(transcriptFileLines(meeting(), [seg(1, 0, ' ', { textOverride: 'Said.' })])).toEqual([
+      '[00:00] Others: Said.',
+    ]);
   });
 
   it('keeps minutes counting past an hour', () => {

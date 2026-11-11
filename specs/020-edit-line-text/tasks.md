@@ -36,7 +36,7 @@ None: no new dependency or configuration.
 **Independent test**: correct a line, then check chat context, transcript file, merged file and a reopened meeting.
 
 - [x] T010 [P] [US2] Chat: `renderLine` in `src/core/chat/context.ts` and `textsAt` in `src/core/chat/citations.ts` use `displayText`. Tests first in `tests/unit/core/chat/context.test.ts` (corrected text sent; a line corrected after an earlier turn is re-sent) and `tests/unit/core/chat/citations.test.ts` (a quote of the corrected text links).
-- [ ] T011 [P] [US2] Downloads: `src/core/export/transcript-file.ts` (`writable`, the line) and `src/core/export/merged-transcript.ts` (`transcriptLines` tokens from `displayText`; a text-corrected line counts as corrected for the repeat check) use the corrected text. Tests first in `tests/unit/core/export/transcript-file.test.ts`, `merged-transcript.test.ts`, `merged-repeats.test.ts`.
+- [x] T011 [P] [US2] Downloads: `src/core/export/transcript-file.ts` (`writable`, the line) and `src/core/export/merged-transcript.ts` (`transcriptLines` tokens from `displayText`; a text-corrected line counts as corrected for the repeat check) use the corrected text. Tests first in `tests/unit/core/export/transcript-file.test.ts`, `merged-transcript.test.ts`, `merged-repeats.test.ts`.
 
 ## Phase 5: User Story 3 — go back to what was heard (P2)
 
