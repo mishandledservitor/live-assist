@@ -8,6 +8,14 @@
 
 **Input**: User description: "Sometimes during a meeting I see a mistranscription I want to be able to edit in the moment. I want to be able to select a block that has already been tagged and edit the text of it."
 
+## Clarifications
+
+### Session 2026-11-11
+
+- Q: How does a line open for editing? → A: A double-click on its text (owner, Q1 B). A single click and a drag keep selecting text as now.
+- Q: Can a past meeting on the Transcripts screen be edited? → A: No (owner, Q2 A). Editing works in the main view while the meeting runs and after Stop until the transcript is closed; past meetings stay read-only, as they are for speaker corrections.
+- Q: Is a corrected line marked? → A: Yes, a small visible `edited` mark on the line, named for screen readers (owner, Q3 A). It shows wherever the line is shown, past transcripts included.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Correct a mistranscribed line during the meeting (Priority: P1)
@@ -20,12 +28,13 @@ During a meeting the user sees a finished line whose text is wrong ("the cue thr
 
 **Acceptance Scenarios**:
 
-1. **Given** a settled line (its speaker shown, not the "…" placeholder and not the in-progress line), **When** the user selects its text, **Then** the text opens for editing in place, holding the line's current text with the cursor at the point the user selected.
+1. **Given** a settled line (its speaker shown, not the "…" placeholder and not the in-progress line), **When** the user double-clicks its text, **Then** the text opens for editing in place, holding the line's current text with the cursor at the word the user double-clicked.
 2. **Given** a line open for editing, **When** the user changes the text and saves (Enter or `Save`), **Then** the line shows the new text, its time and speaker are unchanged, and focus returns to the line.
 3. **Given** a line open for editing, **When** the user cancels (Escape or `Cancel`), **Then** the line shows the text it had before and nothing is stored.
 4. **Given** a line open for editing, **When** new lines arrive or other lines settle, **Then** the typed text, the cursor and the open editor are kept, and the transcript does not scroll the editor out of view.
-5. **Given** the in-progress line or a line still showing the "…" placeholder, **When** the user selects its text, **Then** nothing opens: only settled lines can be edited.
-6. **Given** the user drags across text to select and copy it, **When** they release, **Then** the selection stays as a selection and no editor opens.
+5. **Given** the in-progress line or a line still showing the "…" placeholder, **When** the user double-clicks its text, **Then** nothing opens: only settled lines can be edited.
+6. **Given** a settled line, **When** the user single-clicks its text or drags across text to select and copy it, **Then** the selection behaves as it does today and no editor opens.
+7. **Given** a past meeting opened from the Transcripts screen, **When** the user double-clicks a line, **Then** nothing opens: past transcripts are read-only.
 
 ---
 
@@ -35,7 +44,7 @@ Once a line's text is corrected, everything built on the transcript uses the cor
 
 **Why this priority**: A correction that only changes what is on screen would leave the downloaded file and Ask's answers wrong, which is the reason the user corrected the line.
 
-**Independent Test**: Correct a line, then ask a question whose answer is in that line, download the transcript, reopen the panel and open the meeting from Transcripts; each shows the corrected text.
+**Independent Test**: Correct a line, then ask a question whose answer is in that line, download the transcript, reopen the panel and open the meeting from Transcripts (read-only there); each shows the corrected text.
 
 **Acceptance Scenarios**:
 
@@ -76,15 +85,15 @@ The user corrected a line and then realises the original was right, or wants to 
 
 ### Functional Requirements
 
-- **FR-001**: Users MUST be able to open the text of a settled transcript line for editing by selecting it, [NEEDS CLARIFICATION: how a line is opened for editing — a single click on its text, a double-click, or a separate edit control on the line?]
+- **FR-001**: Users MUST be able to open the text of a settled transcript line for editing by double-clicking it; a single click or a drag MUST keep selecting text as before. Keyboard users MUST be able to open the same editor from a focused line (the key is decided in the plan).
 - **FR-002**: Only settled lines MUST be editable: not the in-progress line and not a line whose speaker still shows the pending placeholder.
-- **FR-003**: Editing MUST be possible in the main view while a meeting runs and after it stops until the transcript is closed, [NEEDS CLARIFICATION: also on a past meeting opened from the Transcripts screen, which today is read-only for speaker corrections too?]
+- **FR-003**: Editing MUST be possible in the main view while a meeting runs and after it stops until the transcript is closed (014). A past meeting opened from the Transcripts screen MUST stay read-only.
 - **FR-004**: Saving MUST store the corrected text as part of the meeting's record, in the same place as the line, so it survives the panel closing and an extension reload.
 - **FR-005**: The original transcribed text MUST be kept unchanged beside the correction.
 - **FR-006**: Every consumer of the transcript (the panel, Ask's context and citations, notes, `Download transcript` and 016's merged file, past transcripts) MUST use the corrected text where a line has one.
 - **FR-007**: Corrected text MUST be one line of 1–2,000 characters after trimming; line breaks MUST be turned into spaces; empty text MUST be refused with an error stating what to enter.
 - **FR-008**: Saving text equal to the original MUST clear the correction; `Restore original` MUST clear it too.
-- **FR-009**: A corrected line MUST be marked as corrected, [NEEDS CLARIFICATION: visible mark on the line (e.g. "edited") with a screen-reader name, or no visible mark and only `Restore original` in the editor?]
+- **FR-009**: A corrected line MUST carry a small visible `edited` mark, named for screen readers, wherever the line is shown (main view and past transcripts); a line without a correction MUST carry none.
 - **FR-010**: Editing a line MUST NOT interrupt the meeting: capture, transcription, new lines arriving and lines settling continue, and an open editor keeps its typed text and cursor through them.
 - **FR-011**: While a line is open for editing, the transcript MUST NOT auto-scroll it out of view.
 - **FR-012**: A text correction and a speaker correction (rename everywhere, single-line override) on the same line MUST be independent: each survives the other.

@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,4 +31,4 @@
 
 ## Notes
 
-- Three markers open, put to the owner on 2026-11-11: FR-001 (how a line opens for editing), FR-003 (past transcripts editable), FR-009 (visible corrected mark).
+- All three markers answered by the owner 2026-11-11: FR-001 double-click, FR-003 past transcripts read-only, FR-009 visible `edited` mark.
