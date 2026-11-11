@@ -4,6 +4,8 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-11
+
 ### Added
 
 - **Correct a line's text** while the meeting runs or after Stop: double-click a line's text, and the word you double-clicked is selected, ready to retype; Enter saves, Escape cancels. From the keyboard, open the line's speaker name and choose `Edit text`. A corrected line is marked `edited`, and its corrected text is what questions, `Download transcript` and the Transcripts screen use. `Restore original` brings back what was transcribed. Lines of past meetings on the Transcripts screen cannot be edited.
