@@ -130,7 +130,12 @@ export const MAX_LABEL_LENGTH = 60;
 export type LabelCommand =
   /** Never `others` (red-team 2026-10-08, decision 35): "Others" lines are corrected one at a time. */
   | { type: 'labels/rename'; meetingId: string; speakerKey: RenamableKey; name: string }
-  | { type: 'labels/override'; meetingId: string; segmentId: string; name: string | null };
+  | { type: 'labels/override'; meetingId: string; segmentId: string; name: string | null }
+  /** 020: a line's corrected text (normalised by parseLineText), or null to restore what was transcribed. */
+  | { type: 'text/override'; meetingId: string; segmentId: string; text: string | null };
+
+/** 020: the longest corrected line, in characters after normalising (FR-007). */
+export const MAX_LINE_TEXT_LENGTH = 2_000;
 
 // ── Chat: side panel ↔ service worker over the `chat` port (003 contracts/chat-messages.md) ──
 export const CHAT_PORT_NAME = 'chat';
@@ -168,6 +173,16 @@ export function parseLabelName(v: unknown): string | null {
   if (!isStr(v)) return null;
   const name = v.trim();
   return name.length >= 1 && name.length <= MAX_LABEL_LENGTH && !/[\r\n]/.test(name) ? name : null;
+}
+
+/**
+ * 020: a line's text the user typed: line breaks and white-space runs become one space, trimmed, 1–2,000 characters.
+ * Returns the normalised text.
+ */
+export function parseLineText(v: unknown): string | null {
+  if (!isStr(v)) return null;
+  const text = v.replace(/\s+/g, ' ').trim();
+  return text.length >= 1 && text.length <= MAX_LINE_TEXT_LENGTH ? text : null;
 }
 
 const MAX_CAPTION_NAME = 200;
@@ -232,6 +247,8 @@ function isSegment(v: unknown): v is TranscriptSegment {
     (v.captionName === undefined || v.captionName === null || isStr(v.captionName)) &&
     (v.captionSelf === undefined || typeof v.captionSelf === 'boolean') &&
     (v.labelOverride === undefined || v.labelOverride === null || isStr(v.labelOverride)) &&
+    // 020 field: absent on records stored before 020.
+    (v.textOverride === undefined || v.textOverride === null || isStr(v.textOverride)) &&
     (v.schemaVersion === undefined || v.schemaVersion === 1 || v.schemaVersion === 2) &&
     (v.labelPending === undefined || typeof v.labelPending === 'boolean') &&
     Array.isArray(v.words) &&
@@ -399,6 +416,13 @@ export const parseLabelCommand = guarded<LabelCommand>((m) => {
         return { type: 'labels/override', meetingId: m.meetingId, segmentId: m.segmentId, name: null };
       const name = parseLabelName(m.name);
       return name ? { type: 'labels/override', meetingId: m.meetingId, segmentId: m.segmentId, name } : null;
+    }
+    case 'text/override': {
+      if (!isStr(m.segmentId)) return null;
+      if (m.text === null)
+        return { type: 'text/override', meetingId: m.meetingId, segmentId: m.segmentId, text: null };
+      const text = parseLineText(m.text);
+      return text ? { type: 'text/override', meetingId: m.meetingId, segmentId: m.segmentId, text } : null;
     }
     default:
       return null;

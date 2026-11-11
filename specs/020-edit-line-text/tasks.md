@@ -11,7 +11,7 @@ None: no new dependency or configuration.
 ## Phase 2: Foundational (blocks every story)
 
 - [x] T001 [P] `TranscriptSegment.textOverride: string | null` in `src/core/transcript/model.ts`; `normaliseSegment` defaults it to `null` and `displayText(segment)` returns `textOverride ?? text` in `src/core/transcript/labels.ts`; new segments from `src/core/transcript/segment-builder.ts` carry `null`; split pieces reset it in `src/core/transcript/split.ts`. Tests first: `tests/unit/core/transcript/labels.test.ts` (old record reads `null`; `displayText` both ways), `tests/unit/core/transcript/split.test.ts` (pieces carry `null`). Update `tests/support/stored-meetings.ts` builders to include the field.
-- [ ] T002 [P] `parseLineText(raw)` in `src/core/messaging/protocol.ts`: line breaks and white-space runs → one space, trimmed, 1–2,000 characters, else `null`; `LabelCommand` gains `text/override` (text string or `null`), parsed by `parseLabelCommand`; `isSegment` accepts `textOverride` absent, `null` or string. Tests first in `tests/unit/core/messaging/protocol.test.ts`.
+- [x] T002 [P] `parseLineText(raw)` in `src/core/messaging/protocol.ts`: line breaks and white-space runs → one space, trimmed, 1–2,000 characters, else `null`; `LabelCommand` gains `text/override` (text string or `null`), parsed by `parseLabelCommand`; `isSegment` accepts `textOverride` absent, `null` or string. Tests first in `tests/unit/core/messaging/protocol.test.ts`.
 
 ## Phase 3: User Story 1 — correct a line during the meeting (P1) 🎯 MVP
 
