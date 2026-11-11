@@ -33,8 +33,7 @@ const oneLine = (text: string) => text.replace(/\s+/g, ' ').trim();
  * Written lines are finished and settled: in-progress text is never a segment, and a line whose name is still pending
  * (design decision 37) would otherwise be written as "Others" and then named in the panel (007 FR-006).
  */
-const writable = (segment: TranscriptSegment) =>
-  segment.labelPending !== true && oneLine(displayText(segment)) !== '';
+const writable = (segment: TranscriptSegment) => segment.labelPending !== true && oneLine(displayText(segment)) !== '';
 
 /** The lines a transcript file holds, in time order (016's merged file is built from the same lines). */
 export function writtenSegments(segments: readonly TranscriptSegment[]): TranscriptSegment[] {

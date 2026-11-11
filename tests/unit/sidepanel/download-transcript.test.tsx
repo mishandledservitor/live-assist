@@ -56,6 +56,7 @@ const seg = (seq: number, text: string, extra: Partial<TranscriptSegment> = {}):
   captionName: 'Tom',
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   schemaVersion: 2,
   words: [],
   timing: 'words',

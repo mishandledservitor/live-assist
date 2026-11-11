@@ -409,9 +409,12 @@ describe('020 line text (data-model.md "Messages")', () => {
   });
 
   it('normalises the text of a text/override command', () => {
-    expect(
-      parseLabelCommand({ type: 'text/override', meetingId: 'm1', segmentId: 's', text: ' We\nship. ' }),
-    ).toEqual({ type: 'text/override', meetingId: 'm1', segmentId: 's', text: 'We ship.' });
+    expect(parseLabelCommand({ type: 'text/override', meetingId: 'm1', segmentId: 's', text: ' We\nship. ' })).toEqual({
+      type: 'text/override',
+      meetingId: 'm1',
+      segmentId: 's',
+      text: 'We ship.',
+    });
   });
 
   it.each([

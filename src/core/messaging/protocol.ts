@@ -420,8 +420,7 @@ export const parseLabelCommand = guarded<LabelCommand>((m) => {
     }
     case 'text/override': {
       if (!isStr(m.segmentId)) return null;
-      if (m.text === null)
-        return { type: 'text/override', meetingId: m.meetingId, segmentId: m.segmentId, text: null };
+      if (m.text === null) return { type: 'text/override', meetingId: m.meetingId, segmentId: m.segmentId, text: null };
       const text = parseLineText(m.text);
       return text ? { type: 'text/override', meetingId: m.meetingId, segmentId: m.segmentId, text } : null;
     }

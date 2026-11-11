@@ -75,6 +75,7 @@ const seg = (seq: number, speakerLabel = 'Others', labelSource: TranscriptSegmen
     captionName: labelSource === 'caption' ? speakerLabel : null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     schemaVersion: 2,
     words: [],
     timing: 'words',

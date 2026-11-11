@@ -894,7 +894,10 @@ describe('MeetingRuntime text commands (020)', () => {
     await playScript(3600, mix, script);
     await settle(runtime.command(textOverride('m1:mixed:0', 'Corrected.')));
     await playScript(6000, mix, script);
-    expect((await repo.listSegments('m1'))[0]).toMatchObject({ textOverride: 'Corrected.', speakerLabel: 'Emma Jones' });
+    expect((await repo.listSegments('m1'))[0]).toMatchObject({
+      textOverride: 'Corrected.',
+      speakerLabel: 'Emma Jones',
+    });
   });
 
   it('a line whose text was corrected before it settles is not split', async () => {

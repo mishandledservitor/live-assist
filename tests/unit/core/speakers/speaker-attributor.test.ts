@@ -31,6 +31,7 @@ function segment(seq: number, startMs: number, endMs: number): TranscriptSegment
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     words: Array.from({ length: n }, (_, i) => ({
       text: 'w',
       startMs: startMs + i * step,

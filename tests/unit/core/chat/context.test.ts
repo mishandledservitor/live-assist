@@ -292,9 +292,7 @@ describe('a corrected line (020)', () => {
   const corrected = (s: TranscriptSegment): TranscriptSegment => ({ ...s, textOverride: 'Pricing rises in March.' });
 
   it('is sent with its corrected text', () => {
-    expect(renderLine(corrected(standup.segments[1]!), standup.meeting)).toBe(
-      '[00:12] Jane: Pricing rises in March.',
-    );
+    expect(renderLine(corrected(standup.segments[1]!), standup.meeting)).toBe('[00:12] Jane: Pricing rises in March.');
   });
 
   it('a line corrected after an earlier question is sent again with the correction', () => {

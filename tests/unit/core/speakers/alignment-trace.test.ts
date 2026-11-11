@@ -26,6 +26,7 @@ function segment(seq: number, startMs: number, fields: Partial<TranscriptSegment
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     words: [
       { text: 'Kickoff', startMs, endMs: startMs + 500 },
       { text: 'tomorrow', startMs: startMs + 500, endMs: startMs + 1000 },

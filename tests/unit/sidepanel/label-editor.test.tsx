@@ -22,6 +22,7 @@ function seg(seq: number, over: Partial<TranscriptSegment> = {}): TranscriptSegm
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     words: [],
     timing: 'words',
     sessionId: 's',

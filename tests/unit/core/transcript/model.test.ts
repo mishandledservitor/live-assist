@@ -51,6 +51,7 @@ function seg(seq: number, startMs: number): TranscriptSegment {
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     schemaVersion: 2,
     words: [],
     timing: 'words',
