@@ -166,6 +166,35 @@ describe('LabelEditor', () => {
     expect(labelButton(1).textContent).toContain('Others');
   });
 
+  // 020 T008 (FR-001, FR-014, research R3): the keyboard path to the text editor.
+  it('"Edit text" closes the dialog and opens the text editor on that line with all its text selected', () => {
+    render(
+      <Transcript
+        segments={segments}
+        partials={[]}
+        meeting={{ speakerRenames: {} }}
+        onRenameSpeaker={vi.fn()}
+        onOverrideLine={vi.fn()}
+        onOverrideText={vi.fn(() => Promise.resolve())}
+      />,
+    );
+    fireEvent.click(labelButton(1));
+    fireEvent.click(within(dialog()).getByRole('button', { name: 'Edit text' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    const group = within(line(1)).getByRole('group', { name: 'Edit line text' });
+    const field = within(group).getByRole<HTMLTextAreaElement>('textbox', { name: 'Line text' });
+    expect(document.activeElement).toBe(field);
+    expect([field.selectionStart, field.selectionEnd]).toEqual([0, 'line 1'.length]);
+    fireEvent.keyDown(field, { key: 'Escape' });
+    expect(document.activeElement).toBe(labelButton(1));
+  });
+
+  it('offers no "Edit text" when the text cannot be edited', () => {
+    setup();
+    fireEvent.click(labelButton(1));
+    expect(within(dialog()).queryByRole('button', { name: 'Edit text' })).toBeNull();
+  });
+
   it('without edit handlers labels are plain text', () => {
     render(<Transcript segments={segments} partials={[]} meeting={{ speakerRenames: {} }} />);
     expect(within(line(0)).queryByRole('button')).toBeNull();

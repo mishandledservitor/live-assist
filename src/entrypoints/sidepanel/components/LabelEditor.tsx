@@ -1,7 +1,8 @@
 // Fix a wrong or missing name (002 US4, research R10): a small dialog opened from a transcript label. "Rename
 // everywhere" renames the speaker on all its lines, past and future (FR-018); "Just this line" overrides one line
 // (FR-019). An "Others" line has no rename-everywhere (decision 35): "Others" is not one person. Names are 1–60
-// characters on one line, the same rule as the user's own name.
+// characters on one line, the same rule as the user's own name. `Edit text` is the keyboard path to the line's text
+// editor (020 research R3).
 import { useId, useState } from 'react';
 import { parseLabelName } from '../../../core/messaging/protocol';
 
@@ -16,6 +17,8 @@ export interface LabelEditorProps {
   /** Absent for an "Others" line, which can only be overridden on its own (decision 35). */
   onRename?: ((name: string) => void) | undefined;
   onOverride: (name: string | null) => void;
+  /** 020 R3: opens the line's text editor in place of this one; absent when the text cannot be edited. */
+  onEditText?: (() => void) | undefined;
   onClose: () => void;
 }
 
@@ -95,6 +98,11 @@ export function LabelEditor(props: LabelEditorProps) {
               }}
             >
               Reset this line
+            </button>
+          )}{' '}
+          {props.onEditText && (
+            <button type="button" className="secondary" onClick={props.onEditText}>
+              Edit text
             </button>
           )}{' '}
           <button type="button" className="secondary" onClick={props.onClose}>

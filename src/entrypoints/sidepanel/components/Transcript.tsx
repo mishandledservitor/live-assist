@@ -324,6 +324,11 @@ export function Transcript({
         suggestions={meetingNames(segments, renames)}
         onRename={target ? (name) => onRenameSpeaker(target, name) : undefined}
         onOverride={(name) => onOverrideLine(edited.id, name)}
+        onEditText={
+          onOverrideText && edited.labelPending !== true
+            ? () => setEditing({ id: edited.id, kind: 'text', selection: null })
+            : undefined
+        }
         onClose={closeEditor}
       />
     );
