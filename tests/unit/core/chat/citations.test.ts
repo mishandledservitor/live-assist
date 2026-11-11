@@ -118,3 +118,22 @@ describe('parseAnswer: quotation guard (T087)', () => {
     ).toEqual(['citation']);
   });
 });
+
+// 020 T010: the quotation guard checks the text the user sees (research R8).
+describe('parseAnswer: a corrected line (020)', () => {
+  const at12 = standup.findIndex((s) => s.startMs === 12_000);
+  const segments = standup.map((s, i) => (i === at12 ? { ...s, textOverride: 'Pricing rises in March.' } : s));
+  const kinds = (answer: string) => parseAnswer(answer, segments).filter((p) => p.kind !== 'text');
+
+  it('a quote of the corrected text links', () => {
+    expect(kinds('Jane said "pricing rises in March" [00:12].')).toEqual([
+      { kind: 'citation', label: '00:12', segmentId: id(standup, 12_000) },
+    ]);
+  });
+
+  it('a quote of the replaced text no longer does', () => {
+    expect(kinds('Jane said "pricing stays at the current tier" [00:12].')).toEqual([
+      { kind: 'unmatched', text: '[00:12]' },
+    ]);
+  });
+});

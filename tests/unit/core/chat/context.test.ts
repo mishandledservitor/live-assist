@@ -286,3 +286,21 @@ describe('earlier turns are replayed in full (failure B constraint)', () => {
     ]);
   });
 });
+
+// 020 T010: Ask reads the corrected text (FR-006, research R8).
+describe('a corrected line (020)', () => {
+  const corrected = (s: TranscriptSegment): TranscriptSegment => ({ ...s, textOverride: 'Pricing rises in March.' });
+
+  it('is sent with its corrected text', () => {
+    expect(renderLine(corrected(standup.segments[1]!), standup.meeting)).toBe(
+      '[00:12] Jane: Pricing rises in March.',
+    );
+  });
+
+  it('a line corrected after an earlier question is sent again with the correction', () => {
+    const first = buildContext(standup.meeting, standup.segments, []);
+    const segments = standup.segments.map((s, i) => (i === 1 ? corrected(s) : s));
+    const second = buildContext(standup.meeting, segments, [turnFrom(first, 0)]);
+    expect(second.contextBlock.split('\n')).toEqual([LATER_BLOCK_HEADER, '[00:12] Jane: Pricing rises in March.']);
+  });
+});
