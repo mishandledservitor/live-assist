@@ -34,8 +34,8 @@ jobs:
         env:
           LIVE_ASSIST_REQUIRE_BUILD: '1'
       # The runner image already has Chrome's system libraries and xvfb; when Ubuntu's package archive is unreachable
-      # (2026-11-11), install the browser alone instead of failing the run.
-      - run: pnpm exec playwright install --with-deps chromium || pnpm exec playwright install chromium
+      # or slow (2026-11-11: 9 minutes, then the job timed out), give it 2 minutes and then install the browser alone.
+      - run: timeout 120 pnpm exec playwright install --with-deps chromium || pnpm exec playwright install chromium
       - run: xvfb-run pnpm test:e2e
       - if: failure()
         uses: actions/upload-artifact@v7
