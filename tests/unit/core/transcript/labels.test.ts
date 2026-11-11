@@ -1,6 +1,13 @@
 // T011: speaker keys and display labels (002 data-model.md "Display label", research R9).
 import { describe, expect, it } from 'vitest';
-import { displayLabel, normaliseMeeting, normaliseName, normaliseSegment, speakerKey } from '@/core/transcript/labels';
+import {
+  displayLabel,
+  displayText,
+  normaliseMeeting,
+  normaliseName,
+  normaliseSegment,
+  speakerKey,
+} from '@/core/transcript/labels';
 import type { Meeting, TranscriptSegment } from '@/core/transcript/model';
 
 const segment = (over: Partial<TranscriptSegment> = {}): TranscriptSegment => ({
@@ -17,6 +24,7 @@ const segment = (over: Partial<TranscriptSegment> = {}): TranscriptSegment => ({
   captionName: null,
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   words: [],
   timing: 'words',
   sessionId: 's',
@@ -101,14 +109,23 @@ describe('normalising v1 records on read', () => {
     delete v1.captionName;
     delete v1.captionSelf;
     delete v1.labelOverride;
+    delete v1.textOverride;
     delete v1.schemaVersion;
     expect(normaliseSegment(v1 as TranscriptSegment)).toEqual({
       ...segment(),
       captionName: null,
       captionSelf: false,
       labelOverride: null,
+      textOverride: null,
       schemaVersion: 1,
     });
+  });
+
+  it('reads a record from before 020 as not text-corrected and keeps a correction', () => {
+    const old = segment() as Partial<TranscriptSegment>;
+    delete old.textOverride;
+    expect(normaliseSegment(old as TranscriptSegment).textOverride).toBeNull();
+    expect(normaliseSegment(segment({ textOverride: 'Hi.' })).textOverride).toBe('Hi.');
   });
 
   it('keeps v2 segment fields', () => {
@@ -165,5 +182,15 @@ describe('displayLabel: the pending placeholder', () => {
 
   it('a line read back from storage is never pending', () => {
     expect(normaliseSegment(segment({ labelPending: true })).labelPending).toBeUndefined();
+  });
+});
+
+describe('displayText (020)', () => {
+  it('is the transcribed text without a correction', () => {
+    expect(displayText(segment())).toBe('Hello.');
+  });
+
+  it('is the correction when there is one', () => {
+    expect(displayText(segment({ textOverride: 'Hallo.' }))).toBe('Hallo.');
   });
 });

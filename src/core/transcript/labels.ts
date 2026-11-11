@@ -46,6 +46,11 @@ export function displayLabel(
   return shown(segment.speakerLabel, segment.labelSource);
 }
 
+/** 020: the line's text as every consumer shows it: the user's correction, else what was transcribed. */
+export function displayText(segment: Pick<TranscriptSegment, 'text' | 'textOverride'>): string {
+  return segment.textOverride ?? segment.text;
+}
+
 /** Records written before 002 lack the 002 fields; reads fill them in (no IndexedDB version bump, research R9). */
 export function normaliseSegment(segment: TranscriptSegment): TranscriptSegment {
   const raw: Partial<TranscriptSegment> = segment;
@@ -56,6 +61,7 @@ export function normaliseSegment(segment: TranscriptSegment): TranscriptSegment 
     captionName: raw.captionName ?? null,
     captionSelf: raw.captionSelf ?? false,
     labelOverride: raw.labelOverride ?? null,
+    textOverride: raw.textOverride ?? null,
     schemaVersion: raw.schemaVersion ?? 1,
   };
 }

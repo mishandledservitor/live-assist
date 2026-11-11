@@ -116,6 +116,7 @@ export class SegmentBuilder {
       captionName: null,
       captionSelf: false,
       labelOverride: null,
+      textOverride: null,
       words,
       timing,
       sessionId: this.sessionId,
