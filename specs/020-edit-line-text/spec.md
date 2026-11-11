@@ -28,7 +28,7 @@ During a meeting the user sees a finished line whose text is wrong ("the cue thr
 
 **Acceptance Scenarios**:
 
-1. **Given** a settled line (its speaker shown, not the "…" placeholder and not the in-progress line), **When** the user double-clicks its text, **Then** the text opens for editing in place, holding the line's current text with the cursor at the word the user double-clicked.
+1. **Given** a settled line (its speaker shown, not the "…" placeholder and not the in-progress line), **When** the user double-clicks its text, **Then** the text opens for editing in place, holding the line's current text with the word the user double-clicked selected, so typing replaces it.
 2. **Given** a line open for editing, **When** the user changes the text and saves (Enter or `Save`), **Then** the line shows the new text, its time and speaker are unchanged, and focus returns to the line.
 3. **Given** a line open for editing, **When** the user cancels (Escape or `Cancel`), **Then** the line shows the text it had before and nothing is stored.
 4. **Given** a line open for editing, **When** new lines arrive or other lines settle, **Then** the typed text, the cursor and the open editor are kept, and the transcript does not scroll the editor out of view.
@@ -49,7 +49,7 @@ Once a line's text is corrected, everything built on the transcript uses the cor
 **Acceptance Scenarios**:
 
 1. **Given** a corrected line, **When** the user asks a question about the meeting, **Then** the transcript sent as context carries the corrected text, and a citation of that line points to it.
-2. **Given** a corrected line in a Meet call with captions, **When** the user downloads the merged transcript (016), **Then** the line's passage carries the corrected text, and the removal of repeated passages still treats it as the same passage as the matching caption.
+2. **Given** a corrected line in a Meet call with captions, **When** the user downloads the merged transcript (016), **Then** the line's passage carries the corrected text and is never removed as a repeated passage: a human correction outranks the repeat check, as a speaker correction does today.
 3. **Given** a corrected line, **When** the panel is closed and opened again, or the meeting is opened from Transcripts, **Then** the line shows the corrected text.
 4. **Given** a corrected line, **When** the user renames its speaker or overrides its speaker (002), **Then** the corrected text is kept; **and** when the user corrects the text of a line with a speaker override, **Then** the override is kept.
 
@@ -77,7 +77,7 @@ The user corrected a line and then realises the original was right, or wants to 
 - Meet's late captions would split a line after it settled (002: a line can split later "if late captions show a speaker change before the line is final"): a line with a corrected text is never split, as a line with a speaker override is never split; the user's correction stands for the whole line.
 - The meeting stops, fails or the call ends while a line is open for editing: the editor stays open and the user can still save or cancel; the stopped meeting's lines remain editable until the transcript is closed (014).
 - The user clicks `Close transcript` (014) or opens Settings with an unsaved edit: the edit is discarded, as the label editor's edits are today.
-- Storing the correction fails: the line goes back to the text it had, and the panel says the correction could not be saved, as speaker corrections do today.
+- Storing the correction fails: the line keeps the text it had; see FR-015.
 - The corrected text no longer matches the line's word timings: the line keeps its start and end time; the word timings are not used for the corrected line (nothing shown to the user depends on them once the line is settled and cannot split).
 - 013's captions file and `Download originals` hold Meet's captions, not transcript lines: a correction does not change them.
 
@@ -85,7 +85,7 @@ The user corrected a line and then realises the original was right, or wants to 
 
 ### Functional Requirements
 
-- **FR-001**: Users MUST be able to open the text of a settled transcript line for editing by double-clicking it; a single click or a drag MUST keep selecting text as before. Keyboard users MUST be able to open the same editor from a focused line (the key is decided in the plan).
+- **FR-001**: Users MUST be able to open the text of a settled transcript line for editing by double-clicking it; a single click or a drag MUST keep selecting text as before. Keyboard users MUST be able to open the same editor from a focused line (the label editor's `Edit text`, plan research R3).
 - **FR-002**: Only settled lines MUST be editable: not the in-progress line and not a line whose speaker still shows the pending placeholder.
 - **FR-003**: Editing MUST be possible in the main view while a meeting runs and after it stops until the transcript is closed (014). A past meeting opened from the Transcripts screen MUST stay read-only.
 - **FR-004**: Saving MUST store the corrected text as part of the meeting's record, in the same place as the line, so it survives the panel closing and an extension reload.
@@ -99,7 +99,7 @@ The user corrected a line and then realises the original was right, or wants to 
 - **FR-012**: A text correction and a speaker correction (rename everywhere, single-line override) on the same line MUST be independent: each survives the other.
 - **FR-013**: A line with corrected text MUST NOT be split by late captions.
 - **FR-014**: Enter MUST save, Escape MUST cancel, and focus MUST return to the line after either; the editor MUST be reachable and usable by keyboard alone.
-- **FR-015**: A failed save MUST put the line back to its previous text and say that the correction could not be saved.
+- **FR-015**: When a save is refused, the line MUST keep its previous text and the editor MUST stay open with the typed text and an error saying the line could not be saved. On a running meeting a store failure inside the meeting leaves the line unchanged without a message, as a speaker correction does today (plan research R6).
 - **FR-016**: The correction MUST NOT be sent anywhere except as part of the transcript that already goes to the user's selected chat provider for Ask (constitution: no new network destination).
 - **FR-017**: Every new user-facing string MUST pass the copy rule and be recorded in `specs/006-panel-redesign/copy-review.md`.
 
