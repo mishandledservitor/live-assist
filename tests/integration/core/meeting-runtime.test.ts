@@ -843,3 +843,70 @@ describe('MeetingRuntime splitting a line at a speaker change', () => {
     expect((await repo.listSegments('m1')).map((s) => s.labelOverride)).toEqual([null, 'Tom Brown', null]);
   });
 });
+
+// 020 T003: a line's corrected text over the live port (research R6, R7).
+describe('MeetingRuntime text commands (020)', () => {
+  const textOverride = (segmentId: string, text: string | null, meetingId = 'm1') =>
+    ({ type: 'text/override', meetingId, segmentId, text }) as const;
+
+  it('text/override sets and clears one line and broadcasts live/segment-updated', async () => {
+    const { runtime, params, mix, events } = meetSetup();
+    await begin(runtime, params());
+    await play(12_500, mix);
+    await settle(runtime.command(textOverride('m1:mixed:1', 'We ship on Friday.')));
+    expect((await repo.listSegments('m1')).map((s) => s.textOverride)).toEqual([null, 'We ship on Friday.']);
+    expect(events).toContainEqual({
+      type: 'live/segment-updated',
+      segment: expect.objectContaining({ id: 'm1:mixed:1', textOverride: 'We ship on Friday.' }) as unknown,
+    });
+    expect(runtime.snapshot().segments[1]?.textOverride).toBe('We ship on Friday.');
+    await settle(runtime.command(textOverride('m1:mixed:1', null)));
+    expect((await repo.listSegments('m1')).map((s) => s.textOverride)).toEqual([null, null]);
+    expect(runtime.snapshot().segments[1]?.textOverride).toBeNull();
+  });
+
+  it('text equal to the transcribed text (after normalising) is stored as no correction', async () => {
+    const { runtime, params, mix } = meetSetup();
+    await begin(runtime, params());
+    await play(12_500, mix);
+    await settle(runtime.command(textOverride('m1:mixed:0', 'Changed.')));
+    const original = runtime.snapshot().segments[0]!.text;
+    await settle(runtime.command(textOverride('m1:mixed:0', original.replace(/\s+/g, ' ').trim())));
+    expect((await repo.listSegments('m1'))[0]?.textOverride).toBeNull();
+    expect(runtime.snapshot().segments[0]?.textOverride).toBeNull();
+  });
+
+  it('ignores another meeting and an unknown line', async () => {
+    const { runtime, params, mix, events } = meetSetup();
+    await begin(runtime, params());
+    await play(12_500, mix);
+    const before = events.length;
+    await settle(runtime.command(textOverride('m1:mixed:0', 'X', 'other')));
+    await settle(runtime.command(textOverride('m1:mixed:99', 'X')));
+    expect((await repo.listSegments('m1')).map((s) => s.textOverride)).toEqual([null, null]);
+    expect(events.slice(before).some((e) => e.type === 'live/segment-updated')).toBe(false);
+  });
+
+  it('a correction survives a later attribution', async () => {
+    const { runtime, params, meet, mix } = meetSetup();
+    await begin(runtime, params());
+    const script = captionsForHappyPath(meet);
+    await playScript(3600, mix, script);
+    await settle(runtime.command(textOverride('m1:mixed:0', 'Corrected.')));
+    await playScript(6000, mix, script);
+    expect((await repo.listSegments('m1'))[0]).toMatchObject({ textOverride: 'Corrected.', speakerLabel: 'Emma Jones' });
+  });
+
+  it('a line whose text was corrected before it settles is not split', async () => {
+    const { runtime, params, meet, mix } = meetSetup({ state: 'on' }, [loadFixture('meet-handover')]);
+    await begin(runtime, params());
+    const script: Record<number, () => void> = {};
+    for (let t = 1800; t <= 5000; t += 400) script[t] = () => meet.caption('pg:1', 'Emma Jones');
+    for (let t = 5800; t <= 9800; t += 400) script[t] = () => meet.caption('pg:2', 'Tom Brown');
+    await playScript(11_000, mix, script);
+    await settle(runtime.command(textOverride('m1:mixed:0', 'We ship on Friday.')));
+    await play(6000, mix);
+    const stored = await repo.listSegments('m1');
+    expect(stored.map((s) => [s.id, s.textOverride])).toEqual([['m1:mixed:0', 'We ship on Friday.']]);
+  });
+});

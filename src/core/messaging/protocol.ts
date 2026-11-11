@@ -7,6 +7,7 @@ import { isChatErrorKind, type ChatErrorKind } from '../chat/provider';
 import { MAX_QUESTION_LENGTH, type AnswerStatus, type ChatTurnView } from '../chat/turn';
 import type { SpeakerNameMapping } from '../settings/schema';
 import type { StatusSnapshot } from '../status/status';
+import { normaliseLineText } from '../transcript/labels';
 import {
   isRenamableKey,
   type EndReason,
@@ -181,7 +182,7 @@ export function parseLabelName(v: unknown): string | null {
  */
 export function parseLineText(v: unknown): string | null {
   if (!isStr(v)) return null;
-  const text = v.replace(/\s+/g, ' ').trim();
+  const text = normaliseLineText(v);
   return text.length >= 1 && text.length <= MAX_LINE_TEXT_LENGTH ? text : null;
 }
 
