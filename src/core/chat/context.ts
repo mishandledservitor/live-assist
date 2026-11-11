@@ -1,7 +1,7 @@
 // What a question sends (003 research R5, data-model "Context build"). Pure. The conversation is append-only: each
 // question carries the transcript lines not yet sent in this meeting's chat plus lines whose rendering changed since
 // (a late caption name, a rename), so earlier turns are replayed byte-for-byte and the prompt cache keeps hitting.
-import { displayLabel } from '../transcript/labels';
+import { displayLabel, displayText } from '../transcript/labels';
 import { formatOffset, type Meeting, type TranscriptSegment } from '../transcript/model';
 import { sortSegments } from '../transcript/ordering';
 import { MAX_OUTPUT_TOKENS, type ChatModel } from './models';
@@ -26,7 +26,7 @@ export const UNIDENTIFIED = 'Others';
 export function renderLine(segment: TranscriptSegment, meeting: Pick<Meeting, 'speakerRenames'>): string {
   const shown = displayLabel(segment, meeting);
   const label = shown.confirmed ? shown.text : UNIDENTIFIED;
-  const text = segment.text.replace(/\s*[\r\n]+\s*/g, ' ');
+  const text = displayText(segment).replace(/\s*[\r\n]+\s*/g, ' ');
   return `[${formatOffset(segment.startMs)}] ${label}: ${text}`;
 }
 

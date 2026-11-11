@@ -240,6 +240,19 @@ describe('a repetition that stays', () => {
     expect(merged(transcript({ labelOverride: 'Dana Ortiz' }), turns)).toContain(`[00:30] Dana Ortiz: ${PASSAGE}`);
   });
 
+  // 020 T011: a line whose text the user corrected is a human correction too, and is never removed as a repeat.
+  it('a line whose text was corrected by hand', () => {
+    const turns = [
+      cap(1, 'Mike Chen', plain(HELLO)),
+      cap(2, 'Sarah Brown', plain(PASSAGE)),
+      cap(3, 'Mike Chen', plain(GREAT)),
+      cap(4, 'Sarah Brown', plain(HIRING)),
+    ];
+    const lines = transcript({ textOverride: PASSAGE }, 'Something else was heard here.');
+    expect(merged(lines, turns)).toContain(`[00:30] Others: ${PASSAGE}`);
+    expect(mergedTranscript(storedMeeting(), lines, turns).removedSegmentIds).toEqual([]);
+  });
+
   it('the same text again more than 400 words later', () => {
     const filler = Array.from({ length: 41 }, (_, i) =>
       line(10 + i, `${Array.from({ length: 10 }, (__, k) => `filler${i * 10 + k}`).join(' ')}.`, spokenBy('Mike Chen')),

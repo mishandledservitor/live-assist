@@ -39,6 +39,7 @@ const segment: TranscriptSegment = {
   captionName: 'Jane',
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   words: [],
   timing: 'estimated',
   sessionId: 's',

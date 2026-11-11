@@ -104,6 +104,11 @@ export interface TranscriptSegment {
   captionSelf: boolean;
   /** 002: a single-line override (1–60 chars trimmed); survives renames. */
   labelOverride: string | null;
+  /**
+   * 020: the user's correction of `text` (one line, 1–2,000 chars trimmed); null = not corrected. `text` stays what the
+   * transcription produced. Absent on records before 020 (normalised to null on read).
+   */
+  textOverride: string | null;
   words: SegmentWord[];
   timing: 'words' | 'estimated';
   sessionId: string;

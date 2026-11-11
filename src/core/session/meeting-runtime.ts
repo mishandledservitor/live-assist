@@ -30,7 +30,7 @@ import {
   type StreamId,
   type TranscriptSegment,
 } from '../transcript/model';
-import { normaliseName, speakerKey } from '../transcript/labels';
+import { isOverridden, normaliseName, speakerKey, storedTextOverride } from '../transcript/labels';
 import { DETAIL_TIMEOUT_MS, SegmentBuilder } from '../transcript/segment-builder';
 import { mixFrames, MuteGate, type GateFrame, type GateMode } from './mute-gate';
 import { ReconnectingSession, type ReconnectingEvent } from './reconnecting-session';
@@ -310,7 +310,10 @@ export class MeetingRuntime {
       onUpdate: (id, fields) => this.relabel(id, fields),
       onRename: (key, rename) => this.rename(key, rename),
       onSplit: (id, pieces) => this.split(id, pieces),
-      isOverridden: (id) => this.segments.find((s) => s.id === id)?.labelOverride != null,
+      isOverridden: (id) => {
+        const s = this.segments.find((x) => x.id === id);
+        return s != null && isOverridden(s);
+      },
     });
     this.watchdog = new CaptionsWatchdog({
       now: () => this.deps.now(),
@@ -442,7 +445,7 @@ export class MeetingRuntime {
       const i = this.segments.findIndex((s) => s.id === id);
       const current = this.segments[i];
       const [first, ...rest] = pieces;
-      if (!current || !first || current.labelOverride) return;
+      if (!current || !first || isOverridden(current)) return;
       try {
         await this.deps.store.updateSegment(first);
         for (const p of rest) await this.deps.store.appendSegment(p);
@@ -469,8 +472,10 @@ export class MeetingRuntime {
       // Renaming a key back to the label it had removes the rename.
       const back = c.name === this.originalLabel(c.speakerKey);
       this.rename(c.speakerKey, back ? null : { name: c.name, origin: 'manual' });
+    } else if (c.type === 'labels/override') {
+      this.override(c.segmentId, (current) => ({ ...current, labelOverride: c.name }));
     } else {
-      this.override(c.segmentId, c.name);
+      this.override(c.segmentId, (current) => ({ ...current, textOverride: storedTextOverride(current, c.text) }));
     }
     return this.writes;
   }
@@ -481,12 +486,13 @@ export class MeetingRuntime {
     return this.segments.find((s) => speakerKey(s) === key)?.speakerLabel ?? null;
   }
 
-  private override(segmentId: string, name: string | null): void {
+  /** A single-line correction (002 speaker, 020 text): stored, then broadcast as live/segment-updated. */
+  private override(segmentId: string, change: (current: TranscriptSegment) => TranscriptSegment): void {
     this.writes = this.writes.then(async () => {
       const i = this.segments.findIndex((s) => s.id === segmentId);
       const current = this.segments[i];
       if (!current) return;
-      const next: TranscriptSegment = { ...current, labelOverride: name };
+      const next = change(current);
       try {
         await this.deps.store.updateSegment(next);
       } catch (e) {

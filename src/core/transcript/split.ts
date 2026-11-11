@@ -61,6 +61,7 @@ export function splitSegment(segment: TranscriptSegment, pieces: readonly Piece[
       text,
       words,
       labelOverride: null,
+      textOverride: null,
       labelPending: false,
     };
   });

@@ -55,6 +55,8 @@ To turn questions off, untick **Ask questions about the meeting** in Settings: t
 
 **Speaker names on Google Meet.** When you press Start on a Meet call, live-assist turns Meet's captions on and uses them to tell who is speaking. Meet's captions stay hidden unless you turn on **Show Meet captions** in Settings. Each line takes a name within a few seconds; speech that cannot be placed with confidence, such as overlaps and short interjections, is labelled "Others". You can rename a speaker on every line or correct a single line, and renames of people Meet named are remembered for later meetings.
 
+**Fixing a wrong word.** Double-click a line's text to correct it: the word you double-clicked is selected, so you can type the right one and press Enter. The line is marked `edited`, questions and downloads use the corrected text, and `Restore original` brings back what was transcribed. From the keyboard, open the line's speaker name and choose `Edit text`.
+
 **Zoom, Teams and other sites.** The tab is transcribed in the same way, but every line is labelled "Others" because speaker names come from Google Meet's captions.
 
 **Language.** The picker next to Start is set to Automatic. You can choose a language there instead; the choice applies to one meeting.

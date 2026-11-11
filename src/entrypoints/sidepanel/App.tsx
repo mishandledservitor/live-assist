@@ -166,6 +166,12 @@ function MainView({
           onOverrideLine={(segmentId, name) =>
             afterEdit(meetings.overrideLine({ meetingId, live: running }, segmentId, name))
           }
+          // 020 FR-015: the editor gets the save itself, so a refused one keeps it open with the reason.
+          onOverrideText={(segmentId, text) => {
+            const save = meetings.overrideText({ meetingId, live: running }, segmentId, text);
+            afterEdit(save);
+            return save;
+          }}
         />
       )}
       {chatApi && (

@@ -4,7 +4,9 @@ import {
   parseCommand,
   parseKeyHintReply,
   parseInternal,
+  MAX_LINE_TEXT_LENGTH,
   parseLabelCommand,
+  parseLineText,
   parseLive,
   parseOffscreenNotice,
   parseOffscreenRequest,
@@ -49,6 +51,7 @@ const segment: TranscriptSegment = {
   captionName: null,
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   schemaVersion: 2,
   words: [{ text: 'hello', startMs: 500, endMs: 900 }],
   timing: 'words',
@@ -72,6 +75,7 @@ const v1Segment: Partial<TranscriptSegment> = { ...segment };
 delete v1Segment.captionName;
 delete v1Segment.captionSelf;
 delete v1Segment.labelOverride;
+delete v1Segment.textOverride;
 delete v1Segment.schemaVersion;
 
 const commands: Command[] = [
@@ -147,6 +151,8 @@ const labelCommands: LabelCommand[] = [
   { type: 'labels/rename', meetingId: 'm1', speakerKey: 'self', name: 'Alex S.' },
   { type: 'labels/override', meetingId: 'm1', segmentId: 'm1:mixed:3', name: 'Jane' },
   { type: 'labels/override', meetingId: 'm1', segmentId: 'm1:mixed:3', name: null },
+  { type: 'text/override', meetingId: 'm1', segmentId: 'm1:mixed:3', text: 'We ship on Friday.' },
+  { type: 'text/override', meetingId: 'm1', segmentId: 'm1:mixed:3', text: null },
 ];
 
 describe('valid messages are accepted unchanged', () => {
@@ -382,5 +388,51 @@ describe('live/captions-kept (013)', () => {
     expect(parseLive(snapshot(false))).toBeNull();
     expect(parseLive(snapshot('An invented caption sentence.'))).toBeNull();
     expect(parseLive(snapshot(['An invented caption sentence.']))).toBeNull();
+  });
+});
+
+describe('020 line text (data-model.md "Messages")', () => {
+  it('turns line breaks and white-space runs into one space and trims', () => {
+    expect(parseLineText('  We ship\n on\r\n\tFriday.  ')).toBe('We ship on Friday.');
+  });
+
+  it(`accepts 1 to ${MAX_LINE_TEXT_LENGTH} characters after normalising`, () => {
+    expect(MAX_LINE_TEXT_LENGTH).toBe(2_000);
+    expect(parseLineText('a')).toBe('a');
+    expect(parseLineText('a'.repeat(2_000))).toBe('a'.repeat(2_000));
+    expect(parseLineText(` ${'a'.repeat(2_000)}\n`)).toBe('a'.repeat(2_000));
+    expect(parseLineText('a'.repeat(2_001))).toBeNull();
+  });
+
+  it.each([[''], ['   '], ['\n\t'], [null], [undefined], [3]])('rejects %o', (v) => {
+    expect(parseLineText(v)).toBeNull();
+  });
+
+  it('normalises the text of a text/override command', () => {
+    expect(parseLabelCommand({ type: 'text/override', meetingId: 'm1', segmentId: 's', text: ' We\nship. ' })).toEqual({
+      type: 'text/override',
+      meetingId: 'm1',
+      segmentId: 's',
+      text: 'We ship.',
+    });
+  });
+
+  it.each([
+    { type: 'text/override', meetingId: 'm1', segmentId: 's', text: '  ' },
+    { type: 'text/override', meetingId: 'm1', segmentId: 's', text: 'a'.repeat(2_001) },
+    { type: 'text/override', meetingId: 'm1', segmentId: 's' },
+    { type: 'text/override', meetingId: 'm1', text: 'A' },
+    { type: 'text/override', segmentId: 's', text: 'A' },
+  ])('rejects text command %o', (m) => expect(parseLabelCommand(m)).toBeNull());
+
+  it('accepts a segment with textOverride absent, null or a string, and nothing else', () => {
+    expect(parseLive({ type: 'live/segment-updated', segment: v1Segment })).not.toBeNull();
+    expect(parseLive({ type: 'live/segment-updated', segment: segment })).not.toBeNull();
+    const corrected = { ...segment, textOverride: 'Good morning, hello' };
+    expect(parseLive({ type: 'live/segment-updated', segment: corrected })).toEqual({
+      type: 'live/segment-updated',
+      segment: corrected,
+    });
+    expect(parseLive({ type: 'live/segment-updated', segment: { ...segment, textOverride: 4 } })).toBeNull();
   });
 });

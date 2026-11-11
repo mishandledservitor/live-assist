@@ -1,6 +1,6 @@
 // The transcript file (007, design decision 48; 004 FR-017–FR-019): name and body. Platform-free so 004's inbox
 // export writes the same file as 007's download.
-import { displayLabel } from '../transcript/labels';
+import { displayLabel, displayText } from '../transcript/labels';
 import type { Meeting, TranscriptSegment } from '../transcript/model';
 import { sortSegments } from '../transcript/ordering';
 import { meetingBaseName } from './download-names';
@@ -33,7 +33,7 @@ const oneLine = (text: string) => text.replace(/\s+/g, ' ').trim();
  * Written lines are finished and settled: in-progress text is never a segment, and a line whose name is still pending
  * (design decision 37) would otherwise be written as "Others" and then named in the panel (007 FR-006).
  */
-const writable = (segment: TranscriptSegment) => segment.labelPending !== true && oneLine(segment.text) !== '';
+const writable = (segment: TranscriptSegment) => segment.labelPending !== true && oneLine(displayText(segment)) !== '';
 
 /** The lines a transcript file holds, in time order (016's merged file is built from the same lines). */
 export function writtenSegments(segments: readonly TranscriptSegment[]): TranscriptSegment[] {
@@ -46,7 +46,7 @@ export function transcriptFileLines(
   segments: readonly TranscriptSegment[],
 ): string[] {
   return writtenSegments(segments).map(
-    (s) => `[${exportTimestamp(s.startMs)}] ${oneLine(displayLabel(s, meeting).text)}: ${oneLine(s.text)}`,
+    (s) => `[${exportTimestamp(s.startMs)}] ${oneLine(displayLabel(s, meeting).text)}: ${oneLine(displayText(s))}`,
   );
 }
 

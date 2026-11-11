@@ -39,6 +39,7 @@ describe('SegmentBuilder (data-model.md TranscriptSegment, research R3)', () => 
       captionName: null,
       captionSelf: false,
       labelOverride: null,
+      textOverride: null,
       schemaVersion: 2,
       words: [
         { text: 'Hello', startMs: 12_100, endMs: 12_400 },

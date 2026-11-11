@@ -39,6 +39,7 @@ const seg = (seq: number, text: string): TranscriptSegment => ({
   captionName: null,
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   schemaVersion: 2,
   words: [],
   timing: 'words',

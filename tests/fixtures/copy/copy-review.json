@@ -827,6 +827,28 @@
       "present": [
         "Remind me to tell people before I start"
       ]
+    },
+    {
+      "id": "A15",
+      "enabled": true,
+      "$comment": "020 FR-017 (design decisions 111, 112, copy review K50): edit a line's text, and the candidates rejected on 2026-11-11",
+      "absent": [
+        "Click to edit",
+        "Double-click to edit",
+        "Your changes are saved",
+        "Original:"
+      ],
+      "present": [
+        "Edit text",
+        "Edit line text",
+        "Line text",
+        "Save",
+        "Restore original",
+        "Enter the line's text.",
+        "Keep the line under 2,000 characters.",
+        "Couldn't save this line. Try again.",
+        "edited"
+      ]
     }
   ]
 }

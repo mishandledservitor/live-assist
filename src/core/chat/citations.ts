@@ -1,6 +1,7 @@
 // Citations in an answer (003 research R7, data-model "Citation"). Derived at render time from the current segments,
 // so a citation to a line that arrives later still resolves; only an exact match with a shown time becomes a link,
 // and not when its sentence quotes something the cited lines do not say (quotation guard, real call 2026-10-09).
+import { displayText } from '../transcript/labels';
 import { formatOffset, type TranscriptSegment } from '../transcript/model';
 import { sortSegments } from '../transcript/ordering';
 import { normaliseNotesLabels, notesPassages, separateNotesPassages } from './notes-passages';
@@ -66,7 +67,7 @@ export function parseAnswer(written: string, segments: readonly TranscriptSegmen
   for (const s of sortSegments(segments)) {
     const time = formatOffset(s.startMs);
     if (!byTime.has(time)) byTime.set(time, s.id);
-    textsAt.set(time, [...(textsAt.get(time) ?? []), s.text]);
+    textsAt.set(time, [...(textsAt.get(time) ?? []), displayText(s)]);
   }
 
   // Citations separated only by spaces form one group, e.g. `[03:45] [04:02]`; a group is checked as one.

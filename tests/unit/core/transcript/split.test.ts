@@ -17,6 +17,7 @@ const line = (over: Partial<TranscriptSegment> = {}): TranscriptSegment => ({
   captionName: null,
   captionSelf: false,
   labelOverride: null,
+  textOverride: null,
   words: [
     { text: 'You', startMs: 1000, endMs: 1200 },
     { text: 'will', startMs: 1200, endMs: 1400 },
@@ -55,7 +56,7 @@ describe('splitSegment', () => {
   });
 
   it('copies the line fields, applies each piece label, and clears the placeholder and any override', () => {
-    const [a, b] = splitSegment(line({ labelOverride: 'Ignored' }), [
+    const [a, b] = splitSegment(line({ labelOverride: 'Ignored', textOverride: 'Ignored too' }), [
       { from: 0, to: 4, fields: hannah },
       { from: 4, to: 7, fields: others },
     ]);
@@ -70,6 +71,7 @@ describe('splitSegment', () => {
         createdAt: 123,
         schemaVersion: 2,
         labelOverride: null,
+        textOverride: null,
         labelPending: false,
       });
     }

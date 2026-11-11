@@ -13,6 +13,7 @@ function setup(over: Partial<MeetingApiDeps> = {}) {
     listCaptionTurns: vi.fn((_id: string) => Promise.resolve<StoredCaptionTurn[]>([])),
     setSpeakerRename: vi.fn((..._a: unknown[]) => Promise.resolve()),
     setLabelOverride: vi.fn((..._a: unknown[]) => Promise.resolve()),
+    setTextOverride: vi.fn((..._a: unknown[]) => Promise.resolve()),
   };
   const remember = vi.fn((_captionName: string, _displayName: string) => Promise.resolve());
   const listeners = { message: [] as ((m: unknown) => void)[], disconnect: [] as (() => void)[] };
@@ -284,6 +285,49 @@ describe('createMeetingApi', () => {
       expect(repo.setSpeakerRename).not.toHaveBeenCalled();
       expect(remember).not.toHaveBeenCalled();
     });
+  });
+});
+
+// 020 T005: a line's corrected text, on the speaker override's path (research R6).
+describe('overrideText', () => {
+  it('while a meeting runs, goes over the live port normalised', async () => {
+    const { api, port, repo } = setup();
+    api.connect(vi.fn(), vi.fn());
+    await api.overrideText({ meetingId: 'm1', live: true }, 'm1:mixed:3', ' We ship\non Friday. ');
+    await api.overrideText({ meetingId: 'm1', live: true }, 'm1:mixed:3', null);
+    expect(port.postMessage.mock.calls.map((c) => c[0])).toEqual([
+      { type: 'text/override', meetingId: 'm1', segmentId: 'm1:mixed:3', text: 'We ship on Friday.' },
+      { type: 'text/override', meetingId: 'm1', segmentId: 'm1:mixed:3', text: null },
+    ]);
+    expect(repo.setTextOverride).not.toHaveBeenCalled();
+  });
+
+  it('with no meeting running, or no live port, is written through the repository', async () => {
+    const { api, port, repo } = setup();
+    await api.overrideText({ meetingId: 'm1', live: false }, 'm1:mixed:3', 'Fixed.');
+    await api.overrideText({ meetingId: 'm1', live: true }, 'm1:mixed:4', null);
+    expect(repo.setTextOverride.mock.calls).toEqual([
+      ['m1', 'm1:mixed:3', 'Fixed.'],
+      ['m1', 'm1:mixed:4', null],
+    ]);
+    expect(port.postMessage).not.toHaveBeenCalled();
+  });
+
+  it.each([['   '], ['\n'], ['x'.repeat(2_001)]])('rejects invalid text %o and sends nothing', async (text) => {
+    const { api, port, repo } = setup();
+    api.connect(vi.fn(), vi.fn());
+    await expect(api.overrideText({ meetingId: 'm1', live: true }, 's', text)).rejects.toThrow();
+    await expect(api.overrideText({ meetingId: 'm1', live: false }, 's', text)).rejects.toThrow();
+    expect(port.postMessage).not.toHaveBeenCalled();
+    expect(repo.setTextOverride).not.toHaveBeenCalled();
+  });
+
+  it('rejects when the write cannot be made', async () => {
+    const failing = setup();
+    failing.repo.setTextOverride.mockImplementation(() => Promise.reject(new Error('quota')));
+    await expect(failing.api.overrideText({ meetingId: 'm1', live: false }, 's', 'A')).rejects.toThrow('quota');
+    const noRepo = setup({ repo: () => Promise.reject(new Error('closed')) });
+    await expect(noRepo.api.overrideText({ meetingId: 'm1', live: false }, 's', 'A')).rejects.toThrow('closed');
   });
 });
 

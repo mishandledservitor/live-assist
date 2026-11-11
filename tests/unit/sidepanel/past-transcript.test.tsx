@@ -300,3 +300,22 @@ describe('PastTranscript: Download originals (016)', () => {
     expect(document.querySelector('.past-actions')!.textContent).toBe('Download transcriptDelete transcript');
   });
 });
+
+// 020 T012 (FR-003, FR-009): a corrected line shows its corrected text and the mark; nothing opens an editor.
+describe('PastTranscript: a corrected line (020)', () => {
+  it('shows the corrected text with the edited mark, and a double-click opens nothing', () => {
+    const segments = [
+      storedSegment('m1', 0, { text: 'the cue three budget', textOverride: 'the Q3 budget', ...spokenBy('Jane') }),
+      storedSegment('m1', 1, { text: 'Second.' }),
+    ];
+    setup({ segments });
+    expect(lines().map((l) => l.textContent)).toEqual([
+      '00:00 Jane (confirmed) the Q3 budget edited',
+      '00:02 Others (speaker not identified) Second.',
+    ]);
+    expect(lines()[0]!.querySelector('.line-edited')?.textContent).toBe('edited');
+    expect(lines()[1]!.querySelector('.line-edited')).toBeNull();
+    fireEvent.doubleClick(lines()[0]!.querySelector('[data-text]')!);
+    expect(screen.queryByRole('group', { name: 'Edit line text' })).toBeNull();
+  });
+});

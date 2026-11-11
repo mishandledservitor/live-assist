@@ -57,6 +57,7 @@ export function storedSegment(
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     words: [],
     timing: 'estimated',
     sessionId: 's1',

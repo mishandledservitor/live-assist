@@ -46,6 +46,29 @@ export function displayLabel(
   return shown(segment.speakerLabel, segment.labelSource);
 }
 
+/** 020: the line's text as every consumer shows it: the user's correction, else what was transcribed. */
+export function displayText(segment: Pick<TranscriptSegment, 'text' | 'textOverride'>): string {
+  return segment.textOverride ?? segment.text;
+}
+
+/** 020: line breaks and white-space runs become one space, trimmed: how a line's typed text is stored. */
+export function normaliseLineText(text: string): string {
+  return text.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * 020 FR-008: the `textOverride` to store for an already-normalised correction. Text equal to the transcribed text
+ * (after the same normalisation) is no correction, so it is stored as null.
+ */
+export function storedTextOverride(segment: Pick<TranscriptSegment, 'text'>, text: string | null): string | null {
+  return text === null || text === normaliseLineText(segment.text) ? null : text;
+}
+
+/** A line the user corrected by hand (002 speaker or 020 text): never split, never removed as a repeat. */
+export function isOverridden(segment: Pick<TranscriptSegment, 'labelOverride' | 'textOverride'>): boolean {
+  return segment.labelOverride != null || segment.textOverride != null;
+}
+
 /** Records written before 002 lack the 002 fields; reads fill them in (no IndexedDB version bump, research R9). */
 export function normaliseSegment(segment: TranscriptSegment): TranscriptSegment {
   const raw: Partial<TranscriptSegment> = segment;
@@ -56,6 +79,7 @@ export function normaliseSegment(segment: TranscriptSegment): TranscriptSegment 
     captionName: raw.captionName ?? null,
     captionSelf: raw.captionSelf ?? false,
     labelOverride: raw.labelOverride ?? null,
+    textOverride: raw.textOverride ?? null,
     schemaVersion: raw.schemaVersion ?? 1,
   };
 }
