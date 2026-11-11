@@ -361,6 +361,46 @@ input:not([type='checkbox']) {
   font-style: italic;
 }
 
+/* 020: a corrected line's mark, after its text: small and muted, read with the line. */
+.line-edited {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 020: the text editor takes the text's place in the line, full width, so it fits at 320 px. */
+.text-editor {
+  margin-top: 4px;
+}
+
+.text-editor textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 2.2em;
+  /* Grows with its text where supported; otherwise the field scrolls. */
+  field-sizing: content;
+  resize: vertical;
+  padding: 2px 4px;
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.text-editor .field-error {
+  margin: 4px 0 0;
+  color: var(--error);
+  font-size: 13px;
+}
+
+.text-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
 .transcript-empty {
   color: var(--muted);
 }

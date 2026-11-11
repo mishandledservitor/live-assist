@@ -25,7 +25,7 @@ None: no new dependency or configuration.
 - [x] T006 [P] [US1] `TextEditor` component in `src/entrypoints/sidepanel/components/TextEditor.tsx` per `contracts/edit-text-ui.md`: group `Edit line text`, textarea `Line text` with the initial selection, `Save`/Enter, `Cancel`/Escape, the two validation errors, awaits `onSave` and shows `Couldn't save this line. Try again.` on rejection keeping the typed text. (`Restore original` belongs to T012.) Tests first in `tests/unit/sidepanel/text-editor.test.tsx`.
 - [x] T007 [US1] Transcript: `onOverrideText` prop; a `dblclick` on a stored line's text (not in-progress, not `labelPending`) opens `TextEditor` in place with the browser selection's range inside the text; one editor state `{id, kind, selection}` shared with the label editor; focus returns to the label button (or the line) on close; auto-follow skipped while an editor is open; `Line` stays memoised, in `src/entrypoints/sidepanel/components/Transcript.tsx`; wire `onOverrideText` in `src/entrypoints/sidepanel/App.tsx` like `onOverrideLine`. Tests first in `tests/unit/sidepanel/transcript.test.tsx` (opens on double-click with word selected; not on single click, the in-progress or a pending line; new lines arriving keep the typed text and caret; no auto-scroll while open; Escape returns focus) and `tests/unit/sidepanel/transcript-perf.test.tsx` still within bound.
 - [x] T008 [US1] Keyboard path: `Edit text` button in `src/entrypoints/sidepanel/components/LabelEditor.tsx` (prop `onEditText`) closes the label editor and opens the text editor on that line with all text selected. Tests first in `tests/unit/sidepanel/label-editor.test.tsx` and `transcript.test.tsx`.
-- [ ] T009 [P] [US1] Styles for the inline editor (full-width textarea, actions row like `.label-editor-actions`, 320 px) in the side panel stylesheet that holds `.label-editor`.
+- [x] T009 [P] [US1] Styles for the inline editor (full-width textarea, actions row like `.label-editor-actions`, 320 px) in the side panel stylesheet that holds `.label-editor`.
 
 **Checkpoint**: a line can be corrected live and after Stop; it shows the corrected text.
 
@@ -40,7 +40,7 @@ None: no new dependency or configuration.
 
 ## Phase 5: User Story 3 — go back to what was heard (P2)
 
-- [ ] T012 [US3] `Restore original` in `TextEditor` (only when the line has `textOverride`, saves `null`) and the `edited` mark (`span.line-edited` after the text) in `Transcript.tsx`, shown in past transcripts too; past transcripts open no editor. Tests first in `tests/unit/sidepanel/text-editor.test.tsx`, `transcript.test.tsx`, `tests/unit/sidepanel/past-transcript.test.tsx`; mark style in the same stylesheet as T009.
+- [x] T012 [US3] `Restore original` in `TextEditor` (only when the line has `textOverride`, saves `null`) and the `edited` mark (`span.line-edited` after the text) in `Transcript.tsx`, shown in past transcripts too; past transcripts open no editor. Tests first in `tests/unit/sidepanel/text-editor.test.tsx`, `transcript.test.tsx`, `tests/unit/sidepanel/past-transcript.test.tsx`; mark style in the same stylesheet as T009.
 
 ## Phase 6: Polish
 

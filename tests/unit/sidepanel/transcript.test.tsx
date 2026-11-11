@@ -342,6 +342,29 @@ describe('editing a line’s text', () => {
     expect([field().selectionStart, field().selectionEnd]).toEqual([0, 'the Q3 budget'.length]);
   });
 
+  // T012 (FR-009): the mark follows the text, real text read with the line; an uncorrected line has none.
+  it('a corrected line shows its corrected text followed by the edited mark', () => {
+    setup([{ ...seg(0, 0, 'the cue three budget'), textOverride: 'the Q3 budget' }, seg(1, 1000, 'plain')]);
+    const [corrected, plain] = items();
+    expect(textOf(corrected!).textContent).toBe('the Q3 budget');
+    const mark = corrected!.querySelector('.line-edited')!;
+    expect(mark.tagName).toBe('SPAN');
+    expect(mark.textContent).toBe('edited');
+    expect(textOf(corrected!).nextSibling?.textContent).toBe(' ');
+    expect(corrected!.lastElementChild).toBe(mark);
+    expect(plain!.querySelector('.line-edited')).toBeNull();
+    expect(plain!.textContent).not.toContain('edited');
+  });
+
+  it('Restore original saves null through the handler', async () => {
+    const { onOverrideText } = setup([{ ...seg(0, 0, 'the cue three budget'), textOverride: 'the Q3 budget' }]);
+    fireEvent.doubleClick(textOf(items()[0]!));
+    fireEvent.click(within(editorGroup()!).getByRole('button', { name: 'Restore original' }));
+    await act(() => Promise.resolve());
+    expect(onOverrideText).toHaveBeenCalledWith('m1:mixed:0', null);
+    expect(editorGroup()).toBeNull();
+  });
+
   it('a single click opens nothing', () => {
     setup([seg(0, 0, 'hello')]);
     fireEvent.click(textOf(items()[0]!));
