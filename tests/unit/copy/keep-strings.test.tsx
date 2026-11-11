@@ -1,4 +1,4 @@
-// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K48) still reads exactly as before. Strings the panel
+// 006 T046 (FR-017, US5-3): every copy-review Keep string (K1–K50) still reads exactly as before. Strings the panel
 // shows are checked on the rendered screen in the state that shows them; reasons produced deeper down (Meet, runtime,
 // provider) and the manifest are checked as the literals that produce them.
 import { join } from 'node:path';
@@ -1139,5 +1139,86 @@ describe('Keep strings: merged download (K47, 016)', () => {
         file,
       ).toEqual([]);
     }
+  });
+});
+
+// 020 T013 (FR-017; copy-review K50, A15; contracts/edit-text-ui.md): the text editor's strings, the label editor's
+// `Edit text` and the `edited` mark.
+describe('Keep strings: edit a line’s text (K50, 020)', () => {
+  const corrected = { ...seg(1), textOverride: 'the Q3 budget' } satisfies TranscriptSegment;
+  const view = () =>
+    render(
+      <Transcript
+        segments={[corrected, seg(2)]}
+        partials={[]}
+        meeting={{ speakerRenames: {} }}
+        onRenameSpeaker={vi.fn()}
+        onOverrideLine={vi.fn()}
+        onOverrideText={vi.fn(() => Promise.reject(new Error('refused')))}
+      />,
+    );
+  const lines = () => within(screen.getByRole('region', { name: 'Transcript' })).getAllByRole('listitem');
+
+  it('the edited mark, Edit text, and the editor with its buttons', () => {
+    view();
+    expect(lines()[0]!.querySelector('.line-edited')!.textContent).toBe('edited');
+    fireEvent.click(within(lines()[1]!).getByRole('button'));
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Edit text' }));
+    let editor = screen.getByRole('group', { name: 'Edit line text' });
+    expect(within(editor).getByRole('textbox', { name: 'Line text' })).toBeTruthy();
+    expect(
+      within(editor)
+        .getAllByRole('button')
+        .map((b) => b.textContent),
+    ).toEqual(['Save', 'Cancel']);
+    fireEvent.click(within(editor).getByRole('button', { name: 'Cancel' }));
+    fireEvent.doubleClick(lines()[0]!.querySelector('[data-text]')!);
+    editor = screen.getByRole('group', { name: 'Edit line text' });
+    expect(
+      within(editor)
+        .getAllByRole('button')
+        .map((b) => b.textContent),
+    ).toEqual(['Save', 'Restore original', 'Cancel']);
+  });
+
+  it('the three errors', async () => {
+    view();
+    fireEvent.doubleClick(lines()[1]!.querySelector('[data-text]')!);
+    const editor = screen.getByRole('group', { name: 'Edit line text' });
+    const field = within(editor).getByRole('textbox', { name: 'Line text' });
+    const save = within(editor).getByRole('button', { name: 'Save' });
+    const alert = () => within(editor).getByRole('alert').textContent;
+    fireEvent.change(field, { target: { value: ' ' } });
+    fireEvent.click(save);
+    expect(alert()).toBe("Enter the line's text.");
+    fireEvent.change(field, { target: { value: 'x'.repeat(2_001) } });
+    fireEvent.click(save);
+    expect(alert()).toBe('Keep the line under 2,000 characters.');
+    fireEvent.change(field, { target: { value: 'fixed' } });
+    fireEvent.click(save);
+    await waitFor(() => expect(alert()).toBe("Couldn't save this line. Try again."));
+  });
+
+  it('the text editor holds K50 and nothing else', () => {
+    const allowed = [
+      'Edit line text',
+      'Line text',
+      'Save',
+      'Restore original',
+      'Cancel',
+      "Enter the line's text.",
+      'Keep the line under 2,000 characters.',
+      "Couldn't save this line. Try again.",
+    ];
+    // Not copy: module paths, identifiers, class names, roles, id suffixes, separators and the keys the field reacts to.
+    const technical = (text: string) =>
+      /^(\.{1,2}\/|react$)/.test(text) ||
+      /^[a-z]+(-[a-z]+)*$/.test(text) ||
+      /^(-[a-z]+|\s*)$/.test(text) ||
+      (/^[A-Z][a-z]+$/.test(text) && !allowed.includes(text));
+    const found = collectProjectStrings(ROOT).get(join(ROOT, 'src/entrypoints/sidepanel/components/TextEditor.tsx'));
+    expect(found).toBeDefined();
+    const copy = [...new Set(found!.filter((text) => !technical(text)))];
+    expect(copy.filter((text) => !allowed.includes(text))).toEqual([]);
   });
 });
