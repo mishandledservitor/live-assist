@@ -153,6 +153,28 @@ test('speaker names, the label editor and remembered names have no axe violation
   await panel.getByRole('button', { name: 'Stop' }).click();
 });
 
+// 020 T014: the text editor open on a stored meeting's line, with an error, and a corrected line's mark.
+test('the line text editor and the edited mark have no axe violations', async ({ context, extensionId }) => {
+  test.setTimeout(60_000);
+  const panel = await openPanel(context, extensionId);
+  await seedAskMeeting(panel, 0);
+  const text = line(panel, 'Thanks all, see you tomorrow.').locator('[data-text]');
+  await text.dblclick();
+  const editor = panel.getByRole('group', { name: 'Edit line text' });
+  await expect(editor).toBeVisible();
+  await expectNoAxeViolationsInBothModes(panel, 'text editor');
+
+  await editor.getByRole('textbox', { name: 'Line text' }).fill(' ');
+  await editor.getByRole('button', { name: 'Save' }).click();
+  await expect(editor.getByRole('alert')).toBeVisible();
+  await expectNoAxeViolationsInBothModes(panel, 'text editor with an error');
+
+  await editor.getByRole('textbox', { name: 'Line text' }).fill('Thanks all, see you on Monday.');
+  await editor.getByRole('button', { name: 'Save' }).click();
+  await expect(line(panel, 'Thanks all, see you on Monday.').locator('.line-edited')).toHaveText('edited');
+  await expectNoAxeViolationsInBothModes(panel, 'a corrected line');
+});
+
 // 003 T077: the main view with a conversation (streaming and finished) and Settings with the Questions section.
 test('Ask: the conversation strip and the Questions settings have no axe violations', async ({
   context,

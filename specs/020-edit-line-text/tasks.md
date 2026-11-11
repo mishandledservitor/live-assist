@@ -45,7 +45,7 @@ None: no new dependency or configuration.
 ## Phase 6: Polish
 
 - [x] T013 Copy: record K50 (the nine strings of `contracts/edit-text-ui.md`) and the rejected candidates as A15 in `specs/006-panel-redesign/copy-review.md`; add the K50 and A15 cases to `tests/fixtures/copy/copy-review.json` and `tests/unit/copy/keep-strings.test.tsx`. Test first: the copy scan fails until recorded.
-- [ ] T014 E2E `tests/e2e/edit-text.spec.ts`: fixture meeting, double-click a settled line, replace a word, Enter; further lines arrive with an editor open; `Download transcript` holds the correction; reload the panel shows it with `edited`; `Restore original` brings the original back; keyboard path through the label editor. Add the editor to `tests/e2e/a11y.spec.ts`.
+- [x] T014 E2E `tests/e2e/edit-text.spec.ts`: fixture meeting, double-click a settled line, replace a word, Enter; further lines arrive with an editor open; `Download transcript` holds the correction; reload the panel shows it with `edited`; `Restore original` brings the original back; keyboard path through the label editor. Add the editor to `tests/e2e/a11y.spec.ts`.
 - [ ] T015 Docs: `specs/020-edit-line-text/manual-check.md` (real Meet call steps), `CHANGELOG.md` `[Unreleased]` Added, `ROADMAP.md` row 020, `README.md` usage line, CLAUDE.md Current status.
 - [ ] T016 Full check: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:e2e`, `pnpm test:e2e`.
 
