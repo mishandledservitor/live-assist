@@ -1,5 +1,5 @@
 import type { StoredCaptionTurn } from '../core/captions/model';
-import { normaliseMeeting, normaliseSegment } from '../core/transcript/labels';
+import { normaliseMeeting, normaliseSegment, storedTextOverride } from '../core/transcript/labels';
 import type {
   EndReason,
   Meeting,
@@ -103,11 +103,31 @@ export class MeetingRepo {
    * meeting's summary.
    */
   async setLabelOverride(meetingId: string, segmentId: string, name: string | null): Promise<void> {
+    await this.correctLine(meetingId, segmentId, (current) => ({ ...current, labelOverride: name }));
+  }
+
+  /**
+   * 020: sets (or, with null, clears) one line's corrected text, already normalised by parseLineText; text equal to
+   * the transcribed text is stored as null (FR-008). The same transaction removes the meeting's summary (012).
+   */
+  async setTextOverride(meetingId: string, segmentId: string, text: string | null): Promise<void> {
+    await this.correctLine(meetingId, segmentId, (current) => ({
+      ...current,
+      textOverride: storedTextOverride(current, text),
+    }));
+  }
+
+  /** One line's hand correction and the summary's removal, in one transaction; another meeting's line is ignored. */
+  private async correctLine(
+    meetingId: string,
+    segmentId: string,
+    change: (current: TranscriptSegment) => TranscriptSegment,
+  ): Promise<void> {
     const tx = this.db.transaction(['segments', 'meetings'], 'readwrite');
     const segments = tx.objectStore('segments');
     const current = await segments.get(segmentId);
     if (current?.meetingId === meetingId) {
-      await segments.put({ ...normaliseSegment(current), labelOverride: name });
+      await segments.put(change(normaliseSegment(current)));
       const meetings = tx.objectStore('meetings');
       const meeting = await meetings.get(meetingId);
       if (meeting?.summary) await meetings.put(withoutSummary(meeting));

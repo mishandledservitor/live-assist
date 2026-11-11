@@ -42,6 +42,7 @@ function seg(meetingId: string, seq: number, startMs: number, text = `line${seq}
     captionName: null,
     captionSelf: false,
     labelOverride: null,
+    textOverride: null,
     schemaVersion: 2,
     words: [],
     timing: 'estimated',
@@ -184,7 +185,14 @@ describe('MeetingRepo — 002 label additions (contracts/live-port-and-labels.md
 
   it('reads v1 records back normalised', async () => {
     const { speakerRenames: _r, ...v1Meeting } = meeting('m1', 100);
-    const { captionName: _n, captionSelf: _s, labelOverride: _o, schemaVersion: _v, ...v1Segment } = seg('m1', 0, 50);
+    const {
+      captionName: _n,
+      captionSelf: _s,
+      labelOverride: _o,
+      textOverride: _t,
+      schemaVersion: _v,
+      ...v1Segment
+    } = seg('m1', 0, 50);
     await db.put('meetings', v1Meeting as Meeting);
     await db.put('segments', v1Segment as TranscriptSegment);
     expect(await repo.getMeeting('m1')).toEqual(meeting('m1', 100));
@@ -282,5 +290,51 @@ describe('MeetingRepo — 008 notes', () => {
 
     expect(scopes).toEqual([['captionTurns', 'chatTurns', 'meetingContexts', 'meetings', 'segments']]);
     expect((await db.getAllKeys('meetingContexts')).sort()).toEqual(['m2', 'next']);
+  });
+});
+
+// 020 T004: a line's corrected text written straight to the repo (stopped meeting, research R6).
+describe('MeetingRepo — 020 text corrections', () => {
+  const summary = { v: 1 as const, names: [], fileLines: 2, lastLineEndMs: 460 };
+
+  it('setTextOverride sets and clears one line’s text, removing the summary', async () => {
+    await repo.createMeeting({ ...meeting('m1', 100), summary });
+    await repo.appendSegment(seg('m1', 0, 50));
+    await repo.appendSegment(seg('m1', 1, 60));
+    await repo.setTextOverride('m1', 'm1:mixed:0', 'Corrected line.');
+    expect((await repo.listSegments('m1')).map((s) => [s.text, s.textOverride])).toEqual([
+      ['line0', 'Corrected line.'],
+      ['line1', null],
+    ]);
+    expect(await db.get('meetings', 'm1')).not.toHaveProperty('summary');
+    await db.put('meetings', { ...meeting('m1', 100), summary });
+    await repo.setTextOverride('m1', 'm1:mixed:0', null);
+    expect((await repo.listSegments('m1'))[0]?.textOverride).toBeNull();
+    expect(await db.get('meetings', 'm1')).not.toHaveProperty('summary');
+  });
+
+  it('text equal to the transcribed text after normalising is stored as null', async () => {
+    await repo.createMeeting(meeting('m1', 100));
+    await repo.appendSegment({ ...seg('m1', 0, 50, ' We  ship\non Friday. '), textOverride: 'Old.' });
+    await repo.setTextOverride('m1', 'm1:mixed:0', 'We ship on Friday.');
+    expect((await repo.listSegments('m1'))[0]?.textOverride).toBeNull();
+  });
+
+  it('a record from before 020 is written back normalised with the field', async () => {
+    await repo.createMeeting(meeting('m1', 100));
+    const { textOverride: _t, labelOverride: _o, ...old } = seg('m1', 0, 50);
+    await db.put('segments', old as TranscriptSegment);
+    await repo.setTextOverride('m1', 'm1:mixed:0', 'New.');
+    expect(await db.get('segments', 'm1:mixed:0')).toMatchObject({ labelOverride: null, textOverride: 'New.' });
+  });
+
+  it("ignores another meeting's line or one that does not exist, keeping the summary", async () => {
+    await repo.createMeeting({ ...meeting('m1', 100), summary });
+    await repo.appendSegment(seg('m1', 0, 50));
+    await repo.setTextOverride('m2', 'm1:mixed:0', 'X');
+    await repo.setTextOverride('m1', 'm1:mixed:9', 'X');
+    expect((await repo.listSegments('m1'))[0]?.textOverride).toBeNull();
+    expect(await repo.countSegments()).toBe(1);
+    expect((await db.get('meetings', 'm1'))?.summary).toEqual(summary);
   });
 });
