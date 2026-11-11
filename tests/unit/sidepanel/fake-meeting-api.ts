@@ -23,6 +23,7 @@ export function fakeMeetingApi(
     ),
     renameSpeaker: vi.fn((..._a: unknown[]) => Promise.resolve()),
     overrideLine: vi.fn((..._a: unknown[]) => Promise.resolve()),
+    overrideText: vi.fn((..._a: unknown[]) => Promise.resolve()),
     connect: vi.fn((_onEvent: (e: unknown) => void, onDisconnect: () => void) => {
       queueMicrotask(onDisconnect);
       return () => undefined;

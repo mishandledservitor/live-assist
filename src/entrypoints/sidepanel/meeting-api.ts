@@ -3,6 +3,7 @@ import type { StoredCaptionTurn } from '../../core/captions/model';
 import {
   LIVE_PORT_NAME,
   parseLabelName,
+  parseLineText,
   type Command,
   type LabelCommand,
   type StartError,
@@ -33,6 +34,12 @@ export interface MeetingApi {
   renameSpeaker(target: EditTarget, speaker: RenameTarget, name: string): Promise<void>;
   /** 002 US4: overrides one line's speaker (FR-019); null clears the override. */
   overrideLine(target: EditTarget, segmentId: string, name: string | null): Promise<void>;
+  /**
+   * 020: corrects one line's text (FR-004); null restores what was transcribed. Rejects invalid text without sending
+   * anything, and rejects when the write cannot be made (FR-015). While the meeting runs, resolving means the command
+   * was sent; the line changes when the meeting broadcasts it.
+   */
+  overrideText(target: EditTarget, segmentId: string, text: string | null): Promise<void>;
   /** 012: the meeting the main view showed was deleted; the main view shows no stored meeting until the next Start. */
   clearMainView(): Promise<void>;
   /** 012: the main view was cleared, here or in another window's panel; returns an unsubscriber. */
@@ -67,7 +74,13 @@ export interface MeetingApiDeps {
   repo(): Promise<
     Pick<
       MeetingRepo,
-      'deleteMeeting' | 'latestMeeting' | 'listSegments' | 'listCaptionTurns' | 'setSpeakerRename' | 'setLabelOverride'
+      | 'deleteMeeting'
+      | 'latestMeeting'
+      | 'listSegments'
+      | 'listCaptionTurns'
+      | 'setSpeakerRename'
+      | 'setLabelOverride'
+      | 'setTextOverride'
     >
   >;
   connect(name: string): LivePort;
@@ -81,6 +94,12 @@ export interface MeetingApiDeps {
 function validName(name: string): string {
   const parsed = parseLabelName(name);
   if (parsed === null) throw new Error('A name is 1–60 characters on one line.');
+  return parsed;
+}
+
+function validText(text: string): string {
+  const parsed = parseLineText(text);
+  if (parsed === null) throw new Error('A line is 1–2,000 characters.');
   return parsed;
 }
 
@@ -161,6 +180,12 @@ export function createMeetingApi(deps: MeetingApiDeps): MeetingApi & LiveApi {
       const command: LabelCommand = { type: 'labels/override', meetingId: target.meetingId, segmentId, name };
       if (target.live && sendLive(command)) return;
       await (await deps.repo()).setLabelOverride(target.meetingId, segmentId, name);
+    },
+    async overrideText(target, segmentId, raw) {
+      const text = raw === null ? null : validText(raw);
+      const command: LabelCommand = { type: 'text/override', meetingId: target.meetingId, segmentId, text };
+      if (target.live && sendLive(command)) return;
+      await (await deps.repo()).setTextOverride(target.meetingId, segmentId, text);
     },
     connect(onEvent, onDisconnect) {
       const port = deps.connect(LIVE_PORT_NAME);
