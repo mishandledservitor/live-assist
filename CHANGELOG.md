@@ -4,6 +4,8 @@ What changes in live-assist from one release to the next, for people who use it.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-16
+
 ### Fixed
 
 - Captions turn on at Start in Google Meet whichever wording Meet's `Captions and translation` menu uses for the captions switch, "Turn on captions" or "Turn on live captions".
