@@ -168,11 +168,16 @@ function liveCaptionsToggle(doc: Document): HTMLElement | null {
   return doc.querySelector<HTMLElement>('[role="dialog"] button[jsname="RrG0hf"]');
 }
 
-/** The Live captions switch as seen 2026-11-03 when on; the off label and icon were not seen and are guesses. */
+/**
+ * The Live captions switch: on as seen 2026-11-03 and 2026-11-16 ("Turn off live captions"), off as seen 2026-11-16
+ * ("Turn on captions", icon `closed_caption_off`; decision 113). The on icon was not seen and is a guess.
+ */
 function setToggle(toggle: HTMLElement, on: boolean): void {
-  toggle.setAttribute('aria-label', on ? 'Turn off live captions' : 'Turn on live captions');
+  toggle.setAttribute('aria-label', on ? 'Turn off live captions' : 'Turn on captions');
   const icon = toggle.querySelector('.google-symbols');
-  if (icon) icon.textContent = on ? 'check' : 'closed_caption';
+  if (icon) icon.textContent = on ? 'check' : 'closed_caption_off';
+  const text = toggle.querySelector('span');
+  if (text) text.textContent = on ? 'Live captions' : 'Turn on captions';
 }
 
 /** Opens the menu as Meet does: a dialog with the Live captions and speech translation switches. */

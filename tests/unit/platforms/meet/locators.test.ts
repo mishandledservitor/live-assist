@@ -130,7 +130,7 @@ describe('D2a the captions-and-translation menu (decision 110, seen 2026-11-03)'
     openCaptionsMenu(doc);
     const found = liveCaptionsSwitch(doc);
     expect(found.tier).toBe(3);
-    expect(found.value?.textContent).toContain('Live captions');
+    expect(found.value?.getAttribute('aria-label')).toBe('Turn on captions');
     closeCaptionsMenu(doc);
     expect(liveCaptionsSwitch(doc)).toEqual(NOTHING);
   });
@@ -139,6 +139,26 @@ describe('D2a the captions-and-translation menu (decision 110, seen 2026-11-03)'
     const doc = loadMeetSnapshot('menu-captions-on');
     openCaptionsMenu(doc);
     expect(liveCaptionsSwitch(doc).value?.getAttribute('aria-label')).toBe('Turn off live captions');
+  });
+
+  // Decision 113: Meet has labelled the off switch both "Turn on live captions" and "Turn on captions".
+  it.each(['Turn on captions', 'Turn on live captions', 'Turn off captions', 'Turn off live captions'])(
+    'the switch labelled %j is found by its label (tier 3)',
+    (label) => {
+      const doc = loadMeetSnapshot('menu-captions-off');
+      const dialog = openCaptionsMenu(doc);
+      const toggle = dialog.querySelector('button')!;
+      toggle.setAttribute('aria-label', label);
+      toggle.removeAttribute('jsname');
+      expect(liveCaptionsSwitch(doc)).toEqual({ value: toggle, tier: 3 });
+    },
+  );
+
+  it('the speech translation switch is never taken for the captions switch, whatever its label', () => {
+    const doc = loadMeetSnapshot('menu-captions-off');
+    const dialog = openCaptionsMenu(doc);
+    dialog.querySelector('button')!.remove();
+    expect(liveCaptionsSwitch(doc)).toEqual(NOTHING);
   });
 
   it('without English labels: the first switch of the menu (tier 4)', () => {
