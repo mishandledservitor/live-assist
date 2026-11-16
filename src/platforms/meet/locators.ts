@@ -71,16 +71,20 @@ export function opensCaptionsMenu(button: Element): boolean {
   return button.getAttribute('aria-haspopup') === 'dialog' || iconOf(button) === 'translate_cc';
 }
 
+/** The switch's label on or off, with or without "live" (both seen, decision 113). */
+const CAPTIONS_SWITCH_LABEL = /^turn (on|off) (live )?captions\b/i;
+const TRANSLATION_LABEL = /translat/i;
+
 /**
- * D2a: the Live captions switch in the open captions-and-translation menu (seen 2026-11-03: a button labelled "Turn
- * off live captions" first in the dialog, before the speech translation switch with the same jsname). Nothing while
- * the menu is closed.
+ * D2a: the Live captions switch in the open captions-and-translation menu: first in the dialog, before the speech
+ * translation switch with the same jsname. Labelled "Turn off live captions" when on (seen 2026-11-03, 2026-11-16) and
+ * "Turn on captions" when off (seen 2026-11-16). Never the speech translation switch. Nothing while the menu is closed.
  */
 export function liveCaptionsSwitch(doc: Document): Located<HTMLElement> {
   const inMenus = [...doc.querySelectorAll('[role="dialog"]')].flatMap(buttons);
-  const byLabel = inMenus.find((b) => /live captions/i.test(labelOf(b)));
+  const byLabel = inMenus.find((b) => CAPTIONS_SWITCH_LABEL.test(labelOf(b)));
   if (byLabel) return found(byLabel, 3);
-  const byName = inMenus.find((b) => b.getAttribute('jsname') === 'RrG0hf');
+  const byName = inMenus.find((b) => b.getAttribute('jsname') === 'RrG0hf' && !TRANSLATION_LABEL.test(labelOf(b)));
   return byName ? found(byName, 4) : NOTHING;
 }
 
